@@ -3,15 +3,43 @@ from collections import namedtuple
 
 #this module is for searching the dex, aka all the game data
 
-Abilities = json.load(open('data/abilities.json'))
-Formats = json.load(open('data/formats.json'))
-Items = json.load(open('data/items.json'))
-Learnsets = json.load(open('data/learnsets.json'))
-Moves = json.load(open('data/moves.json'))
-Pokedex = json.load(open('data/pokedex.json'))
-Typechart = json.load(open('data/typechart.json'))
-Natures = json.load(open('data/natures.json'))
-#missing statuses, scripts, rulesets(formats), formatsdata( event pokemon and their moves), aliases
+#missing statuses, scripts, rulesets(formats), formatsdata( event pokemon and thespeed moves), aliases
+
+with open('data/abilities.json') as f:
+    Abilities = json.load(f)
+with open('data/formats.json') as f:
+    Formats = json.load(f)
+with open('data/items.json') as f:
+    Items = json.load(f)
+with open('data/learnsets.json') as f:
+    Learnsets = json.load(f)
+with open('data/moves.json') as f:
+    Moves = json.load(f)
+with open('data/pokedex.json') as f:
+    Pokedex = json.load(f)
+with open('data/typechart.json') as f:
+    Typechart = json.load(f)
+with open('data/natures.json') as f:
+    Natures = json.load(f)
+
+Dex = namedtuple('Dex', 'abilities formats items learnsets moves pokedex typechart natures')
+
+blankPokemon = {
+    'num': None,
+    'species': None,
+    'baseSpecies': None,
+
+}
+
+
+pokemon = {}
+
+for i in Pokedex:
+    stats = Stats(**i['baseStats'])
+    baseabilities = BaseAbilities(**i['abilities'])
+    genderRatio = GenderRatio(**i['genderRatio'])
+    pokemon[i] = Pokemon(
+
 
 
 
@@ -34,7 +62,7 @@ Move = namedtuple('Move', 'num accuracy basePower category desc shortDesc id nam
 
 Pokemon = namedtuple('Pokemon', 'num species baseSpecies forme formeLetter types genderRatio baseStats abilities height weight color prevo evos evoLevel eggGroups otherFormes tier requiredItem')
 GenderRatio = namedtuple('GenderRatio', 'male female')
-Stats = namedtuple('Stats', 'hp atk def spa spd spe')
+Stats = namedtuple('Stats', 'hp attack defense specialattack specialdefense speed')
 BaseAbilities = namedtuple('BaseAbilities', 'normal0 normal1 hidden')
 
 TypeChart = namedtuple('TypeChart', 'damageTaken HPivs')

@@ -22877,7 +22877,7 @@
     },
     "accelgor": {
         "num": 617,
-        "species": "Accelgor",
+        "species": "accelgor",
         "types": [
             "Bug"
         ],
@@ -24915,7 +24915,7 @@
     },
     "flabebe": {
         "num": 669,
-        "species": "Flabe\u00cc\udc81be\u00cc\udc81",
+        "species": "Flabebe",
         "baseForme": "Red",
         "types": [
             "Fairy"
