@@ -2,7 +2,6 @@ import json
 import time
 from collections import namedtuple
 
-t0 = time.time()
 
 #this module is for searching the dex, aka all the game data
 

@@ -6,12 +6,12 @@ class Player:
         self.name = name
         self.side = side
 
-    def decide(self, state):
-        if state[self.side].currentRequest == 'teampreview':
-            slots = ['1', '2', '3', '4', '5', '6']
-            team = ''
-            for i in range(0, 4):
-                team = team + slots.remove(random.choice(slots))
+def decide(self, state):
+    if state[self.side].currentRequest == 'teampreview':
+        slots = ['1', '2', '3', '4', '5', '6']
+        team = ''
+        for i in range(0, 4):
+            team = team + slots.remove(random.choice(slots))
 
             return 'team ' + team
 

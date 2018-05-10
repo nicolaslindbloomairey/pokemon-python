@@ -1,14 +1,15 @@
 from pokemon import Pokemon
 
 class Side:
-    def __init__(self, name, battle, sideNum, team):
-        self.battle = battle
-        self.n = sideNum
-        self.name = name
+    def __init__(self, ai, team):
+        #self.battle = battle
+        #self.n = sideNum
+        #self.name = name
+        self.ai = ai
         #avatar is unneccesary i think
 
         self.pokemon = []
-        self.active = [None]
+        #self.active = [None]
 
         self.sideConditions = {}
 
@@ -17,16 +18,16 @@ class Side:
         self.faintedLastTurn = False
         self.faintedThisTurn = False
 
-        self.choice = {
-            'cantUndo': False,
-            'error': '',
-            'actions': [],
-            'forcedSwitchesLeft': 0,
-            'forcedPassesLeft': 0,
-            'switchIns': {},
-            'zMove': False,
-            'mega': False
-        }
+        #self.choice = {
+        #    'cantUndo': False,
+        #    'error': '',
+        #    'actions': [],
+        #    'forcedSwitchesLeft': 0,
+        #    'forcedPassesLeft': 0,
+        #    'switchIns': {},
+        #    'zMove': False,
+        #    'mega': False
+        #}
 
         '''
             current request is one of
@@ -36,24 +37,24 @@ class Side:
             '' - no request
         '''
         self.currentRequest = ''
-        self.maxTeamSize = 6
+        #self.maxTeamSize = 6
         self.foe = None
 
-        self.id = 'p2' if sideNum == 1 else 'p1'
+        #self.id = 'p2' if sideNum == 1 else 'p1'
 
-        if self.battle.gameType == 'doubles':
-            self.active = [None, None]
-        elif self.battle.gameType == 'triples' or self.battle.gameType == 'rotation':
-            self.active = [None, None, None]
+        #if self.battle.gameType == 'doubles':
+        #    self.active = [None, None]
+        #elif self.battle.gameType == 'triples' or self.battle.gameType == 'rotation':
+        #    self.active = [None, None, None]
 
         self.team = team
 
-        for i in range(len(team)):
-            self.pokemon.append(Pokemon(self.team[i], self))
+        #for i in range(len(team)):
+        #    self.pokemon.append(Pokemon(self.team[i], self))
 
-        self.pokemonLeft = len(self.pokemon)
+        #self.pokemonLeft = len(self.pokemon)
 
-        for i in range(len(self.pokemon)):
-            self.pokemon[i].position = i
+        #for i in range(len(self.pokemon)):
+        #    self.pokemon[i].position = i
 
 
