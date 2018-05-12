@@ -1,33 +1,24 @@
 from pokemon import Pokemon
+from picksix import generateTeam
+from ai import Ai
 
 class Side:
-    def __init__(self, ai, team):
-        #self.battle = battle
-        #self.n = sideNum
-        #self.name = name
-        self.ai = ai
-        #avatar is unneccesary i think
+    def __init__(self, battle, num):
+        self.ai = Ai(num)
+
+        self.battle = battle
 
         self.pokemon = []
-        #self.active = [None]
+        self.team = generateTeam()
 
-        self.sideConditions = {}
+        for i in range(len(self.team)):
+            self.pokemon.append(Pokemon(self.team[i], num))
+            self.pokemon[i].position = i
+        #print(self.pokemon)
 
-        self.pokemonLeft = 0
+        self.pokemonLeft = len(self.pokemon)
 
-        self.faintedLastTurn = False
-        self.faintedThisTurn = False
-
-        #self.choice = {
-        #    'cantUndo': False,
-        #    'error': '',
-        #    'actions': [],
-        #    'forcedSwitchesLeft': 0,
-        #    'forcedPassesLeft': 0,
-        #    'switchIns': {},
-        #    'zMove': False,
-        #    'mega': False
-        #}
+        self.activePokemon = self.pokemon[0]
 
         '''
             current request is one of
@@ -36,25 +27,5 @@ class Side:
             teampreview - beginning of battle pick which pokemon
             '' - no request
         '''
-        self.currentRequest = ''
-        #self.maxTeamSize = 6
-        self.foe = None
-
-        #self.id = 'p2' if sideNum == 1 else 'p1'
-
-        #if self.battle.gameType == 'doubles':
-        #    self.active = [None, None]
-        #elif self.battle.gameType == 'triples' or self.battle.gameType == 'rotation':
-        #    self.active = [None, None, None]
-
-        self.team = team
-
-        #for i in range(len(team)):
-        #    self.pokemon.append(Pokemon(self.team[i], self))
-
-        #self.pokemonLeft = len(self.pokemon)
-
-        #for i in range(len(self.pokemon)):
-        #    self.pokemon[i].position = i
-
+        self.request = ''
 

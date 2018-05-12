@@ -23674,6 +23674,38 @@
         ],
         "tier": "BL"
     },
+    "thundurusincarnate": {
+        "num": 642,
+        "species": "Thundurus",
+        "baseForme": "Incarnate",
+        "types": [
+            "Electric",
+            "Flying"
+        ],
+        "gender": "M",
+        "baseStats": {
+            "hp": 79,
+            "atk": 115,
+            "def": 70,
+            "spa": 125,
+            "spd": 80,
+            "spe": 111
+        },
+        "abilities": {
+            "0": "Prankster",
+            "H": "Defiant"
+        },
+        "heightm": 1.5,
+        "weightkg": 61,
+        "color": "Blue",
+        "eggGroups": [
+            "Undiscovered"
+        ],
+        "otherFormes": [
+            "thundurustherian"
+        ],
+        "tier": "BL"
+    },
     "thundurustherian": {
         "num": 642,
         "species": "Thundurus-Therian",
@@ -27913,6 +27945,40 @@
         "tier": "LC"
     },
     "lycanroc": {
+        "num": 745,
+        "species": "Lycanroc",
+        "baseForme": "Midday",
+        "types": [
+            "Rock"
+        ],
+        "baseStats": {
+            "hp": 75,
+            "atk": 115,
+            "def": 65,
+            "spa": 55,
+            "spd": 65,
+            "spe": 112
+        },
+        "abilities": {
+            "0": "Keen Eye",
+            "1": "Sand Rush",
+            "H": "Steadfast"
+        },
+        "heightm": 0.8,
+        "weightkg": 25,
+        "color": "Brown",
+        "prevo": "rockruff",
+        "evoLevel": 25,
+        "eggGroups": [
+            "Field"
+        ],
+        "otherFormes": [
+            "lycanrocmidnight",
+            "lycanrocdusk"
+        ],
+        "tier": "PU"
+    },
+    "lycanrocmidday": {
         "num": 745,
         "species": "Lycanroc",
         "baseForme": "Midday",

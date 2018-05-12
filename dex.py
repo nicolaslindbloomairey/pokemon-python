@@ -144,19 +144,19 @@ damagetakenAttributes = ['prankster', 'par', 'brn', 'trapped', 'powder', 'sandst
 
 typecharts = {}
 
-TypeChart = namedtuple('TypeChart', 'damageTaken HPivs')
+TypeChart = namedtuple('TypeChart', typechartAttributes)
 DamageTaken = namedtuple('DamageTaken', 'prankster par brn trapped powder sandstorm hail frz psn tox Bug Dark Dragon Electric Fairy Fighting Fire Flying Ghost Grass Ground Ice Normal Poison Psychic Rock Steel Water')
 
 for i in Typechart:
     for a in typechartAttributes:
         if a not in Typechart[i]:
             Typechart[i][a] = None
-        else:
-            if a == 'damageTaken':
-                for y in damagetakenAttributes:
-                    if y not in Typechart[i][a]:
-                        Typechart[i][a][y] = None
-                Typechart[i][a] = DamageTaken._make([Typechart[i][a][j] for j in damagetakenAttributes])
+#        else:
+#            if a == 'damageTaken':
+#                for y in damagetakenAttributes:
+#                    if y not in Typechart[i][a]:
+#                        Typechart[i][a][y] = None
+#                Typechart[i][a] = DamageTaken._make([Typechart[i][a][j] for j in damagetakenAttributes])
 
     typecharts[i] = TypeChart._make([Typechart[i][j] for j in typechartAttributes])
 
@@ -167,14 +167,28 @@ for i in Typechart:
 natureAttributes = ['id', 'name', 'plus', 'minus']
 natures = {}
 
-Nature = namedtuple('Nature', natureAttributes)
+temp = ['id', 'name', 'plus', 'minus', 'values']
+Nature = namedtuple('Nature', temp)
 
 for i in Natures:
     for a in natureAttributes:
         if a not in Natures[i]:
             Natures[i][a] = None
 
-    natures[i] = Nature._make([Natures[i][j] for j in natureAttributes])
+    args = [Natures[i][j] for j in natureAttributes]
+
+    values = {}
+    stats = ['attack', 'defense', 'specialattack', 'specialdefense', 'speed']
+    for stat in stats:
+        if args[2] == stat:
+            values[stat] = 1.1
+        elif args[3] == stat:
+            values[stat] = 0.9
+        else:
+            values[stat] = 1
+    args.append(values)
+
+    natures[i] = Nature._make(args)
 
 
 #learnset? pokemon -> move -> how it can learn it

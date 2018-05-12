@@ -1,6 +1,8 @@
 import random
 import json
 import numpy
+from collections import namedtuple
+Stats = namedtuple('Stats', 'hp attack defense specialattack specialdefense speed')
 
 vgc = json.load(open('data/vgcreformated.json'))
 
@@ -33,14 +35,8 @@ def generateTeam():
         for i in range(len(divs)-1):
             e.append(252 if 4*(divs[i+1]-divs[i]) > 252 else 4*(divs[i+1]-divs[i]))
 
-        pokemon['evs'] = {
-            'hp': e[0],
-            'atk': e[1],
-            'def': e[2],
-            'spa': e[3],
-            'spd': e[4],
-            'spe': e[5],
-        }
+        pokemon['evs'] = Stats(e[0], e[1], e[2], e[3], e[4], e[5])
+        pokemon['ivs'] = Stats(31, 31, 31, 31, 31, 31)
 
         team.append(pokemon)
 

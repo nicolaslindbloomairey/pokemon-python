@@ -7693,7 +7693,7 @@
     {
         "count": 0,
         "id": "105-1",
-        "name": "Marowak-Alola Form",
+        "name": "Marowak-Alola",
         "types": [
             "Fire",
             "Ghost"
@@ -8300,7 +8300,7 @@
     {
         "count": 0,
         "id": "38-1",
-        "name": "Ninetales-Alola Form",
+        "name": "Ninetales-Alola",
         "types": [
             "Ice",
             "Fairy"
@@ -8591,7 +8591,7 @@
     {
         "count": 0,
         "id": "642-1",
-        "name": "Thundurus-Therian Forme",
+        "name": "Thundurus-Therian",
         "types": [
             "Electric",
             "Flying"
@@ -8746,7 +8746,7 @@
     {
         "count": 0,
         "id": "53-1",
-        "name": "Persian-Alola Form",
+        "name": "Persian-Alola",
         "types": [
             "Dark",
             "null"
@@ -9193,7 +9193,7 @@
     {
         "count": 0,
         "id": "479-2",
-        "name": "Rotom-Wash Rotom",
+        "name": "Rotom-Wash",
         "types": [
             "Electric",
             "Water"
@@ -9935,7 +9935,7 @@
     {
         "count": 0,
         "id": "89-1",
-        "name": "Muk-Alola Form",
+        "name": "Muk-Alola",
         "types": [
             "Poison",
             "Dark"
@@ -11832,7 +11832,7 @@
     {
         "count": 0,
         "id": "26-1",
-        "name": "Raichu-Alola Form",
+        "name": "Raichu-Alola",
         "types": [
             "Electric",
             "Psychic"
@@ -13231,7 +13231,7 @@
     {
         "count": 0,
         "id": "745-0",
-        "name": "Lycanroc-Midday Form",
+        "name": "Lycanroc-Midday",
         "types": [
             "Rock",
             "null"
@@ -14695,7 +14695,7 @@
     {
         "count": 0,
         "id": "642-0",
-        "name": "Thundurus-Incarnate Forme",
+        "name": "Thundurus-Incarnate",
         "types": [
             "Electric",
             "Flying"
@@ -14986,7 +14986,7 @@
     {
         "count": 0,
         "id": "479-1",
-        "name": "Rotom-Heat Rotom",
+        "name": "Rotom-Heat",
         "types": [
             "Electric",
             "Fire"
@@ -16738,7 +16738,7 @@
     {
         "count": 0,
         "id": "773-0",
-        "name": "Silvally-Type: Normal",
+        "name": "Silvally",
         "types": [
             "Normal",
             "null"
@@ -19261,7 +19261,7 @@
     {
         "count": 0,
         "id": "641-0",
-        "name": "Tornadus-Incarnate Forme",
+        "name": "Tornadus-Incarnate",
         "types": [
             "Flying",
             "null"
@@ -20116,7 +20116,7 @@
     {
         "count": 0,
         "id": "745-2",
-        "name": "Lycanroc-Dusk Form",
+        "name": "Lycanroc-Dusk",
         "types": [
             "Rock",
             "null"
@@ -25020,7 +25020,7 @@
     {
         "count": 0,
         "id": "645-0",
-        "name": "Landorus-Incarnate Forme",
+        "name": "Landorus-Incarnate",
         "types": [
             "Ground",
             "Flying"
@@ -26802,7 +26802,7 @@
     {
         "count": 0,
         "id": "773-7",
-        "name": "Silvally-Type: Ghost",
+        "name": "Silvally: Ghost",
         "types": [
             "Ghost",
             "null"
@@ -27068,7 +27068,7 @@
     {
         "count": 0,
         "id": "745-1",
-        "name": "Lycanroc-Midnight Form",
+        "name": "Lycanroc-Midnight",
         "types": [
             "Rock",
             "null"
@@ -28101,7 +28101,7 @@
     {
         "count": 0,
         "id": "28-1",
-        "name": "Sandslash-Alola Form",
+        "name": "Sandslash-Alola",
         "types": [
             "Ice",
             "Steel"
@@ -28188,7 +28188,7 @@
     {
         "count": 0,
         "id": "479-5",
-        "name": "Rotom-Mow Rotom",
+        "name": "Rotom-Mow",
         "types": [
             "Electric",
             "Grass"
@@ -28945,7 +28945,7 @@
     {
         "count": 0,
         "id": "773-4",
-        "name": "Silvally-Type: Ground",
+        "name": "Silvally: Ground",
         "types": [
             "Ground",
             "null"
@@ -29019,7 +29019,7 @@
     {
         "count": 0,
         "id": "773-11",
-        "name": "Silvally-Type: Grass",
+        "name": "Silvally: Grass",
         "types": [
             "Grass",
             "null"
@@ -29621,7 +29621,7 @@
     {
         "count": 0,
         "id": "76-1",
-        "name": "Golem-Alola Form",
+        "name": "Golem-Alola",
         "types": [
             "Rock",
             "Electric"
@@ -30713,7 +30713,7 @@
     {
         "count": 0,
         "id": "103-1",
-        "name": "Exeggutor-Alola Form",
+        "name": "Exeggutor-Alola",
         "types": [
             "Grass",
             "Dragon"
@@ -30836,7 +30836,7 @@
     {
         "count": 0,
         "id": "641-1",
-        "name": "Tornadus-Therian Forme",
+        "name": "Tornadus-Therian",
         "types": [
             "Flying",
             "null"
@@ -31871,7 +31871,7 @@
     {
         "count": 0,
         "id": "20-1",
-        "name": "Raticate-Alola Form",
+        "name": "Raticate-Alola",
         "types": [
             "Dark",
             "Normal"
