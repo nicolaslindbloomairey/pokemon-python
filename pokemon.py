@@ -19,43 +19,46 @@ class Pokemon:
         self.name = pokemonSet['name']
         self.moves = pokemonSet['moves']
         self.baseMoves = self.moves
-        self.movepp = {}
+        #self.movepp = {}
 
-        self.trapped = False
-        self.maybeTrapped = False
-        self.maybeDisable = False
-        self.illusion = None
+        #self.trapped = False
+        #self.maybeTrapped = False
+        #self.maybeDisable = False
+        #self.illusion = None
         self.fainted = False
-        self.faintQueued = False
-        self.lastItem = ''
-        self.ateBerry = False
+        #self.faintQueued = False
+        #self.lastItem = ''
+        #self.ateBerry = False
         self.status = ''
         self.position = 0
         self.burned = False
+
+        self.accuracy = 0
+        self.evasion = 0
         
-        self.lastMove = ''
-        self.moveThisTurn = ''
+        #self.lastMove = ''
+        #self.moveThisTurn = ''
 
-        self.lastDamage = 0
-        self.lastAttackedBy = None
-        self.usedItemThisTurn = False
-        self.newlySwitched = False
-        self.beingCalledBack = False
-        self.isActive = False
-        self.activeTurns = 0
+        #self.lastDamage = 0
+        #self.lastAttackedBy = None
+        #self.usedItemThisTurn = False
+        #self.newlySwitched = False
+        #self.beingCalledBack = False
+        #self.isActive = False
+        #self.activeTurns = 0
 
-        self.isStarted = False
-        self.transformed = False
-        self.duringMove = False
-        self.speed = 0
-        self.abilityOrder = 0
+        #self.isStarted = False
+        #self.transformed = False
+        #self.duringMove = False
+        #self.speed = 0
+        #self.abilityOrder = 0
 
         self.level = pokemonSet['level']
 
-        self.gender = 'N'
+        #self.gender = 'N'
 
-        self.statusData = {}
-        self.volatiles = {}
+        #self.statusData = {}
+        #self.volatiles = {}
 
 
         self.baseAbility = pokemonSet['ability']
@@ -63,8 +66,8 @@ class Pokemon:
         self.item = pokemonSet['item']
 
         self.types = self.template.types
-        self.addedType = ''
-        self.knownType = True
+        #self.addedType = ''
+        #self.knownType = True
 
         if 'evs' not in pokemonSet:
             self.pokemonSet['evs'] = Stats(0, 0, 0, 0, 0, 0)

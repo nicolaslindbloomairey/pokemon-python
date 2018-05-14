@@ -191,13 +191,65 @@ for i in Natures:
     natures[i] = Nature._make(args)
 
 
+#---------------------
+#ACCURACY AND BOOSTS
+#---------------------
+
+accuracy = {
+    -6: 0.333,
+    -5: 0.375,
+    -4: 0.430,
+    -3: 0.500,
+    -2: 0.600,
+    -1: 0.750,
+    0: 1.000,
+    1: 1.3333,
+    2: 1.6667,
+    3: 2.000,
+    4: 2.3333,
+    5: 2.6667,
+    6: 3.000,
+}
+
+evasion = {
+    6: 0.333,
+    5: 0.375,
+    4: 0.430,
+    3: 0.500,
+    2: 0.600,
+    1: 0.750,
+    0: 1.000,
+    -1: 1.3333,
+    -2: 1.6667,
+    -3: 2.000,
+    -4: 2.3333,
+    -5: 2.6667,
+    -6: 3.000,
+}
+
+boosts = {
+    -6: 0.25,
+    -5: 0.28,
+    -4: 0.33,
+    -3: 0.40,
+    -2: 0.50,
+    -1: 0.66,
+    0: 1.0,
+    1: 1.5,
+    2: 2.0,
+    3: 2.5,
+    4: 3.0,
+    5: 3.5,
+    6: 4.0,
+}
+
 #learnset? pokemon -> move -> how it can learn it
 
 #flags? move -> integer
 
 
-Dex = namedtuple('Dex', 'abilities formats items moves pokemon typecharts natures')
-dex = Dex(abilities, formats, items, moves, pokemon, typecharts, natures)
+Dex = namedtuple('Dex', 'abilities formats items moves pokemon typecharts natures accuracy evasion boosts')
+dex = Dex(abilities, formats, items, moves, pokemon, typecharts, natures, accuracy, evasion, boosts)
 
 
 '''

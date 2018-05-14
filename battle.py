@@ -142,9 +142,9 @@ class Battle():
 
         return math.floor(damage)
 
-    def accuracyCheck(self, user, decsision, target):
+    def accuracyCheck(self, user, move, target):
 #       returns a boolean whether the move hit the target
-        return True
+        return random.randint(0, 99) < (move.accuracy * user.accuracy * target.evasion)
         
 
     def determineTurnOrder(self):
