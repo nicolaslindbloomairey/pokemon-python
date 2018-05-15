@@ -27,8 +27,9 @@ class Battle():
             self.sides[0].choice = self.sides[0].ai.decide(self) 
             self.sides[1].choice = self.sides[1].ai.decide(self) 
             self.doTurn()
-            #if self.turn > 5:
-            #    break
+            if self.turn > 500:
+                print('ERROR TURN COUNTER IS OVER 500')
+                break
 
     def doTurn(self):
         self.turn += 1
@@ -63,6 +64,8 @@ class Battle():
                     self.sides[1].switch()
                 elif self.sides[0].choice.type == 'switch' and self.sides[1].choice.type != 'switch':
                     self.sides[0].switch()
+                else:
+                    pass
 
             #turn order by speed stat
             if self.sides[0].activePokemon.stats.speed > self.sides[1].activePokemon.stats.speed:

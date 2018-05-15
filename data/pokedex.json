@@ -23853,6 +23853,38 @@
         ],
         "tier": "Uber"
     },
+    "landorusincarnate": {
+        "num": 645,
+        "species": "Landorus",
+        "baseForme": "Incarnate",
+        "types": [
+            "Ground",
+            "Flying"
+        ],
+        "gender": "M",
+        "baseStats": {
+            "hp": 89,
+            "atk": 125,
+            "def": 90,
+            "spa": 115,
+            "spd": 80,
+            "spe": 101
+        },
+        "abilities": {
+            "0": "Sand Force",
+            "H": "Sheer Force"
+        },
+        "heightm": 1.5,
+        "weightkg": 68,
+        "color": "Brown",
+        "eggGroups": [
+            "Undiscovered"
+        ],
+        "otherFormes": [
+            "landorustherian"
+        ],
+        "tier": "Uber"
+    },
     "landorustherian": {
         "num": 645,
         "species": "Landorus-Therian",
