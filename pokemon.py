@@ -6,8 +6,10 @@ from collections import namedtuple
 Stats = namedtuple('Stats', 'hp attack defense specialattack specialdefense speed')
 
 class Pokemon:
-    def __init__(self, pokemonSet, sideNum):
-        self.side = sideNum
+    def __init__(self, pokemonSet, sideNum, side=None, battle=None):
+        self.sideNum = sideNum
+        self.side = side
+        self.battle = battle
 
         self.pokemonSet = pokemonSet
 
@@ -44,7 +46,7 @@ class Pokemon:
         #self.usedItemThisTurn = False
         #self.newlySwitched = False
         #self.beingCalledBack = False
-        #self.isActive = False
+        self.active = False
         #self.activeTurns = 0
 
         #self.isStarted = False
@@ -96,5 +98,11 @@ class Pokemon:
 
         self.stats = Stats(hp, cal[0], cal[1], cal[2], cal[3], cal[4])
 
+
 #        print(self.name, self.nature, self.pokemonSet['evs'], self.stats)
+
+    def faint(self):
+        self.hp = 0
+        self.fainted = True
+        self.side.pokemonLeft -= 1
     
