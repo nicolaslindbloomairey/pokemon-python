@@ -23613,6 +23613,37 @@
         ],
         "tier": "BL2"
     },
+    "tornadusincarnate": {
+        "num": 641,
+        "species": "Tornadus",
+        "baseForme": "Incarnate",
+        "types": [
+            "Flying"
+        ],
+        "gender": "M",
+        "baseStats": {
+            "hp": 79,
+            "atk": 115,
+            "def": 70,
+            "spa": 125,
+            "spd": 80,
+            "spe": 111
+        },
+        "abilities": {
+            "0": "Prankster",
+            "H": "Defiant"
+        },
+        "heightm": 1.5,
+        "weightkg": 63,
+        "color": "Green",
+        "eggGroups": [
+            "Undiscovered"
+        ],
+        "otherFormes": [
+            "tornadustherian"
+        ],
+        "tier": "BL2"
+    },
     "tornadustherian": {
         "num": 641,
         "species": "Tornadus-Therian",

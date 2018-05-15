@@ -6,6 +6,11 @@ class Side:
     def __init__(self, battle, num):
         self.ai = Ai(num)
 
+        if num == 0:
+            self.name = 'nick'
+        if num == 1:
+            self.name = 'sam'
+
         self.battle = battle
 
         self.pokemon = []

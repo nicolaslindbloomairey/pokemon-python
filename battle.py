@@ -5,7 +5,8 @@ import random
 import math
 
 class Battle():
-    def __init__(self):
+    def __init__(self, debug=True):
+        self.debug = debug
         self.sides = []
         self.activePokemon = []
         for i in range(2):
@@ -32,12 +33,13 @@ class Battle():
     def doTurn(self):
         self.turn += 1
         #determine turn order
-        print('')
-        print('Turn ' + str(self.turn))
-        print(str(self.sides[0].pokemonLeft) + " : " + str(self.sides[1].pokemonLeft))
+        if self.debug:
+            print('')
+            print('Turn ' + str(self.turn))
+            print(str(self.sides[0].pokemonLeft) + " : " + str(self.sides[1].pokemonLeft))
 
-        for i in range(2):
-            print(str(self.sides[i].activePokemon))
+            for i in range(2):
+                print(self.sides[i].name + "| " + str(self.sides[i].activePokemon))
 
 
         #Switches because of a fainted pokemon
@@ -116,15 +118,18 @@ class Battle():
             selection = decision.selection
 
         move = Dex.moves[user.moves[selection]]
-        print(user.name + " used " + move.name)
 #       accuracycheck
         #print(self.accuracyCheck(user,move,target))
         if self.accuracyCheck(user, move, target):
+            if self.debug:
+                print(user.name + " used " + move.name)
 #           move hit! do damage
             #print(self.damage(user, move, target))
             target.hp -= self.damage(user, move, target)
         else:
 #           move missed! do noting
+            if self.debug:
+                print(user.name + " used " + move.name + " but it missed!")
             pass
 
         if target.hp <= 0:

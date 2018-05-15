@@ -1,6 +1,7 @@
 import random
 import json
 import numpy
+import re
 from collections import namedtuple
 Stats = namedtuple('Stats', 'hp attack defense specialattack specialdefense speed')
 
@@ -39,6 +40,10 @@ def generateTeam():
         pokemon['ivs'] = Stats(31, 31, 31, 31, 31, 31)
 
         team.append(pokemon)
+
+        for i in range(len(pokemon['moves'])):
+            move = re.sub(r'\W+', '', pokemon['moves'][i].lower())
+            pokemon['moves'][i] = move
 
     return team
 
