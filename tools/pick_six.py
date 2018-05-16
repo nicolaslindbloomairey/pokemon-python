@@ -2,10 +2,15 @@ import random
 import json
 import numpy
 import re
-from collections import namedtuple
-Stats = namedtuple('Stats', 'hp attack defense specialattack specialdefense speed')
+import os
+from data import dex
+#from collections import namedtuple
+#Stats = namedtuple('Stats', 'hp attack defense specialattack specialdefense speed')
+script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+rel_path = "../data/vgcreformated.json"
+abs_file_path = os.path.join(script_dir, rel_path)
 
-with open('data/vgcrefomated.json') as f:
+with open(abs_file_path) as f:
     vgc = json.load(f)
 
 
@@ -37,8 +42,8 @@ def generate_team():
         for i in range(len(divs)-1):
             e.append(252 if 4*(divs[i+1]-divs[i]) > 252 else 4*(divs[i+1]-divs[i]))
 
-        pokemon['evs'] = Stats(e[0], e[1], e[2], e[3], e[4], e[5])
-        pokemon['ivs'] = Stats(31, 31, 31, 31, 31, 31)
+        pokemon['evs'] = dex.Stats(e[0], e[1], e[2], e[3], e[4], e[5])
+        pokemon['ivs'] = dex.Stats(31, 31, 31, 31, 31, 31)
 
         team.append(pokemon)
 

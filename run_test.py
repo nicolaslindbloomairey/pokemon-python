@@ -1,4 +1,4 @@
-from test.testmoves import TestSimpleMoves
+from test.test_moves import TestSimpleMoves
 import unittest
 
 suite = unittest.TestSuite()

@@ -171,12 +171,12 @@ class Battle(object):
                 if 'status' in move.secondary:
                     status = move.secondary['status']
                     if target.status == '':
-                        if status == 'brn' and ('Fire' in target.types or dex.abilities[target.ability].prevent_burn):
+                        if status == 'brn' and ('Fire' in target.types or dex.ability_dex[target.ability].prevent_burn):
                             pass
                         else:
                             target.status = move.secondary['status']
                 if 'volatileStatus' in move.secondary:
-                    target.volatile_status.add(move.secondary['volatileStatus'])
+                    target.volatile_statuses.add(move.secondary['volatileStatus'])
             
 
 
