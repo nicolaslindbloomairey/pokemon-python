@@ -19,7 +19,7 @@ class Pokemon(object):
 
         self.name = pokemon_set.get('name', self.template.species)
 
-        self.moves = pokemon_set['moves']
+        self.moves = pokemon_set.get('moves', None)
         self.base_moves = self.moves
 
         self.fainted = False

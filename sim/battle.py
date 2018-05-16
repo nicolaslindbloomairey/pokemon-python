@@ -222,6 +222,8 @@ class Battle(object):
             modifier *= 0.5
 #       other
 
+        #floor damage before applying modifier
+        damage = math.floor(damage)
 #       apply modifier
         damage *= modifier
         #print(str(damage))
