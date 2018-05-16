@@ -5,7 +5,8 @@ import random
 import math
 
 class Battle():
-    def __init__(self, debug=True):
+    def __init__(self, debug=True, rng=True):
+        self.rng = rng
         self.debug = debug
         self.sides = []
         self.activePokemon = []
@@ -161,7 +162,7 @@ class Battle():
         if move.secondary != False and target.fainted != True:
             temp = random.randint(0, 99)
             check = move.secondary['chance']
-            print(str(temp) + '<' + str(check))
+            #print(str(temp) + '<' + str(check))
             if temp < check:
                 if 'boosts' in move.secondary:
                     for stat in move.secondary['boosts']:
@@ -181,9 +182,10 @@ class Battle():
     def damage(self, user, move, target):
         damage = 0
         if move.category == 'Special':
-            damage  = (((( ((2 * user.level) / 5) + 2) * user.stats.specialattack * move.basePower / user.stats.specialdefense) / 50) + 2) 
+            damage = ((((((2 * user.level) / 5) + 2) * user.stats.specialattack * move.basePower / target.stats.specialdefense) / 50) + 2) 
         elif move.category == 'Physical':
-            damage = ((((2 * user.level / 5 + 2) * user.stats.attack * move.basePower / user.stats.defense) / 50) + 2) 
+            #print(str(user.level) + ' ' + str(user.stats.attack) + ' ' + str(move.basePower) + ' ' + str(user.stats.defense
+            damage = ((((((2 * user.level) / 5) + 2) * user.stats.attack * move.basePower / target.stats.defense) / 50) + 2) 
         elif move.category == 'Status':
             pass
 
@@ -206,7 +208,8 @@ class Battle():
             modifier *= 1.0
 #       if crit *=1.5
 #       random float
-        modifier *= random.uniform(0.85, 1.0)
+        if (self.rng):
+            modifier *= random.uniform(0.85, 1.0)
 #       STAB      
         if move.type in user.types:
             modifier *= 1.5
@@ -221,6 +224,7 @@ class Battle():
 
 #       apply modifier
         damage *= modifier
+        #print(str(damage))
 
         return math.floor(damage)
 

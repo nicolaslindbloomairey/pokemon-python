@@ -18,7 +18,6 @@ class Pokemon:
         self.nature = self.pokemonSet.get('nature', 'hardy')
 
         self.template = Dex.pokemon[self.species]
-        self.hp = None
 
         self.name = pokemonSet.get('name', self.template.species)
 
@@ -94,6 +93,7 @@ class Pokemon:
 
         self.calculateStats()
         self.hp = self.stats.hp
+        self.maxhp = self.hp
 
 
     def __str__(self):
