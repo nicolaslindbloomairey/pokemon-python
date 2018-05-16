@@ -1,31 +1,14 @@
-from player import Player
 from battle import Battle
-from picksix import generateTeam
-import time
+from collections import namedtuple
+Decision = namedtuple('Decision', ['type', 'selection'])
 
-format = 'vgc2018'
+battle = Battle()
 
-p1 = Player('nick', 'p1')
-p2 = Player('sam', 'p2')
+battle.join(0, [{'species': 'mew', 'ability': 'Water Veil', 'level': 100, 'moves': ['growl', 'tackle']}])
+battle.join(1, [{'species': 'squirtle', 'level': 5, 'moves': ['nuzzle', 'watergun', 'scald']}])
 
-t0 = time.time() 
+battle.choose(0, Decision('move', 0))
+battle.choose(1, Decision('move', 2))
+battle.doTurn()
 
-for i in range(1, 10):
-    battle = Battle(format)
-    print('battle number',  i)
-
-    team1 = generateTeam()
-    team2 = generateTeam()
-
-    battle.join('p1', p1.name, None, team1)
-    battle.join('p2', p2.name, None, team2)
-
-    while not battle.ended:
-        battle.choose(p1.side, p1.decide(battle))
-        battle.choose(p2.side, p2.decide(battle))
-
-    print(battle.winner)
-
-
-t1 = time.time()
-print (t1-t0)
+print(battle)

@@ -3,8 +3,10 @@ from picksix import generateTeam
 from ai import Ai
 
 class Side:
-    def __init__(self, battle, num):
-        self.ai = Ai(num)
+    def __init__(self, battle, num, ai=True):
+        if ai == True:
+            self.ai = Ai(num)
+        self.num = num
 
         if num == 0:
             self.name = 'nick'
@@ -14,17 +16,17 @@ class Side:
         self.battle = battle
 
         self.pokemon = []
-        self.team = generateTeam()
 
-        for i in range(len(self.team)):
-            self.pokemon.append(Pokemon(self.team[i], num, self, battle))
-            self.pokemon[i].position = i
+        self.team = []
+
+        #for i in range(len(self.team)):
+        #    self.pokemon.append(Pokemon(self.team[i], num, self, battle))
+        #    self.pokemon[i].position = i
         #print(self.pokemon)
 
         self.pokemonLeft = len(self.pokemon)
 
-        self.activePokemon = self.pokemon[0]
-        self.pokemon[0].active = True
+        self.activePokemon = None
 
         '''
             current request is one of
@@ -34,6 +36,20 @@ class Side:
             '' - no request
         '''
         self.request = ''
+
+    def populate_team(self, team):
+        if team == None:
+            self.team = generateTeam()
+        else:
+            self.team = team
+
+        for i in range(len(self.team)):
+            self.pokemon.append(Pokemon(self.team[i], self.num, self, self.battle))
+            self.pokemon[i].position = i
+
+        self.pokemonLeft = len(self.pokemon)
+        self.activePokemon = self.pokemon[0]
+        self.pokemon[0].active = True
 
     #handle a switch
     def switch(self):

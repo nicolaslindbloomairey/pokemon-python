@@ -14,11 +14,14 @@ class Pokemon:
         self.pokemonSet = pokemonSet
 
         self.species = re.sub(r'\W+', '', pokemonSet['species'].lower())
-        self.nature = pokemonSet['nature']
+
+        self.nature = self.pokemonSet.get('nature', 'hardy')
+
         self.template = Dex.pokemon[self.species]
         self.hp = None
 
-        self.name = pokemonSet['name']
+        self.name = pokemonSet.get('name', self.template.species)
+
         self.moves = pokemonSet['moves']
         self.baseMoves = self.moves
         #self.movepp = {}
@@ -37,6 +40,14 @@ class Pokemon:
 
         self.accuracy = 0
         self.evasion = 0
+        self.boosts = {
+            'atk': 0,
+            'def': 0,
+            'spa': 0,
+            'spd': 0,
+            'spe': 0,
+        }
+        self.volatileStatuses = set()
         
         #self.lastMove = ''
         #self.moveThisTurn = ''
@@ -55,7 +66,7 @@ class Pokemon:
         #self.speed = 0
         #self.abilityOrder = 0
 
-        self.level = pokemonSet['level']
+        self.level = pokemonSet.get('level', 50)
 
         #self.gender = 'N'
 
@@ -63,9 +74,10 @@ class Pokemon:
         #self.volatiles = {}
 
 
-        self.baseAbility = pokemonSet['ability']
+        self.baseAbility = self.pokemonSet.get('ability', self.template.abilities.normal0)
+        self.baseAbility = re.sub(r'\W+', '', self.baseAbility.lower())
         self.ability = self.baseAbility
-        self.item = pokemonSet['item']
+        self.item = pokemonSet.get('item', None)
 
         self.types = self.template.types
         #self.addedType = ''
@@ -85,7 +97,7 @@ class Pokemon:
 
 
     def __str__(self):
-        return self.name + ' ' + str(self.hp) 
+        return self.name + '|' + str(self.nature) + '|' + str(self.ability) +  '|' + str(self.level) + '|' + str(self.status) + '|'+ 'hp' + str(self.hp) 
 
     def calculateStats(self):
 #       hp

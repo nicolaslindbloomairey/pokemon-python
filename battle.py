@@ -21,8 +21,13 @@ class Battle():
         self.started = False
         self.request = 'move'
 
+    def join(self, sideNum, team=None):
+        self.sides[sideNum].populate_team(team)
+
     #method that runs the entire battle
     def run(self):
+        self.join(0)
+        self.join(1)
         while not self.ended:
             self.sides[0].choice = self.sides[0].ai.decide(self) 
             self.sides[1].choice = self.sides[1].ai.decide(self) 
@@ -31,16 +36,28 @@ class Battle():
                 print('ERROR TURN COUNTER IS OVER 500')
                 break
 
+    def __str__(self):
+        out = '\n'
+        out += 'Turn ' + str(self.turn) + '\n'
+        out += str(self.sides[0].pokemonLeft) + " : " + str(self.sides[1].pokemonLeft) + '\n'
+        for i in range(2):
+            out += self.sides[i].name + "|" + str(self.sides[i].activePokemon) + '\n'
+        out = out[:-1]
+        return out
+
     def doTurn(self):
         self.turn += 1
         #determine turn order
         if self.debug:
+            print(self)
+            '''
             print('')
             print('Turn ' + str(self.turn))
             print(str(self.sides[0].pokemonLeft) + " : " + str(self.sides[1].pokemonLeft))
 
             for i in range(2):
-                print(self.sides[i].name + "| " + str(self.sides[i].activePokemon))
+                print(self.sides[i].name + "|" + str(self.sides[i].activePokemon))
+            '''
 
 
         #Switches because of a fainted pokemon
@@ -124,11 +141,12 @@ class Battle():
 #       accuracycheck
         #print(self.accuracyCheck(user,move,target))
         if self.accuracyCheck(user, move, target):
+            damage = self.damage(user, move, target)
             if self.debug:
-                print(user.name + " used " + move.name)
+                print(user.name + " used " + move.name + ' doing ' + str(damage) + ' dmg')
 #           move hit! do damage
             #print(self.damage(user, move, target))
-            target.hp -= self.damage(user, move, target)
+            target.hp -= damage
         else:
 #           move missed! do noting
             if self.debug:
@@ -138,11 +156,26 @@ class Battle():
         if target.hp <= 0:
             target.faint()
 
-        if not target.fainted:
-#           secondary effects on target
-            pass
 
 #       secondary effects
+        if move.secondary != False and target.fainted != True:
+            temp = random.randint(0, 99)
+            check = move.secondary['chance']
+            print(str(temp) + '<' + str(check))
+            if temp < check:
+                if 'boosts' in move.secondary:
+                    for stat in move.secondary['boosts']:
+                        target.boosts[stat] += move.secondary['boosts'][stat]
+                if 'status' in move.secondary:
+                    status = move.secondary['status']
+                    if target.status == '':
+                        if status == 'brn' and ('Fire' in target.types or Dex.abilities[target.ability].prevent_burn):
+                            pass
+                        else:
+                            target.status = move.secondary['status']
+                if 'volatileStatus' in move.secondary:
+                    target.volatileStatus.add(move.secondary['volatileStatus'])
+            
 
 
     def damage(self, user, move, target):
@@ -198,14 +231,5 @@ class Battle():
         #print(temp, check)
         return temp < check 
         
-
-    def determineTurnOrder(self):
-        queue = []
-
-#    def join(self, team):
-#        if len(self.sides) < 2:
-#            self.sides.append(Side(team))
-#
-#        if len(self.sides) = 2:
-#            self.start()
-
+    def choose(self, sideNum, choice):
+        self.sides[sideNum].choice = choice 

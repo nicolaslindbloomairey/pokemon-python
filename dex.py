@@ -61,7 +61,7 @@ for i in Pokedex:
 #------------
 #ABILITIES
 #------------
-abilityAttributes = ['id', 'desc', 'shortDesc', 'name', 'rating', 'num'] 
+abilityAttributes = ['id', 'desc', 'shortDesc', 'name', 'rating', 'num', 'prevent_burn'] 
 abilities = {}
 
 Ability = namedtuple('Ability', abilityAttributes) #way more props, supressweather, onmodifymovepriority, onbasepowerpriority

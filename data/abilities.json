@@ -1820,6 +1820,7 @@
         "onModifyAtkPriority": 5,
         "onModifySpAPriority": 5,
         "id": "waterbubble",
+        "prevent_burn": true,
         "name": "Water Bubble",
         "rating": 4,
         "num": 199
@@ -1835,6 +1836,7 @@
         "shortDesc": "This Pokemon cannot be burned. Gaining this Ability while burned cures it.",
         "id": "waterveil",
         "name": "Water Veil",
+        "prevent_burn": true,
         "rating": 2,
         "num": 41
     },
