@@ -1,18 +1,18 @@
 #from dex import ModdedDex
-from side import Side
-import dex as Dex
+from sim.side import Side
+import data.dex as dex
 import random
 import math
 
-class Battle():
+class Battle(object):
     def __init__(self, debug=True, rng=True):
         self.rng = rng
         self.debug = debug
         self.sides = []
-        self.activePokemon = []
+        self.active_pokemon = []
         for i in range(2):
             self.sides.append(Side(self, i))
-            self.activePokemon.append(self.sides[i].activePokemon)
+            self.active_pokemon.append(self.sides[i].active_pokemon)
         self.status = ''
 
         self.weather = ''
@@ -22,8 +22,8 @@ class Battle():
         self.started = False
         self.request = 'move'
 
-    def join(self, sideNum, team=None):
-        self.sides[sideNum].populate_team(team)
+    def join(self, side_id, team=None):
+        self.sides[side_id].populate_team(team)
 
     #method that runs the entire battle
     def run(self):
@@ -32,21 +32,22 @@ class Battle():
         while not self.ended:
             self.sides[0].choice = self.sides[0].ai.decide(self) 
             self.sides[1].choice = self.sides[1].ai.decide(self) 
-            self.doTurn()
+            self.do_turn()
             if self.turn > 500:
                 print('ERROR TURN COUNTER IS OVER 500')
                 break
 
     def __str__(self):
-        out = '\n'
-        out += 'Turn ' + str(self.turn) + '\n'
-        out += str(self.sides[0].pokemonLeft) + " : " + str(self.sides[1].pokemonLeft) + '\n'
+        out = ['\n']
+        out.append('Turn ' + str(self.turn) + '\n')
+        out.append(str(self.sides[0].pokemon_left) + " : " + str(self.sides[1].pokemon_left) + '\n')
         for i in range(2):
-            out += self.sides[i].name + "|" + str(self.sides[i].activePokemon) + '\n'
-        out = out[:-1]
-        return out
+            out.append(self.sides[i].name + "|" + str(self.sides[i].active_pokemon))
+            out.append('\n')
+        del out[-1]
+        return ''.join(out)
 
-    def doTurn(self):
+    def do_turn(self):
         self.turn += 1
         #determine turn order
         if self.debug:
@@ -54,10 +55,10 @@ class Battle():
             '''
             print('')
             print('Turn ' + str(self.turn))
-            print(str(self.sides[0].pokemonLeft) + " : " + str(self.sides[1].pokemonLeft))
+            print(str(self.sides[0].pokemon_left) + " : " + str(self.sides[1].pokemon_left))
 
             for i in range(2):
-                print(self.sides[i].name + "|" + str(self.sides[i].activePokemon))
+                print(self.sides[i].name + "|" + str(self.sides[i].active_pokemon))
             '''
 
 
@@ -86,19 +87,19 @@ class Battle():
                     pass
 
             #turn order by speed stat
-            if self.sides[0].activePokemon.stats.speed > self.sides[1].activePokemon.stats.speed:
-                self.runMove(self.sides[0].activePokemon, self.sides[0].choice, self.sides[1].activePokemon)
-                self.runMove(self.sides[1].activePokemon, self.sides[1].choice, self.sides[0].activePokemon)
-            elif self.sides[1].activePokemon.stats.speed > self.sides[0].activePokemon.stats.speed:
-                self.runMove(self.sides[1].activePokemon, self.sides[1].choice, self.sides[0].activePokemon)
-                self.runMove(self.sides[0].activePokemon, self.sides[0].choice, self.sides[1].activePokemon)
+            if self.sides[0].active_pokemon.stats.speed > self.sides[1].active_pokemon.stats.speed:
+                self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
+                self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
+            elif self.sides[1].active_pokemon.stats.speed > self.sides[0].active_pokemon.stats.speed:
+                self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
+                self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
             else:
                 if random.random() > 50:
-                    self.runMove(self.sides[0].activePokemon, self.sides[0].choice, self.sides[1].activePokemon)
-                    self.runMove(self.sides[1].activePokemon, self.sides[1].choice, self.sides[0].activePokemon)
+                    self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
+                    self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
                 else:
-                    self.runMove(self.sides[1].activePokemon, self.sides[1].choice, self.sides[0].activePokemon)
-                    self.runMove(self.sides[0].activePokemon, self.sides[0].choice, self.sides[1].activePokemon)
+                    self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
+                    self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
 
 #       do switches
 #       mega evolution
@@ -115,20 +116,20 @@ class Battle():
             self.sides[i].request = 'move'
         #check if a pokemon fainted and insert a pseudo turn
         for i in range(2):
-            if self.sides[i].activePokemon.fainted:
+            if self.sides[i].active_pokemon.fainted:
                 self.sides[i].request = 'switch'
                 self.request = 'switch'
-                if self.sides[0 if i else 1].activePokemon.fainted == False:
+                if self.sides[0 if i else 1].active_pokemon.fainted == False:
                     self.sides[0 if i else 1].request = 'pass'
 
 #       check for a winner
 #       end the while true once the game ends
         for i in range(2):
-            if self.sides[i].pokemonLeft == 0:
+            if self.sides[i].pokemon_left == 0:
                 self.ended = True
                 self.winner = 0 if i else 1
 
-    def runMove(self, user, decision, target):
+    def run_move(self, user, decision, target):
         if user.fainted:
             return
 
@@ -138,10 +139,10 @@ class Battle():
         else:
             selection = decision.selection
 
-        move = Dex.moves[user.moves[selection]]
-#       accuracycheck
-        #print(self.accuracyCheck(user,move,target))
-        if self.accuracyCheck(user, move, target):
+        move = dex.move_dex[user.moves[selection]]
+#       accuracy_check
+        #print(self.accuracy_check(user,move,target))
+        if self.accuracy_check(user, move, target):
             damage = self.damage(user, move, target)
             if self.debug:
                 print(user.name + " used " + move.name + ' doing ' + str(damage) + ' dmg')
@@ -170,12 +171,12 @@ class Battle():
                 if 'status' in move.secondary:
                     status = move.secondary['status']
                     if target.status == '':
-                        if status == 'brn' and ('Fire' in target.types or Dex.abilities[target.ability].prevent_burn):
+                        if status == 'brn' and ('Fire' in target.types or dex.abilities[target.ability].prevent_burn):
                             pass
                         else:
                             target.status = move.secondary['status']
                 if 'volatileStatus' in move.secondary:
-                    target.volatileStatus.add(move.secondary['volatileStatus'])
+                    target.volatile_status.add(move.secondary['volatileStatus'])
             
 
 
@@ -215,8 +216,7 @@ class Battle():
             modifier *= 1.5
 #       type effectiveness
         for each in target.types:
-#            modifier *= getattr(getattr(Dex.typecharts, each).damageTaken, move.type)
-            modifier *= Dex.typecharts[each].damageTaken[move.type]
+            modifier *= dex.typechart_dex[each].damage_taken[move.type]
 #       burn
         if user.burned and move.category == 'Physical' and user.ability != 'guts':
             modifier *= 0.5
@@ -228,12 +228,12 @@ class Battle():
 
         return math.floor(damage)
 
-    def accuracyCheck(self, user, move, target):
+    def accuracy_check(self, user, move, target):
 #       returns a boolean whether the move hit the target
         temp = random.randint(0, 99)
-        check = (move.accuracy * Dex.accuracy[user.accuracy] * Dex.evasion[target.evasion])
+        check = (move.accuracy * dex.accuracy[user.accuracy] * dex.evasion[target.evasion])
         #print(temp, check)
         return temp < check 
         
-    def choose(self, sideNum, choice):
-        self.sides[sideNum].choice = choice 
+    def choose(self, side_id, choice):
+        self.sides[side_id].choice = choice 

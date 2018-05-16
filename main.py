@@ -1,4 +1,4 @@
-from battle import Battle
+from sim.battle import Battle
 
 
 '''

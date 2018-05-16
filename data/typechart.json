@@ -1,6 +1,6 @@
 {
     "Bug": {
-        "damageTaken": {
+        "damage_taken": {
             "Bug": 1,
             "Dark": 1,
             "Dragon": 1,
@@ -27,7 +27,7 @@
         }
     },
     "Dark": {
-        "damageTaken": {
+        "damage_taken": {
             "prankster": 0,
             "Bug": 2,
             "Dark": 0.5,
@@ -51,7 +51,7 @@
         "HPivs": {}
     },
     "Dragon": {
-        "damageTaken": {
+        "damage_taken": {
             "Bug": 1,
             "Dark": 1,
             "Dragon": 2,
@@ -76,7 +76,7 @@
         }
     },
     "Electric": {
-        "damageTaken": {
+        "damage_taken": {
             "par": 0,
             "Bug": 1,
             "Dark": 1,
@@ -102,7 +102,7 @@
         }
     },
     "Fairy": {
-        "damageTaken": {
+        "damage_taken": {
             "Bug": 0.5,
             "Dark": 0.5,
             "Dragon": 0,
@@ -124,7 +124,7 @@
         }
     },
     "Fighting": {
-        "damageTaken": {
+        "damage_taken": {
             "Bug": 0.5,
             "Dark": 0.5,
             "Dragon": 1,
@@ -152,7 +152,7 @@
         }
     },
     "Fire": {
-        "damageTaken": {
+        "damage_taken": {
             "brn": 0,
             "Bug": 0.5,
             "Dark": 1,
@@ -180,7 +180,7 @@
         }
     },
     "Flying": {
-        "damageTaken": {
+        "damage_taken": {
             "Bug": 0.5,
             "Dark": 1,
             "Dragon": 1,
@@ -209,7 +209,7 @@
         }
     },
     "Ghost": {
-        "damageTaken": {
+        "damage_taken": {
             "trapped": 0,
             "Bug": 0.5,
             "Dark": 2,
@@ -236,7 +236,7 @@
         }
     },
     "Grass": {
-        "damageTaken": {
+        "damage_taken": {
             "powder": 0,
             "Bug": 2,
             "Dark": 1,
@@ -263,7 +263,7 @@
         }
     },
     "Ground": {
-        "damageTaken": {
+        "damage_taken": {
             "sandstorm": 0,
             "Bug": 1,
             "Dark": 1,
@@ -290,7 +290,7 @@
         }
     },
     "Ice": {
-        "damageTaken": {
+        "damage_taken": {
             "hail": 0,
             "frz": 0,
             "Bug": 1,
@@ -318,7 +318,7 @@
         }
     },
     "Normal": {
-        "damageTaken": {
+        "damage_taken": {
             "Bug": 1,
             "Dark": 1,
             "Dragon": 1,
@@ -340,7 +340,7 @@
         }
     },
     "Poison": {
-        "damageTaken": {
+        "damage_taken": {
             "psn": 0,
             "tox": 0,
             "Bug": 0.5,
@@ -369,7 +369,7 @@
         }
     },
     "Psychic": {
-        "damageTaken": {
+        "damage_taken": {
             "Bug": 2,
             "Dark": 2,
             "Dragon": 1,
@@ -395,7 +395,7 @@
         }
     },
     "Rock": {
-        "damageTaken": {
+        "damage_taken": {
             "sandstorm": 0,
             "Bug": 1,
             "Dark": 1,
@@ -423,7 +423,7 @@
         }
     },
     "Steel": {
-        "damageTaken": {
+        "damage_taken": {
             "psn": 0,
             "tox": 0,
             "sandstorm": 0,
@@ -451,7 +451,7 @@
         }
     },
     "Water": {
-        "damageTaken": {
+        "damage_taken": {
             "Bug": 1,
             "Dark": 1,
             "Dragon": 1,

@@ -5,10 +5,11 @@ import re
 from collections import namedtuple
 Stats = namedtuple('Stats', 'hp attack defense specialattack specialdefense speed')
 
-vgc = json.load(open('data/vgcreformated.json'))
+with open('data/vgcrefomated.json') as f:
+    vgc = json.load(f)
 
 
-def generateTeam():
+def generate_team():
 
     probs = numpy.array([p['usage'] for p in vgc])
     probs /= probs.sum()

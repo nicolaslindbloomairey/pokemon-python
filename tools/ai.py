@@ -1,7 +1,6 @@
-from collections import namedtuple
 import random
-Decision = namedtuple('Decision', ['type', 'selection'])
-class Ai:
+
+class Ai(object):
     def __init__(self, num):
         self.num = num
 

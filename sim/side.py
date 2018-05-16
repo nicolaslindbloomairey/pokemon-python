@@ -1,16 +1,16 @@
-from pokemon import Pokemon
-from picksix import generateTeam
-from ai import Ai
+from sim.pokemon import Pokemon
+from tools.pick_six import generate_team
+from tools.ai import Ai
 
-class Side:
-    def __init__(self, battle, num, ai=True):
+class Side(object):
+    def __init__(self, battle, id, ai=True):
         if ai == True:
-            self.ai = Ai(num)
-        self.num = num
+            self.ai = Ai(id)
+        self.id = id
 
-        if num == 0:
-            self.name = 'nick'
-        if num == 1:
+        if id == 0:
+            self.name = 'nic'
+        if id == 1:
             self.name = 'sam'
 
         self.battle = battle
@@ -20,13 +20,13 @@ class Side:
         self.team = []
 
         #for i in range(len(self.team)):
-        #    self.pokemon.append(Pokemon(self.team[i], num, self, battle))
+        #    self.pokemon.append(Pokemon(self.team[i], id, self, battle))
         #    self.pokemon[i].position = i
         #print(self.pokemon)
 
-        self.pokemonLeft = len(self.pokemon)
+        self.pokemon_left = len(self.pokemon)
 
-        self.activePokemon = None
+        self.active_pokemon = None
 
         '''
             current request is one of
@@ -39,16 +39,16 @@ class Side:
 
     def populate_team(self, team):
         if team == None:
-            self.team = generateTeam()
+            self.team = generate_team()
         else:
             self.team = team
 
         for i in range(len(self.team)):
-            self.pokemon.append(Pokemon(self.team[i], self.num, self, self.battle))
+            self.pokemon.append(Pokemon(self.team[i], self.id, self, self.battle))
             self.pokemon[i].position = i
 
-        self.pokemonLeft = len(self.pokemon)
-        self.activePokemon = self.pokemon[0]
+        self.pokemon_left = len(self.pokemon)
+        self.active_pokemon = self.pokemon[0]
         self.pokemon[0].active = True
 
     #handle a switch
@@ -57,12 +57,12 @@ class Side:
         if self.choice == None:
             for pokemon in self.pokemon:
                 if pokemon.fainted == False:
-                    self.activePokemon = pokemon
+                    self.active_pokemon = pokemon
                     pokemon.active = True
         #follow the choice of the player
         else:
             if self.pokemon[self.choice.selection].fainted == False:
-                self.activePokemon = self.pokemon[self.choice.selection]
+                self.active_pokemon = self.pokemon[self.choice.selection]
                 self.pokemon[self.choice.selection].active = True
 
             
