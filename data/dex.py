@@ -1,6 +1,8 @@
 import json
 import time
 from collections import namedtuple
+import random
+import re
 
 
 #this module is for searching the dex, aka all the game data
@@ -22,7 +24,11 @@ with open('data/typechart.json') as f:
 with open('data/natures.json') as f:
     natures_raw_data = json.load(f)
 
-Decision = namedtuple('Decision', ['type', 'selection'])
+
+class Decision(namedtuple('Decision', ['type', 'selection', 'mega', 'zmove'])):
+    def __new__(cls, type, selection, mega=False, zmove=False):
+        return super(Decision, cls).__new__(cls, type, selection, mega, zmove)
+        
 
 #-------------
 #POKEDEX

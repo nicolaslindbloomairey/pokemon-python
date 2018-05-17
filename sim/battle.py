@@ -1,6 +1,6 @@
 #from dex import ModdedDex
 from sim.side import Side
-import data.dex as dex
+from data import dex
 import random
 import math
 
@@ -22,6 +22,7 @@ class Battle(object):
         self.ended = False
         self.started = False
         self.request = 'move'
+        self.trickroom = False
 
     def join(self, side_id, team=None):
         self.sides[side_id].populate_team(team)
@@ -53,30 +54,27 @@ class Battle(object):
             self.turn += 1
             self.sides[0].active_pokemon.active_turns += 1
             self.sides[1].active_pokemon.active_turns += 1
-        #determine turn order
+
+        # if there is no choice, pick a random one
+        if self.request == 'move':
+            for i in range(2):
+                if self.sides[i].choice is None:
+                    self.sides[i].choice = dex.Decision('move', random.randint(0, 3))
+
+        # print the state of the battle
         if self.debug:
             print(self)
-            '''
-            print('')
-            print('Turn ' + str(self.turn))
-            print(str(self.sides[0].pokemon_left) + " : " + str(self.sides[1].pokemon_left))
-
-            for i in range(2):
-                print(self.sides[i].name + "|" + str(self.sides[i].active_pokemon))
-            '''
-
 
         #Switches because of a fainted pokemon
+        # pseudo turn
         for i in range(2):
             if self.sides[i].request == 'switch':
                 self.sides[i].switch()
 
-
-
-        #Moves
-
+        # real turn
         if self.request == 'move':
 
+            # switches and pursuit
             if self.sides[0].choice != None and self.sides[1].choice != None:
                 if self.sides[0].choice.type == 'switch' and self.sides[1].choice.type == 'switch':
                     #faster pokemon switches out first
@@ -84,11 +82,32 @@ class Battle(object):
                     self.sides[0].switch()
                     self.sides[1].switch()
                 elif self.sides[0].choice.type != 'switch' and self.sides[1].choice.type == 'switch':
+                    # if other pokemon used pursuit
+                    if self.sides[0].active_pokemon.moves[self.sides[0].choice.selection] == 'pursuit':
+                        self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
                     self.sides[1].switch()
                 elif self.sides[0].choice.type == 'switch' and self.sides[1].choice.type != 'switch':
+                    # if other pokemon used pursuit
+                    if self.sides[1].active_pokemon.moves[self.sides[1].choice.selection] == 'pursuit':
+                        self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
                     self.sides[0].switch()
                 else:
                     pass
+
+            # mega evolution
+            if self.sides[0].choice.mega and self.sides[1].choice.mega:
+                if self.sides[0].active_pokemon.get_speed() > self.sides[1].active_pokemon.get_speed():
+                    self.sides[0].active_pokemon.mega_evolve()
+                    self.sides[1].active_pokemon.mega_evolve()
+                elif self.sides[1].active_pokemon.get_speed() > self.sides[0].active_pokemon.get_speed():
+                    self.sides[1].active_pokemon.mega_evolve()
+                    self.sides[0].active_pokemon.mega_evolve()
+            elif self.sides[0].choice.mega:
+                    self.sides[0].active_pokemon.mega_evolve()
+            elif self.sides[1].choice.mega:
+                    self.sides[1].active_pokemon.mega_evolve()
+
+
 
             #turn order by speed stat
             if self.sides[0].active_pokemon.get_speed() > self.sides[1].active_pokemon.get_speed():

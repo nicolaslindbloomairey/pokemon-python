@@ -46,7 +46,7 @@ class Pokemon(object):
         self.base_ability = self.pokemon_set.get('ability', self.template.abilities.normal0)
         self.base_ability = re.sub(r'\W+', '', self.base_ability.lower())
         self.ability = self.base_ability
-        self.item = pokemon_set.get('item', None)
+        self.item = pokemon_set.get('item', 'pokeball')
         self.lost_item = False
 
         self.types = self.template.types
@@ -68,6 +68,25 @@ class Pokemon(object):
         for each in info:
             out += str(each)+ '|'
         return out
+
+    def mega_evolve(self):
+        canmega = False
+        if dex.item_dex[self.item].megaStone is not None:
+            megaspecies = re.sub(r'\W+', '', dex.item_dex[self.item].megaStone.lower())
+            if re.sub(r'\W+', '', dex.item_dex[self.item].megaEvolves.lower()) == self.species:
+                canmega = True
+
+
+        if canmega:
+            # overwrite the current pokemon with the mega form
+            self.species = megaspecies
+            self.template = dex.pokedex[self.species]
+            self.base_ability = self.template.abilities.normal0
+            self.ability = self.base_ability
+            self.types = self.template.types
+            self.calculate_stats()
+            self.hp = self.stats.hp
+            self.maxhp = self.hp
 
     def get_attack(self):
         modifier = dex.boosts[self.boosts['atk']]
@@ -158,7 +177,9 @@ class Pokemon(object):
         if self.ability == 'quickfeet' and self.status != '':
             modifier *= 1.5
         if self.ability == 'slowstart' and self.active_turns < 5:
-            modifier = 0.5
+            modifier *= 0.5
+        if self.battle.trickroom:
+            modifier *= -1
             
         return self.stats.speed * modifier
 
