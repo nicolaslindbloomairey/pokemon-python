@@ -27,6 +27,7 @@ class Side(object):
         self.pokemon_left = len(self.pokemon)
 
         self.active_pokemon = None
+        self.volatile_statuses = set()
 
         '''
             current request is one of

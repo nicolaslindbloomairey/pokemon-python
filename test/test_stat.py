@@ -62,11 +62,22 @@ class TestStatCalc(unittest.TestCase):
         self.assertEqual(stats.specialdefense, 157)
         self.assertEqual(stats.speed, 228)
 
+    def maximum_inbattle_speed(self):
+        battle = Battle(debug=False, rng=False)
+        battle.join(0, [{'species': 'deoxysspeed', 'ability': 'swiftswim', 'level': 100, 'ivs': dex.Stats(0, 0, 0, 0, 0, 31),
+                         'evs': dex.Stats(0, 0, 0, 0, 0, 252), 'nature': 'jolly', 'item': 'choicescarf'}])
+        battle.sides[0].pokemon[0].boosts['spe'] = 6
+        battle.weather = 'rainy'
+        battle.sides[0].volatile_statuses.add('tailwind')
+
+        self.assertEqual(battle.sides[0].pokemon[0].get_speed(), 12096)
+
     def runTest(self):
         self.test_case1()
         self.test_case2()
         self.test_case3()
         self.test_case4()
+        self.maximum_inbattle_speed()
 
 if __name__ == '__main__':
     unittest.main()

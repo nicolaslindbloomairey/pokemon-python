@@ -16,6 +16,7 @@ class Battle(object):
         self.status = ''
 
         self.weather = ''
+        self.terrain = ''
         self.turn = 0
         self.winner = None
         self.ended = False
@@ -48,7 +49,10 @@ class Battle(object):
         return ''.join(out)
 
     def do_turn(self):
-        self.turn += 1
+        if self.request != 'switch':
+            self.turn += 1
+            self.sides[0].active_pokemon.active_turns += 1
+            self.sides[1].active_pokemon.active_turns += 1
         #determine turn order
         if self.debug:
             print(self)
@@ -87,10 +91,10 @@ class Battle(object):
                     pass
 
             #turn order by speed stat
-            if self.sides[0].active_pokemon.stats.speed > self.sides[1].active_pokemon.stats.speed:
+            if self.sides[0].active_pokemon.get_speed() > self.sides[1].active_pokemon.get_speed():
                 self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
                 self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
-            elif self.sides[1].active_pokemon.stats.speed > self.sides[0].active_pokemon.stats.speed:
+            elif self.sides[1].active_pokemon.get_speed() > self.sides[0].active_pokemon.get_speed():
                 self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
                 self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
             else:
@@ -201,10 +205,9 @@ class Battle(object):
     def damage(self, user, move, target):
         damage = 0
         if move.category == 'Special':
-            damage = ((((((2 * user.level) / 5) + 2) * user.stats.specialattack * move.basePower / target.stats.specialdefense) / 50) + 2) 
+            damage = ((((((2 * user.level) / 5) + 2) * user.get_specialattack() * move.basePower / target.get_specialdefense()) / 50) + 2) 
         elif move.category == 'Physical':
-            #print(str(user.level) + ' ' + str(user.stats.attack) + ' ' + str(move.basePower) + ' ' + str(user.stats.defense
-            damage = ((((((2 * user.level) / 5) + 2) * user.stats.attack * move.basePower / target.stats.defense) / 50) + 2) 
+            damage = ((((((2 * user.level) / 5) + 2) * user.get_attack() * move.basePower / target.get_defense()) / 50) + 2) 
         elif move.category == 'Status':
             pass
 
@@ -251,8 +254,8 @@ class Battle(object):
     def accuracy_check(self, user, move, target):
 #       returns a boolean whether the move hit the target
         temp = random.randint(0, 99)
-        accuracy = dex.accuracy[user.boosts['accuracy']]
-        evasion = dex.evasion[target.boosts['evasion']]
+        accuracy = user.get_accuracy()
+        evasion = target.get_evasion()
         check = (move.accuracy * accuracy * evasion)
         #print(temp, check)
         return temp < check 
