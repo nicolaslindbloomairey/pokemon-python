@@ -160,7 +160,7 @@ class Battle(object):
 
 
 #       secondary effects
-        if move.secondary != False and target.fainted != True:
+        if move.secondary is not None and target.fainted != True:
             temp = random.randint(0, 99)
             check = move.secondary['chance']
             #print(str(temp) + '<' + str(check))
@@ -177,6 +177,24 @@ class Battle(object):
                             target.status = move.secondary['status']
                 if 'volatileStatus' in move.secondary:
                     target.volatile_statuses.add(move.secondary['volatileStatus'])
+
+        if move.tertiary is not None and target.fainted != True:
+            temp = random.randint(0, 99)
+            check = move.tertiary['chance']
+            #print(str(temp) + '<' + str(check))
+            if temp < check:
+                if 'boosts' in move.tertiary:
+                    for stat in move.tertiary['boosts']:
+                        target.boosts[stat] += move.tertiary['boosts'][stat]
+                if 'status' in move.tertiary:
+                    status = move.tertiary['status']
+                    if target.status == '':
+                        if status == 'brn' and ('Fire' in target.types or dex.ability_dex[target.ability].prevent_burn):
+                            pass
+                        else:
+                            target.status = move.tertiary['status']
+                if 'volatileStatus' in move.tertiary:
+                    target.volatile_statuses.add(move.tertiary['volatileStatus'])
             
 
 
@@ -233,7 +251,9 @@ class Battle(object):
     def accuracy_check(self, user, move, target):
 #       returns a boolean whether the move hit the target
         temp = random.randint(0, 99)
-        check = (move.accuracy * dex.accuracy[user.accuracy] * dex.evasion[target.evasion])
+        accuracy = dex.accuracy[user.boosts['accuracy']]
+        evasion = dex.evasion[target.boosts['evasion']]
+        check = (move.accuracy * accuracy * evasion)
         #print(temp, check)
         return temp < check 
         

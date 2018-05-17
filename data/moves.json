@@ -13,7 +13,7 @@
         "flags": {},
         "isZ": "pikashuniumz",
         "critRatio": 3,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "contestType": "Cool"
@@ -38,7 +38,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 100,
@@ -61,7 +61,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "zMovePower": 100,
@@ -110,7 +110,7 @@
         "boosts": {
             "def": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Poison",
         "zMoveEffect": "clearnegativeboost",
@@ -129,7 +129,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "poisoniumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "contestType": "Cool"
@@ -180,7 +180,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 100,
@@ -198,7 +198,7 @@
         "pp": 30,
         "priority": 0,
         "flags": {},
-        "secondary": false,
+        
         "target": "adjacentAllyOrSelf",
         "type": "Normal",
         "zMoveEffect": "crit2",
@@ -222,7 +222,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 120,
@@ -246,7 +246,7 @@
             "distance": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 180,
@@ -267,7 +267,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -293,7 +293,7 @@
         "boosts": {
             "spe": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveEffect": "clearnegativeboost",
@@ -315,7 +315,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Flying",
         "zMovePower": 120,
@@ -360,7 +360,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "fightiniumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "contestType": "Cool"
@@ -377,7 +377,7 @@
         "pp": 15,
         "priority": 2,
         "flags": {},
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveBoost": {
@@ -402,7 +402,7 @@
         "boosts": {
             "spd": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveEffect": "clearnegativeboost",
@@ -482,7 +482,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 100,
@@ -506,7 +506,7 @@
         "effect": {
             "onResidualOrder": 6
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Water",
         "zMoveBoost": {
@@ -531,7 +531,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 175,
@@ -557,7 +557,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 100,
@@ -601,7 +601,7 @@
         "boosts": {
             "spd": 1
         },
-        "secondary": false,
+        
         "target": "adjacentAlly",
         "type": "Fairy",
         "zMoveBoost": {
@@ -621,7 +621,7 @@
         "pp": 20,
         "priority": 0,
         "flags": {},
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "contestType": "Cute"
@@ -645,7 +645,7 @@
         "effect": {
             "duration": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 120,
@@ -693,7 +693,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 175,
@@ -721,7 +721,7 @@
             "noCopy": true,
             "onBeforeMovePriority": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -746,7 +746,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Fighting",
         "zMovePower": 160,
@@ -799,7 +799,7 @@
             "onResidualOrder": 21,
             "onResidualSubOrder": 1
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Ice",
         "zMoveBoost": {
@@ -830,7 +830,7 @@
             "noCopy": true,
             "onModifyWeightPriority": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Steel",
         "zMoveEffect": "clearnegativeboost",
@@ -853,7 +853,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ice",
         "zMovePower": 120,
@@ -879,7 +879,7 @@
         "boosts": {
             "atk": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "zMoveBoost": {
@@ -906,7 +906,7 @@
             "duration": 1,
             "onTryHitPriority": 3
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Poison",
         "zMoveBoost": {
@@ -934,7 +934,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -957,7 +957,7 @@
         "boosts": {
             "def": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveEffect": "clearnegativeboost",
@@ -977,7 +977,7 @@
         "priority": 0,
         "flags": {},
         "selfSwitch": "copyvolatile",
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -1002,7 +1002,7 @@
         "effect": {
             "duration": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Flying",
         "zMovePower": 180,
@@ -1024,7 +1024,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 100,
@@ -1044,7 +1044,7 @@
         "flags": {
             "protect": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "zMovePower": 190,
@@ -1064,7 +1064,7 @@
         "flags": {
             "snatch": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "heal",
@@ -1086,7 +1086,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -1116,7 +1116,7 @@
             "onLockMove": "bide",
             "onDamagePriority": -101
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMovePower": 100,
@@ -1139,7 +1139,7 @@
             "mirror": 1
         },
         "volatileStatus": "partiallytrapped",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -1184,7 +1184,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "darkiniumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "contestType": "Cool"
@@ -1208,7 +1208,7 @@
         "self": {
             "volatileStatus": "mustrecharge"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 200,
@@ -1281,7 +1281,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -1302,7 +1302,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "grassiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "contestType": "Cool"
@@ -1428,7 +1428,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "zMovePower": 140,
@@ -1451,7 +1451,7 @@
             "mirror": 1
         },
         "multihit": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "zMovePower": 100,
@@ -1475,7 +1475,7 @@
             "sound": 1,
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Normal",
         "zMovePower": 200,
@@ -1534,7 +1534,7 @@
             33,
             100
         ],
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 190,
@@ -1553,7 +1553,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "normaliumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "contestType": "Cool"
@@ -1575,7 +1575,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 140,
@@ -1597,7 +1597,7 @@
             "mirror": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 120,
@@ -1619,7 +1619,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Dark",
         "zMovePower": 120,
@@ -1693,7 +1693,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 120,
@@ -1747,7 +1747,7 @@
             "atk": 1,
             "def": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Fighting",
         "zMoveBoost": {
@@ -1800,7 +1800,7 @@
             "mirror": 1,
             "punch": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "zMovePower": 100,
@@ -1827,7 +1827,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 140,
@@ -1850,7 +1850,7 @@
             "defrost": 1
         },
         "self": {},
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 195,
@@ -1875,7 +1875,7 @@
             "spa": 1,
             "spd": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveEffect": "clearnegativeboost",
@@ -1895,7 +1895,7 @@
         "flags": {
             "snatch": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -1922,7 +1922,7 @@
         "boosts": {
             "spa": -2
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Normal",
         "zMoveBoost": {
@@ -1945,7 +1945,7 @@
             "contact": 1
         },
         "isZ": "pikaniumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "contestType": "Cool"
@@ -1962,7 +1962,7 @@
         "pp": 40,
         "priority": 0,
         "flags": {},
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -1996,7 +1996,7 @@
         "boosts": {
             "spd": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Electric",
         "zMoveBoost": {
@@ -2052,7 +2052,7 @@
         "boosts": {
             "atk": -2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "zMoveBoost": {
@@ -2107,7 +2107,7 @@
         },
         "ignoreDefensive": true,
         "ignoreEvasion": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 140,
@@ -2153,7 +2153,7 @@
             "mirror": 1
         },
         "volatileStatus": "partiallytrapped",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 100,
@@ -2182,7 +2182,7 @@
                 "def": -1
             }
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Dragon",
         "zMovePower": 185,
@@ -2213,7 +2213,7 @@
             }
         },
         "isZ": "kommoniumz",
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Dragon",
         "contestType": "Cool"
@@ -2234,7 +2234,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "zMovePower": 100,
@@ -2263,7 +2263,7 @@
                 "spd": -1
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 190,
@@ -2289,7 +2289,7 @@
             "def": 1,
             "accuracy": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Poison",
         "zMoveEffect": "clearnegativeboost",
@@ -2316,7 +2316,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -2342,7 +2342,7 @@
         "boosts": {
             "spa": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -2367,7 +2367,7 @@
             "mirror": 1
         },
         "volatileStatus": "confusion",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMoveBoost": {
@@ -2439,7 +2439,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "rockiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "contestType": "Cool"
@@ -2458,7 +2458,7 @@
         "flags": {
             "snatch": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -2484,7 +2484,7 @@
         "flags": {
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveEffect": "heal",
@@ -2502,7 +2502,7 @@
         "pp": 20,
         "priority": 0,
         "flags": {},
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -2526,7 +2526,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Dragon",
         "zMovePower": 140,
@@ -2545,7 +2545,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "steeliumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "contestType": "Cool"
@@ -2568,7 +2568,7 @@
             "def": 1,
             "spd": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveBoost": {
@@ -2594,7 +2594,7 @@
         "boosts": {
             "def": 3
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Grass",
         "zMoveEffect": "clearnegativeboost",
@@ -2620,7 +2620,7 @@
         "boosts": {
             "spe": -2
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Grass",
         "zMoveEffect": "clearnegativeboost",
@@ -2647,7 +2647,7 @@
             "onRedirectTargetPriority": -1,
             "onDamagePriority": -101
         },
-        "secondary": false,
+        
         "target": "scripted",
         "type": "Fighting",
         "zMovePower": 100,
@@ -2669,7 +2669,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 120,
@@ -2693,7 +2693,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 180,
@@ -2716,7 +2716,7 @@
             "duration": 1,
             "onTryHitPriority": 3
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Fairy",
         "zMoveBoost": {
@@ -2742,7 +2742,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 180,
@@ -2846,7 +2846,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 190,
@@ -2870,7 +2870,7 @@
         "effect": {
             "onResidualOrder": 10
         },
-        "secondary": false,
+        
         "target": "normal",
         "nonGhostTarget": "self",
         "type": "Ghost",
@@ -2893,7 +2893,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -2944,7 +2944,7 @@
             "mirror": 1
         },
         "status": "slp",
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Dark",
         "zMoveEffect": "clearnegativeboost",
@@ -2969,7 +2969,7 @@
         },
         "ignoreEvasion": true,
         "ignoreDefensive": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 160,
@@ -2991,7 +2991,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Fairy",
         "zMovePower": 160,
@@ -3016,7 +3016,7 @@
             "def": 1,
             "spd": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Bug",
         "zMoveBoost": {
@@ -3045,7 +3045,7 @@
         "effect": {
             "noCopy": true
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -3071,7 +3071,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Flying",
         "zMoveBoost": {
@@ -3099,7 +3099,7 @@
             "onBeforeMovePriority": -1,
             "onBeforeSwitchOutPriority": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Ghost",
         "zMoveEffect": "redirect",
@@ -3120,7 +3120,7 @@
         "flags": {},
         "stallingMove": true,
         "volatileStatus": "protect",
-        "secondary": false,
+        
         "target": "self",
         "type": "Fighting",
         "zMoveBoost": {
@@ -3140,7 +3140,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "dragoniumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dragon",
         "contestType": "Cool"
@@ -3195,7 +3195,7 @@
         "effect": {
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "zMovePower": 160,
@@ -3226,7 +3226,7 @@
             "onResidualOrder": 14,
             "onBeforeMovePriority": 7
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -3249,7 +3249,7 @@
             "sound": 1,
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Fairy",
         "zMovePower": 100,
@@ -3301,7 +3301,7 @@
         "effect": {
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 160,
@@ -3346,7 +3346,7 @@
         "priority": 0,
         "flags": {},
         "isFutureMove": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "zMovePower": 200,
@@ -3373,7 +3373,7 @@
             33,
             100
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 190,
@@ -3396,7 +3396,7 @@
             "mirror": 1
         },
         "multihit": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 140,
@@ -3419,7 +3419,7 @@
             "mirror": 1
         },
         "multihit": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 100,
@@ -3445,7 +3445,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -3468,7 +3468,7 @@
         "boosts": {
             "evasion": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -3495,7 +3495,7 @@
                 "spa": -2
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dragon",
         "zMovePower": 195,
@@ -3571,7 +3571,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dragon",
         "zMovePower": 160,
@@ -3597,7 +3597,7 @@
             "atk": 1,
             "spe": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Dragon",
         "zMoveEffect": "clearnegativeboost",
@@ -3620,7 +3620,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dragon",
         "zMovePower": 175,
@@ -3644,7 +3644,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Dragon",
         "zMovePower": 160,
@@ -3666,7 +3666,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dragon",
         "zMovePower": 100,
@@ -3741,7 +3741,7 @@
             3,
             4
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "zMovePower": 100,
@@ -3770,7 +3770,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 140,
@@ -3796,7 +3796,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 180,
@@ -3820,7 +3820,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 160,
@@ -3844,7 +3844,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "zMovePower": 160,
@@ -3867,7 +3867,7 @@
             "mirror": 1
         },
         "multihit": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dragon",
         "zMovePower": 100,
@@ -3944,7 +3944,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Ground",
         "zMovePower": 180,
@@ -3970,7 +3970,7 @@
         "effect": {
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -3995,7 +3995,7 @@
         "boosts": {
             "spa": -2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "zMoveBoost": {
@@ -4019,7 +4019,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 180,
@@ -4045,7 +4045,7 @@
             "onResidualOrder": 21,
             "onResidualSubOrder": 2
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Electric",
         "zMoveBoost": {
@@ -4074,7 +4074,7 @@
             "duration": 1,
             "onModifyMovePriority": -2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "zMoveBoost": {
@@ -4098,7 +4098,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "zMovePower": 160,
@@ -4151,7 +4151,7 @@
             "duration": 5,
             "onResidualOrder": 18
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveBoost": {
@@ -4207,7 +4207,7 @@
             "noCopy": true,
             "onResidualOrder": 13
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -4232,7 +4232,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -4256,7 +4256,7 @@
             "duration": 1,
             "onDamagePriority": -10
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -4307,7 +4307,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -4331,7 +4331,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Fire",
         "zMovePower": 200,
@@ -4354,7 +4354,7 @@
             "mirror": 1
         },
         "selfdestruct": "always",
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Normal",
         "zMovePower": 200,
@@ -4406,7 +4406,7 @@
             "spd": 2,
             "spe": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "contestType": "Beautiful"
@@ -4428,7 +4428,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -4452,7 +4452,7 @@
             "mirror": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 140,
@@ -4474,7 +4474,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 120,
@@ -4499,7 +4499,7 @@
         "effect": {
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Fairy",
         "zMoveBoost": {
@@ -4522,7 +4522,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "zMovePower": 100,
@@ -4574,7 +4574,7 @@
         "boosts": {
             "spd": -2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveBoost": {
@@ -4599,7 +4599,7 @@
             "mirror": 1
         },
         "noFaint": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -4626,7 +4626,7 @@
         "boosts": {
             "atk": -2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Flying",
         "zMoveBoost": {
@@ -4649,7 +4649,7 @@
             "mirror": 1
         },
         "breaksProtect": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -4671,7 +4671,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 100,
@@ -4723,7 +4723,7 @@
             "protect": 1
         },
         "selfdestruct": "ifHit",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 180,
@@ -4772,16 +4772,14 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondaries": [
-            {
+        "secondary": {
                 "chance": 10,
                 "status": "brn"
-            },
-            {
+        },
+        "tertiary": {
                 "chance": 10,
                 "volatileStatus": "flinch"
-            }
-        ],
+        },
         "target": "normal",
         "type": "Fire",
         "zMovePower": 120,
@@ -4834,7 +4832,7 @@
         "effect": {
             "duration": 4
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 160,
@@ -4883,7 +4881,7 @@
             "mirror": 1
         },
         "volatileStatus": "partiallytrapped",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 100,
@@ -4906,7 +4904,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 175,
@@ -4929,7 +4927,7 @@
             "nonsky": 1
         },
         "ohko": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "zMovePower": 180,
@@ -4951,7 +4949,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -4972,7 +4970,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 140,
@@ -5109,7 +5107,7 @@
         "boosts": {
             "accuracy": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -5165,7 +5163,7 @@
         "boosts": {
             "spa": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveBoost": {
@@ -5194,7 +5192,7 @@
                 "spa": -2
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "zMovePower": 195,
@@ -5216,7 +5214,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 100,
@@ -5240,7 +5238,7 @@
             "heal": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "zMoveEffect": "clearnegativeboost",
@@ -5260,7 +5258,7 @@
         "flags": {
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Fairy",
         "zMoveBoost": {
@@ -5290,7 +5288,7 @@
         "effect": {
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 175,
@@ -5315,7 +5313,7 @@
             "nonsky": 1
         },
         "priority": 0,
-        "secondary": false,
+        
         "target": "any",
         "type": "Fighting",
         "zMovePower": 170,
@@ -5365,7 +5363,7 @@
         },
         "volatileStatus": "focusenergy",
         "effect": {},
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -5393,7 +5391,7 @@
         "effect": {
             "duration": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 200,
@@ -5416,7 +5414,7 @@
             "duration": 1,
             "onFoeRedirectTargetPriority": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -5468,7 +5466,7 @@
         "effect": {
             "noCopy": true
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveEffect": "crit2",
@@ -5491,7 +5489,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMoveBoost": {
@@ -5521,7 +5519,7 @@
             "mirror": 1
         },
         "useTargetOffensive": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 175,
@@ -5597,7 +5595,7 @@
         "self": {
             "volatileStatus": "mustrecharge"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 200,
@@ -5619,7 +5617,7 @@
             "mirror": 1
         },
         "willCrit": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ice",
         "zMovePower": 120,
@@ -5642,7 +5640,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -5668,7 +5666,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -5693,7 +5691,7 @@
         "effect": {
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 100,
@@ -5719,7 +5717,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -5742,7 +5740,7 @@
             "mirror": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "zMovePower": 180,
@@ -5766,7 +5764,7 @@
             "defrost": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 180,
@@ -5786,7 +5784,7 @@
         "flags": {},
         "ignoreImmunity": true,
         "isFutureMove": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 190,
@@ -5811,7 +5809,7 @@
         },
         "volatileStatus": "gastroacid",
         "effect": {},
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "zMoveBoost": {
@@ -5837,7 +5835,7 @@
             "mirror": 1
         },
         "multihit": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "zMovePower": 180,
@@ -5858,7 +5856,7 @@
             "snatch": 1,
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Steel",
         "zMoveBoost": {
@@ -5908,7 +5906,7 @@
             "spd": 2,
             "spe": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Fairy",
         "zMoveBoost": {
@@ -5941,7 +5939,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 140,
@@ -5967,7 +5965,7 @@
         "self": {
             "volatileStatus": "mustrecharge"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 200,
@@ -5986,7 +5984,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "electriumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "contestType": "Cool"
@@ -6035,7 +6033,7 @@
             "mirror": 1
         },
         "status": "par",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -6061,7 +6059,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 160,
@@ -6086,7 +6084,7 @@
         "effect": {
             "duration": 4
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 160,
@@ -6111,7 +6109,7 @@
             "authentic": 1
         },
         "status": "slp",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMoveBoost": {
@@ -6139,7 +6137,7 @@
             "onResidualOrder": 5,
             "onResidualSubOrder": 2
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Grass",
         "zMoveBoost": {
@@ -6167,7 +6165,7 @@
             "onBeforeMovePriority": 6,
             "onResidualOrder": 22
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Psychic",
         "zMoveBoost": {
@@ -6196,7 +6194,7 @@
         "boosts": {
             "atk": -1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Normal",
         "zMoveBoost": {
@@ -6222,7 +6220,7 @@
             "atk": 1,
             "spa": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -6248,7 +6246,7 @@
         "effect": {
             "onBeforeMovePriority": 100
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Ghost",
         "zMoveEffect": "redirect",
@@ -6269,7 +6267,7 @@
             "protect": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -6294,7 +6292,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -6315,7 +6313,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "tapuniumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "contestType": "Tough"
@@ -6337,7 +6335,7 @@
             "mirror": 1
         },
         "ohko": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 180,
@@ -6384,7 +6382,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 100,
@@ -6408,7 +6406,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "zMovePower": 160,
@@ -6427,7 +6425,7 @@
         "priority": 0,
         "flags": {},
         "weather": "hail",
-        "secondary": false,
+        
         "target": "all",
         "type": "Ice",
         "zMoveBoost": {
@@ -6458,7 +6456,7 @@
                 "spe": -1
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 180,
@@ -6476,7 +6474,7 @@
         "pp": 30,
         "priority": 0,
         "flags": {},
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Normal",
         "zMoveBoost": {
@@ -6505,7 +6503,7 @@
         "boosts": {
             "def": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -6528,7 +6526,7 @@
         "flags": {
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Ice",
         "zMoveEffect": "heal",
@@ -6555,7 +6553,7 @@
             1,
             4
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 190,
@@ -6582,7 +6580,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "zMovePower": 200,
@@ -6659,7 +6657,7 @@
             "onResidualOrder": 17,
             "onTryHeal": false
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Psychic",
         "zMoveBoost": {
@@ -6687,7 +6685,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "self",
         "type": "Bug",
         "zMoveEffect": "clearnegativeboost",
@@ -6712,7 +6710,7 @@
             "heal": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Psychic",
         "zMoveEffect": "clearnegativeboost",
@@ -6740,7 +6738,7 @@
             "duration": 2,
             "onSwitchInPriority": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "contestType": "Beautiful"
@@ -6787,7 +6785,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveEffect": "crit2",
@@ -6810,7 +6808,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 160,
@@ -6859,7 +6857,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "zMovePower": 160,
@@ -6884,7 +6882,7 @@
             "duration": 1,
             "onBasePowerPriority": 3
         },
-        "secondary": false,
+        
         "target": "adjacentAlly",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -6906,7 +6904,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 160,
@@ -6927,7 +6925,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 120,
@@ -6948,7 +6946,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "contestType": "Clever"
@@ -6968,7 +6966,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "contestType": "Clever"
@@ -6988,7 +6986,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dragon",
         "contestType": "Clever"
@@ -7009,7 +7007,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "contestType": "Clever"
@@ -7030,7 +7028,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "contestType": "Clever"
@@ -7051,7 +7049,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "contestType": "Clever"
@@ -7071,7 +7069,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Flying",
         "contestType": "Clever"
@@ -7091,7 +7089,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "contestType": "Clever"
@@ -7112,7 +7110,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "contestType": "Clever"
@@ -7132,7 +7130,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "contestType": "Clever"
@@ -7153,7 +7151,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ice",
         "contestType": "Clever"
@@ -7173,7 +7171,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "contestType": "Clever"
@@ -7193,7 +7191,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "contestType": "Clever"
@@ -7213,7 +7211,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "contestType": "Clever"
@@ -7233,7 +7231,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "contestType": "Clever"
@@ -7253,7 +7251,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "contestType": "Clever"
@@ -7274,7 +7272,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "zMovePower": 175,
@@ -7299,7 +7297,7 @@
             "gravity": 1
         },
         "hasCustomRecoil": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 195,
@@ -7322,7 +7320,7 @@
             "mirror": 1
         },
         "noFaint": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -7342,7 +7340,7 @@
         "flags": {
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "adjacentAlly",
         "type": "Normal",
         "zMoveBoost": {
@@ -7373,7 +7371,7 @@
             "atk": 1,
             "accuracy": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Dark",
         "zMoveBoost": {
@@ -7397,7 +7395,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 120,
@@ -7420,7 +7418,7 @@
             "mirror": 1
         },
         "ohko": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 180,
@@ -7448,7 +7446,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 140,
@@ -7471,7 +7469,7 @@
         "boosts": {
             "atk": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -7524,7 +7522,7 @@
         "self": {
             "volatileStatus": "mustrecharge"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 200,
@@ -7546,7 +7544,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 185,
@@ -7565,7 +7563,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "wateriumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "contestType": "Cool"
@@ -7589,7 +7587,7 @@
         "self": {
             "volatileStatus": "mustrecharge"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 200,
@@ -7643,7 +7641,7 @@
                 "def": -1
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 180,
@@ -7665,7 +7663,7 @@
             "authentic": 1
         },
         "breaksProtect": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 160,
@@ -7689,7 +7687,7 @@
             "sound": 1,
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Normal",
         "zMovePower": 175,
@@ -7712,7 +7710,7 @@
             "mirror": 1
         },
         "status": "slp",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -7741,7 +7739,7 @@
             "duration": 2,
             "onLockMove": "iceball"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ice",
         "zMovePower": 100,
@@ -7815,16 +7813,14 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondaries": [
-            {
+        "secondary": {
                 "chance": 10,
                 "status": "frz"
-            },
-            {
+        },
+        "tertiary": {
                 "chance": 10,
                 "volatileStatus": "flinch"
-            }
-        ],
+        },
         "target": "normal",
         "type": "Ice",
         "zMovePower": 120,
@@ -7853,7 +7849,7 @@
                 "spe": -1
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ice",
         "zMovePower": 180,
@@ -7902,7 +7898,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ice",
         "zMovePower": 100,
@@ -7953,7 +7949,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ice",
         "zMovePower": 140,
@@ -8005,7 +8001,7 @@
             "noCopy": true,
             "onFoeBeforeMovePriority": 4
         },
-        "secondary": false,
+        
         "pressureTarget": "foeSide",
         "target": "self",
         "type": "Psychic",
@@ -8029,7 +8025,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Fire",
         "zMovePower": 120,
@@ -8072,7 +8068,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "firiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "contestType": "Cool"
@@ -8094,7 +8090,7 @@
             "mirror": 1
         },
         "volatileStatus": "partiallytrapped",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 100,
@@ -8119,7 +8115,7 @@
         "effect": {
             "onResidualOrder": 7
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Grass",
         "zMoveBoost": {
@@ -8143,7 +8139,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -8168,7 +8164,7 @@
             "duration": 1,
             "onModifyMovePriority": -2
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Electric",
         "zMoveBoost": {
@@ -8193,7 +8189,7 @@
         "boosts": {
             "def": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Steel",
         "zMoveEffect": "clearnegativeboost",
@@ -8268,7 +8264,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 180,
@@ -8293,7 +8289,7 @@
             "gravity": 1
         },
         "hasCustomRecoil": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 180,
@@ -8316,7 +8312,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 100,
@@ -8341,7 +8337,7 @@
         "boosts": {
             "accuracy": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -8368,7 +8364,7 @@
             "duration": 1,
             "onTryHitPriority": 3
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Steel",
         "zMoveEffect": "clearnegativeboost",
@@ -8392,7 +8388,7 @@
             "mirror": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 120,
@@ -8414,7 +8410,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Ground",
         "zMovePower": 185,
@@ -8438,7 +8434,7 @@
         "effect": {
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -8462,7 +8458,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 200,
@@ -8511,7 +8507,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 175,
@@ -8538,7 +8534,7 @@
                 "spa": -2
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 195,
@@ -8585,7 +8581,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 100,
@@ -8613,7 +8609,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 160,
@@ -8640,7 +8636,7 @@
         "effect": {
             "onResidualOrder": 8
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMoveEffect": "clearnegativeboost",
@@ -8665,7 +8661,7 @@
         "boosts": {
             "def": -1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Normal",
         "zMoveBoost": {
@@ -8688,7 +8684,7 @@
             "contact": 1
         },
         "isZ": "mimikiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "contestType": "Cool"
@@ -8739,7 +8735,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "zMovePower": 200,
@@ -8766,7 +8762,7 @@
             "onResidualOrder": 21,
             "onResidualSubOrder": 1
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Psychic",
         "zMoveBoost": {
@@ -8788,7 +8784,7 @@
         "flags": {},
         "ignoreAbility": true,
         "isZ": "ultranecroziumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "contestType": "Cool"
@@ -8840,7 +8836,7 @@
             "noCopy": true,
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -8866,7 +8862,7 @@
             "mirror": 1
         },
         "status": "slp",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -8891,7 +8887,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 160,
@@ -8945,7 +8941,7 @@
             "onResidualOrder": 21,
             "onResidualSubOrder": 5
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Normal",
         "zMoveBoost": {
@@ -8976,7 +8972,7 @@
             "duration": 2,
             "onSwitchInPriority": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "contestType": "Beautiful"
@@ -9053,7 +9049,7 @@
             "mirror": 1,
             "punch": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 100,
@@ -9077,7 +9073,7 @@
             "duration": 1,
             "onTryHitPriority": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveBoost": {
@@ -9103,7 +9099,7 @@
             "duration": 5,
             "onResidualOrder": 25
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Psychic",
         "zMoveBoost": {
@@ -9126,7 +9122,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 120,
@@ -9149,7 +9145,7 @@
             "mirror": 1
         },
         "volatileStatus": "partiallytrapped",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 180,
@@ -9171,7 +9167,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "zMovePower": 120,
@@ -9193,7 +9189,7 @@
             "distance": 1,
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Electric",
         "zMoveBoost": {
@@ -9221,7 +9217,7 @@
             "duration": 5,
             "onResidualOrder": 15
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Electric",
         "zMoveBoost": {
@@ -9245,7 +9241,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Ground",
         "zMovePower": 140,
@@ -9266,7 +9262,7 @@
             "contact": 1
         },
         "isZ": "inciniumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "contestType": "Cool"
@@ -9292,7 +9288,7 @@
             "duration": 1,
             "onTryHitPriority": 3
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Fighting",
         "zMoveBoost": {
@@ -9319,7 +9315,7 @@
             "duration": 1,
             "onBasePowerPriority": 4
         },
-        "secondary": false,
+        
         "target": "adjacentFoe",
         "type": "Normal",
         "zMoveBoost": {
@@ -9342,7 +9338,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -9367,7 +9363,7 @@
         "boosts": {
             "atk": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveBoost": {
@@ -9395,7 +9391,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 120,
@@ -9417,7 +9413,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 190,
@@ -9440,7 +9436,7 @@
             "mirror": 1,
             "punch": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -9463,7 +9459,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 190,
@@ -9490,7 +9486,7 @@
             "spa": -2
         },
         "selfdestruct": "ifHit",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveEffect": "healreplacement",
@@ -9510,7 +9506,7 @@
         "flags": {},
         "isZ": "lunaliumz",
         "ignoreAbility": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "contestType": "Cool"
@@ -9536,7 +9532,7 @@
             "onRedirectTargetPriority": -1,
             "onDamagePriority": -101
         },
-        "secondary": false,
+        
         "target": "scripted",
         "type": "Steel",
         "zMovePower": 100,
@@ -9593,7 +9589,7 @@
         "boosts": {
             "spd": -2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "zMoveBoost": {
@@ -9705,7 +9701,7 @@
             "vcreate",
             "wideguard"
         ],
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "contestType": "Cute"
@@ -9730,7 +9726,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -9752,7 +9748,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -9777,7 +9773,7 @@
             "mirror": 1
         },
         "mindBlownRecoil": true,
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Fire",
         "zMovePower": 200,
@@ -9798,7 +9794,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -9827,7 +9823,7 @@
         "boosts": {
             "evasion": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -9854,7 +9850,7 @@
         "effect": {
             "noCopy": true
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -9882,7 +9878,7 @@
             "onRedirectTargetPriority": -1,
             "onDamagePriority": -101
         },
-        "secondary": false,
+        
         "target": "scripted",
         "type": "Psychic",
         "zMovePower": 100,
@@ -9900,7 +9896,7 @@
         "pp": 20,
         "priority": 0,
         "flags": {},
-        "secondary": false,
+        
         "target": "normal",
         "type": "Flying",
         "zMoveBoost": {
@@ -9954,7 +9950,7 @@
             "onResidualOrder": 21,
             "onResidualSubOrder": 3
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Ice",
         "zMoveEffect": "heal",
@@ -10007,7 +10003,7 @@
             "onResidualOrder": 21,
             "onResidualSubOrder": 2
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Fairy",
         "zMoveBoost": {
@@ -10059,7 +10055,7 @@
             "mirror": 1
         },
         "ignoreAbility": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 180,
@@ -10081,7 +10077,7 @@
             "snatch": 1,
             "heal": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Fairy",
         "zMoveEffect": "clearnegativeboost",
@@ -10103,7 +10099,7 @@
             "snatch": 1,
             "heal": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -10207,7 +10203,7 @@
             "onBasePowerPriority": 1,
             "onResidualOrder": 21
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Ground",
         "zMoveBoost": {
@@ -10259,7 +10255,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 185,
@@ -10309,7 +10305,7 @@
         "boosts": {
             "spa": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Dark",
         "zMoveEffect": "clearnegativeboost",
@@ -10330,7 +10326,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -10349,7 +10345,7 @@
         "pp": 20,
         "priority": 0,
         "flags": {},
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "contestType": "Beautiful"
@@ -10370,7 +10366,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "zMovePower": 100,
@@ -10414,7 +10410,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "ghostiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "contestType": "Cool"
@@ -10462,7 +10458,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 100,
@@ -10486,7 +10482,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 140,
@@ -10512,7 +10508,7 @@
             "noCopy": true,
             "onResidualOrder": 9
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMoveBoost": {
@@ -10542,7 +10538,7 @@
             "atk": -1,
             "spa": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -10598,7 +10594,7 @@
             3,
             4
         ],
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 160,
@@ -10617,7 +10613,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "primariumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "contestType": "Cool"
@@ -10668,7 +10664,7 @@
             "mystery": 1
         },
         "volatileStatus": "foresight",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -10750,7 +10746,7 @@
         "self": {
             "volatileStatus": "lockedmove"
         },
-        "secondary": false,
+        
         "target": "randomNormal",
         "type": "Dragon",
         "zMovePower": 190,
@@ -10777,7 +10773,7 @@
                 "spa": -2
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 195,
@@ -10800,7 +10796,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -10828,7 +10824,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Electric",
         "zMovePower": 120,
@@ -10858,7 +10854,7 @@
             "atk": -1,
             "spa": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveEffect": "healreplacement",
@@ -10879,7 +10875,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -10901,7 +10897,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 100,
@@ -10924,7 +10920,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 100,
@@ -10951,7 +10947,7 @@
             "duration": 4,
             "onResidualOrder": 20
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -10973,7 +10969,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Grass",
         "zMovePower": 175,
@@ -10999,7 +10995,7 @@
         "self": {
             "volatileStatus": "lockedmove"
         },
-        "secondary": false,
+        
         "target": "randomNormal",
         "type": "Grass",
         "zMovePower": 190,
@@ -11025,7 +11021,7 @@
         "effect": {
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 175,
@@ -11048,7 +11044,7 @@
             "mirror": 1
         },
         "ignoreAbility": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 180,
@@ -11073,7 +11069,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 140,
@@ -11099,7 +11095,7 @@
         },
         "pseudoWeather": "iondeluge",
         "isUnreleased": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "zMovePower": 180,
@@ -11124,7 +11120,7 @@
         "boosts": {
             "atk": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -11177,7 +11173,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 120,
@@ -11226,7 +11222,7 @@
             "mirror": 1
         },
         "status": "psn",
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Poison",
         "zMoveBoost": {
@@ -11278,7 +11274,7 @@
             "mirror": 1
         },
         "status": "psn",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "zMoveBoost": {
@@ -11352,7 +11348,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 175,
@@ -11374,7 +11370,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -11403,7 +11399,7 @@
             "duration": 1,
             "onTryMovePriority": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMoveBoost": {
@@ -11451,7 +11447,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "zMovePower": 160,
@@ -11472,7 +11468,7 @@
             "protect": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -11497,7 +11493,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -11521,7 +11517,7 @@
         },
         "volatileStatus": "powertrick",
         "effect": {},
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveBoost": {
@@ -11545,7 +11541,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 160,
@@ -11599,7 +11595,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 190,
@@ -11642,7 +11638,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -11667,7 +11663,7 @@
         "self": {
             "volatileStatus": "mustrecharge"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 200,
@@ -11692,7 +11688,7 @@
             "duration": 1,
             "onTryHitPriority": 3
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -11737,7 +11733,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveEffect": "heal",
@@ -11788,7 +11784,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 160,
@@ -11815,7 +11811,7 @@
             "onResidualOrder": 21,
             "onResidualSubOrder": 2
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Psychic",
         "zMoveBoost": {
@@ -11844,7 +11840,7 @@
                 "spa": -2
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 200,
@@ -11867,7 +11863,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 140,
@@ -11888,7 +11884,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -11913,7 +11909,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 160,
@@ -11936,7 +11932,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 180,
@@ -11957,7 +11953,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 100,
@@ -11978,7 +11974,7 @@
             "contact": 1
         },
         "isZ": "snorliumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "contestType": "Cool"
@@ -11999,7 +11995,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 160,
@@ -12021,7 +12017,7 @@
             "reflectable": 1,
             "heal": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "zMoveBoost": {
@@ -12053,7 +12049,7 @@
         "effect": {
             "duration": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 100,
@@ -12074,7 +12070,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveBoost": {
@@ -12099,7 +12095,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -12124,7 +12120,7 @@
             "duration": 1,
             "onTryHitPriority": 4
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Fighting",
         "zMoveBoost": {
@@ -12153,7 +12149,7 @@
             "spd": 1,
             "spe": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Bug",
         "zMoveEffect": "clearnegativeboost",
@@ -12181,7 +12177,7 @@
         "effect": {
             "onBeforeMovePriority": 100
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -12206,7 +12202,7 @@
             "duration": 1,
             "onFoeRedirectTargetPriority": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Bug",
         "zMoveEffect": "clearnegativeboost",
@@ -12225,7 +12221,7 @@
         "priority": 0,
         "flags": {},
         "weather": "RainDance",
-        "secondary": false,
+        
         "target": "all",
         "type": "Water",
         "zMoveBoost": {
@@ -12251,7 +12247,7 @@
             "mirror": 1
         },
         "self": {},
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -12273,7 +12269,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Grass",
         "zMovePower": 100,
@@ -12324,7 +12320,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Normal",
         "zMovePower": 160,
@@ -12350,7 +12346,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -12370,7 +12366,7 @@
         "flags": {
             "snatch": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -12398,7 +12394,7 @@
             "duration": 5,
             "onResidualOrder": 21
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Psychic",
         "zMoveBoost": {
@@ -12422,7 +12418,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -12445,7 +12441,7 @@
         "flags": {
             "snatch": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "heal",
@@ -12494,7 +12490,7 @@
             "snatch": 1,
             "heal": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveEffect": "clearnegativeboost",
@@ -12517,7 +12513,7 @@
             "mirror": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 140,
@@ -12540,7 +12536,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -12563,7 +12559,7 @@
             "mirror": 1,
             "dance": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 175,
@@ -12585,7 +12581,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 120,
@@ -12607,7 +12603,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 160,
@@ -12633,7 +12629,7 @@
             "mystery": 1
         },
         "forceSwitch": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -12660,7 +12656,7 @@
         "self": {
             "volatileStatus": "mustrecharge"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dragon",
         "zMovePower": 200,
@@ -12687,7 +12683,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "zMovePower": 140,
@@ -12736,7 +12732,7 @@
         "boosts": {
             "spe": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Rock",
         "zMoveEffect": "clearnegativeboost",
@@ -12809,7 +12805,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "zMovePower": 100,
@@ -12861,7 +12857,7 @@
         "self": {
             "volatileStatus": "mustrecharge"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "zMovePower": 200,
@@ -12882,7 +12878,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -12935,7 +12931,7 @@
             "duration": 2,
             "onLockMove": "rollout"
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "zMovePower": 100,
@@ -12968,7 +12964,7 @@
             "duration": 1,
             "onResidualOrder": 20
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Flying",
         "zMoveEffect": "clearnegativeboost",
@@ -12989,7 +12985,7 @@
             "distance": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Ground",
         "zMoveBoost": {
@@ -13014,7 +13010,7 @@
             "sound": 1,
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 120,
@@ -13065,7 +13061,7 @@
         },
         "ignoreEvasion": true,
         "ignoreDefensive": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 175,
@@ -13091,7 +13087,7 @@
             "onResidualOrder": 21,
             "onResidualSubOrder": 2
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Normal",
         "zMoveBoost": {
@@ -13118,7 +13114,7 @@
         "boosts": {
             "accuracy": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "zMoveBoost": {
@@ -13142,7 +13138,7 @@
             "mirror": 1
         },
         "volatileStatus": "partiallytrapped",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "zMovePower": 100,
@@ -13161,7 +13157,7 @@
         "priority": 0,
         "flags": {},
         "weather": "Sandstorm",
-        "secondary": false,
+        
         "target": "all",
         "type": "Rock",
         "zMoveBoost": {
@@ -13181,7 +13177,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "buginiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "contestType": "Cool"
@@ -13233,7 +13229,7 @@
         "boosts": {
             "spe": -2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -13257,7 +13253,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -13285,7 +13281,7 @@
         "boosts": {
             "def": -2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -13334,7 +13330,7 @@
         },
         "isZ": "solganiumz",
         "ignoreAbility": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "contestType": "Cool"
@@ -13380,7 +13376,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 160,
@@ -13403,7 +13399,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 160,
@@ -13455,7 +13451,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 100,
@@ -13477,7 +13473,7 @@
             "mirror": 1
         },
         "selfdestruct": "always",
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Normal",
         "zMovePower": 200,
@@ -13556,7 +13552,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 140,
@@ -13583,7 +13579,7 @@
         "effect": {
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 190,
@@ -13607,7 +13603,7 @@
             "mirror": 1,
             "punch": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 120,
@@ -13630,7 +13626,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 100,
@@ -13653,7 +13649,7 @@
         "boosts": {
             "atk": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -13674,7 +13670,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "psychiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "contestType": "Cool"
@@ -13694,7 +13690,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "ohko": "Ice",
         "target": "normal",
         "type": "Ice",
@@ -13723,7 +13719,7 @@
             "spa": 2,
             "spe": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -13746,7 +13742,7 @@
         "effect": {
             "duration": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Fire",
         "zMovePower": 200,
@@ -13771,7 +13767,7 @@
             "spe": 2,
             "atk": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Steel",
         "zMoveEffect": "clearnegativeboost",
@@ -13792,7 +13788,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "zMovePower": 120,
@@ -13814,7 +13810,7 @@
             "snatch": 1,
             "heal": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Ground",
         "zMoveEffect": "clearnegativeboost",
@@ -13894,7 +13890,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -13921,7 +13917,7 @@
             "authentic": 1
         },
         "status": "slp",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -13942,7 +13938,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "decidiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "contestType": "Cool"
@@ -13963,7 +13959,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -13992,7 +13988,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -14017,7 +14013,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 195,
@@ -14075,7 +14071,7 @@
             "onFoeBeforeMovePriority": 12,
             "onRedirectTargetPriority": 99
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 120,
@@ -14098,7 +14094,7 @@
             "mirror": 1,
             "punch": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 160,
@@ -14124,7 +14120,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -14147,7 +14143,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -14170,7 +14166,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 140,
@@ -14195,7 +14191,7 @@
             "mirror": 1
         },
         "status": "slp",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMoveBoost": {
@@ -14217,7 +14213,7 @@
         "priority": 0,
         "flags": {},
         "sleepUsable": true,
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "crit2",
@@ -14318,7 +14314,7 @@
         "effect": {
             "noCopy": true
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "zMovePower": 100,
@@ -14340,7 +14336,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "zMovePower": 140,
@@ -14362,7 +14358,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 140,
@@ -14411,7 +14407,7 @@
         "boosts": {
             "accuracy": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -14465,7 +14461,7 @@
         "effect": {
             "duration": 1
         },
-        "secondary": false,
+        
         "pressureTarget": "foeSide",
         "target": "self",
         "type": "Dark",
@@ -14520,7 +14516,7 @@
             "authentic": 1
         },
         "stealsBoosts": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 175,
@@ -14543,7 +14539,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -14570,7 +14566,7 @@
             "duration": 1,
             "onTryHitPriority": 3
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Grass",
         "zMoveBoost": {
@@ -14619,7 +14615,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMoveBoost": {
@@ -14647,7 +14643,7 @@
             1,
             2
         ],
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -14670,7 +14666,7 @@
             "mirror": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 190,
@@ -14694,7 +14690,7 @@
             "mirror": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 190,
@@ -14716,7 +14712,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -14737,7 +14733,7 @@
             "contact": 1
         },
         "isZ": "marshadiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "contestType": "Cool"
@@ -14759,7 +14755,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dragon",
         "zMovePower": 180,
@@ -14832,7 +14828,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMoveBoost": {
@@ -14859,7 +14855,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -14883,7 +14879,7 @@
         },
         "sideCondition": "spikes",
         "effect": {},
-        "secondary": false,
+        
         "target": "foeSide",
         "type": "Ground",
         "zMoveBoost": {
@@ -14905,7 +14901,7 @@
         "flags": {
             "protect": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -14928,7 +14924,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMoveEffect": "heal",
@@ -14948,7 +14944,7 @@
         "flags": {
             "gravity": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -14969,7 +14965,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "lycaniumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "contestType": "Cool"
@@ -14993,7 +14989,7 @@
             "mirror": 1
         },
         "status": "slp",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMoveEffect": "clearnegativeboost",
@@ -15020,7 +15016,7 @@
             "duration": 1,
             "onFoeRedirectTargetPriority": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -15045,7 +15041,7 @@
         },
         "sideCondition": "stealthrock",
         "effect": {},
-        "secondary": false,
+        
         "target": "foeSide",
         "type": "Rock",
         "zMoveBoost": {
@@ -15126,7 +15122,7 @@
         },
         "sideCondition": "stickyweb",
         "effect": {},
-        "secondary": false,
+        
         "target": "foeSide",
         "type": "Bug",
         "zMoveBoost": {
@@ -15152,7 +15148,7 @@
         "effect": {
             "noCopy": true
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "heal",
@@ -15222,7 +15218,7 @@
             "mirror": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "zMovePower": 140,
@@ -15245,7 +15241,7 @@
             "mirror": 1
         },
         "critRatio": 2,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Rock",
         "zMovePower": 180,
@@ -15266,7 +15262,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMovePower": 160,
@@ -15290,7 +15286,7 @@
             "mirror": 1
         },
         "willCrit": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 120,
@@ -15337,7 +15333,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -15361,7 +15357,7 @@
             "mirror": 1,
             "heal": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMoveBoost": {
@@ -15388,7 +15384,7 @@
         "boosts": {
             "spe": -2
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Bug",
         "zMoveBoost": {
@@ -15414,7 +15410,7 @@
         },
         "noSketch": true,
         "struggleRecoil": true,
-        "secondary": false,
+        
         "target": "randomNormal",
         "type": "Normal",
         "zMovePower": 1,
@@ -15464,7 +15460,7 @@
             "mirror": 1
         },
         "status": "par",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMoveBoost": {
@@ -15492,7 +15488,7 @@
             1,
             4
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 160,
@@ -15518,7 +15514,7 @@
         "effect": {
             "onTryPrimaryHitPriority": -1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -15537,7 +15533,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "iciumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ice",
         "contestType": "Cool"
@@ -15559,7 +15555,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 140,
@@ -15578,7 +15574,7 @@
         "priority": 0,
         "flags": {},
         "weather": "sunnyday",
-        "secondary": false,
+        
         "target": "all",
         "type": "Fire",
         "zMoveBoost": {
@@ -15604,7 +15600,7 @@
             "mirror": 1
         },
         "ignoreAbility": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Steel",
         "zMovePower": 180,
@@ -15627,7 +15623,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -15656,7 +15652,7 @@
                 "def": -1
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 190,
@@ -15681,7 +15677,7 @@
             "authentic": 1
         },
         "volatileStatus": "confusion",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -15702,7 +15698,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "flyiniumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Flying",
         "contestType": "Cool"
@@ -15724,7 +15720,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Water",
         "zMovePower": 175,
@@ -15751,7 +15747,7 @@
         "boosts": {
             "atk": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -15772,7 +15768,7 @@
             "snatch": 1,
             "heal": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -15795,7 +15791,7 @@
             "mirror": 1
         },
         "volatileStatus": "confusion",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "zMoveBoost": {
@@ -15822,7 +15818,7 @@
         "boosts": {
             "evasion": -2
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Normal",
         "zMoveBoost": {
@@ -15845,7 +15841,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Normal",
         "zMovePower": 120,
@@ -15868,7 +15864,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveBoost": {
@@ -15895,7 +15891,7 @@
         "boosts": {
             "atk": 2
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -15916,7 +15912,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Psychic",
         "zMovePower": 190,
@@ -15938,7 +15934,7 @@
             "snatch": 1,
             "heal": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Grass",
         "zMoveEffect": "clearnegativeboost",
@@ -15960,7 +15956,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -15984,7 +15980,7 @@
         "boosts": {
             "spa": 3
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Bug",
         "zMoveEffect": "clearnegativeboost",
@@ -16011,7 +16007,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 140,
@@ -16036,7 +16032,7 @@
         "boosts": {
             "def": -1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Normal",
         "zMoveBoost": {
@@ -16065,7 +16061,7 @@
             "onResidualOrder": 21,
             "onResidualSubOrder": 4
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Flying",
         "zMoveEffect": "crit2",
@@ -16091,7 +16087,7 @@
             1,
             4
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 175,
@@ -16121,7 +16117,7 @@
             "onResidualOrder": 12,
             "onBeforeMovePriority": 5
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveBoost": {
@@ -16148,7 +16144,7 @@
             "atk": -1,
             "spa": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -16172,7 +16168,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 190,
@@ -16191,7 +16187,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "groundiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ground",
         "contestType": "Cool"
@@ -16213,7 +16209,7 @@
             "dance": 1
         },
         "volatileStatus": "confusion",
-        "secondary": false,
+        
         "target": "allAdjacent",
         "type": "Normal",
         "zMoveBoost": {
@@ -16245,7 +16241,7 @@
             "onAccuracyPriority": -1,
             "onResidualOrder": 16
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -16266,7 +16262,7 @@
         "priority": 0,
         "flags": {},
         "onTryHit": false,
-        "secondary": false,
+        
         "target": "self",
         "type": "Psychic",
         "zMoveEffect": "heal",
@@ -16288,7 +16284,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMovePower": 120,
@@ -16315,7 +16311,7 @@
         "ignoreImmunity": {
             "Ground": true
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Ground",
         "zMovePower": 180,
@@ -16337,7 +16333,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Ground",
         "zMovePower": 175,
@@ -16362,7 +16358,7 @@
         "self": {
             "volatileStatus": "lockedmove"
         },
-        "secondary": false,
+        
         "target": "randomNormal",
         "type": "Normal",
         "zMovePower": 190,
@@ -16439,16 +16435,14 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondaries": [
-            {
+        "secondary": {
                 "chance": 10,
                 "status": "par"
-            },
-            {
+        },
+        "tertiary": {
                 "chance": 10,
                 "volatileStatus": "flinch"
-            }
-        ],
+        },
         "target": "normal",
         "type": "Electric",
         "zMovePower": 120,
@@ -16524,7 +16518,7 @@
         },
         "status": "par",
         "ignoreImmunity": false,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "zMoveBoost": {
@@ -16578,7 +16572,7 @@
             "atk": -1,
             "def": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -16603,7 +16597,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveBoost": {
@@ -16632,7 +16626,7 @@
         "effect": {
             "noCopy": true
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Dark",
         "zMoveBoost": {
@@ -16658,7 +16652,7 @@
             "mirror": 1
         },
         "status": "tox",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "zMoveBoost": {
@@ -16684,7 +16678,7 @@
         },
         "sideCondition": "toxicspikes",
         "effect": {},
-        "secondary": false,
+        
         "target": "foeSide",
         "type": "Poison",
         "zMoveBoost": {
@@ -16713,7 +16707,7 @@
         "boosts": {
             "spe": -1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "zMoveBoost": {
@@ -16735,7 +16729,7 @@
         "flags": {
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveEffect": "heal",
@@ -16782,7 +16776,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Psychic",
         "zMoveBoost": {
@@ -16807,7 +16801,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Ghost",
         "zMoveBoost": {
@@ -16837,7 +16831,7 @@
             "duration": 5,
             "onResidualOrder": 23
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Psychic",
         "zMoveBoost": {
@@ -16863,7 +16857,7 @@
         },
         "multihit": 3,
         "multiaccuracy": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 120,
@@ -16913,7 +16907,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -16960,7 +16954,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "fairiumz",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fairy",
         "contestType": "Cool"
@@ -17007,7 +17001,7 @@
             "mirror": 1
         },
         "selfSwitch": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 140,
@@ -17037,7 +17031,7 @@
             "duration": 3,
             "onLockMove": "uproar"
         },
-        "secondary": false,
+        
         "target": "randomNormal",
         "type": "Normal",
         "zMovePower": 175,
@@ -17067,7 +17061,7 @@
                 "spd": -1
             }
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMovePower": 220,
@@ -17088,7 +17082,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 100,
@@ -17110,7 +17104,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Poison",
         "zMoveBoost": {
@@ -17134,7 +17128,7 @@
             "mirror": 1
         },
         "onBasePowerPriority": 4,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Poison",
         "zMovePower": 120,
@@ -17156,7 +17150,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -17178,7 +17172,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 100,
@@ -17200,7 +17194,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 140,
@@ -17223,7 +17217,7 @@
             "mirror": 1
         },
         "selfSwitch": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "zMovePower": 140,
@@ -17275,7 +17269,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 140,
@@ -17296,7 +17290,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 100,
@@ -17321,7 +17315,7 @@
         "effect": {
             "duration": 4
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 160,
@@ -17372,7 +17366,7 @@
             "onBasePowerPriority": 1,
             "onResidualOrder": 21
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Water",
         "zMoveBoost": {
@@ -17396,7 +17390,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "allAdjacentFoes",
         "type": "Water",
         "zMovePower": 200,
@@ -17447,7 +17441,7 @@
             2,
             5
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 100,
@@ -17469,7 +17463,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 160,
@@ -17491,7 +17485,7 @@
             "mirror": 1
         },
         "volatileStatus": "partiallytrapped",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Water",
         "zMovePower": 100,
@@ -17516,7 +17510,7 @@
             "mystery": 1
         },
         "forceSwitch": true,
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -17543,7 +17537,7 @@
             "duration": 1,
             "onTryHitPriority": 4
         },
-        "secondary": false,
+        
         "target": "allySide",
         "type": "Rock",
         "zMoveBoost": {
@@ -17572,7 +17566,7 @@
             1,
             4
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Electric",
         "zMovePower": 175,
@@ -17596,7 +17590,7 @@
             "mirror": 1
         },
         "status": "brn",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Fire",
         "zMoveBoost": {
@@ -17621,7 +17615,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "secondary": false,
+        
         "target": "any",
         "type": "Flying",
         "zMovePower": 120,
@@ -17648,7 +17642,7 @@
             "duration": 2,
             "onResidualOrder": 4
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -17673,7 +17667,7 @@
         "boosts": {
             "def": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Water",
         "zMoveBoost": {
@@ -17699,7 +17693,7 @@
             "duration": 5,
             "onResidualOrder": 24
         },
-        "secondary": false,
+        
         "target": "all",
         "type": "Psychic",
         "zMoveBoost": {
@@ -17728,7 +17722,7 @@
             33,
             100
         ],
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMovePower": 190,
@@ -17752,7 +17746,7 @@
             "atk": 1,
             "spa": 1
         },
-        "secondary": false,
+        
         "target": "self",
         "type": "Normal",
         "zMoveBoost": {
@@ -17777,7 +17771,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Grass",
         "zMoveBoost": {
@@ -17802,7 +17796,7 @@
             "mirror": 1
         },
         "volatileStatus": "partiallytrapped",
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 100,
@@ -17824,7 +17818,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMovePower": 190,
@@ -17847,7 +17841,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Bug",
         "zMovePower": 160,
@@ -17874,7 +17868,7 @@
             "noCopy": true,
             "duration": 2
         },
-        "secondary": false,
+        
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {

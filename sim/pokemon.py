@@ -27,14 +27,14 @@ class Pokemon(object):
         self.position = 0
         self.burned = False
 
-        self.accuracy = 0
-        self.evasion = 0
         self.boosts = {
             'atk': 0,
             'def': 0,
             'spa': 0,
             'spd': 0,
             'spe': 0,
+            'accuracy': 0,
+            'evasion': 0
         }
         self.volatile_statuses = set()
         
@@ -60,7 +60,12 @@ class Pokemon(object):
 
 
     def __str__(self):
-        return self.name + '|' + str(self.nature) + '|' + str(self.ability) +  '|' + str(self.level) + '|' + str(self.status) + '|'+ 'hp' + str(self.hp) 
+        info = [self.name, self.nature, self.ability, self.level, self.status, self.hp]
+        info.append(self.volatile_statuses)
+        out = ''
+        for each in info:
+            out += str(each)+ '|'
+        return out
 
     def calculate_stats(self):
 #       hp
