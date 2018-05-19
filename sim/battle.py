@@ -260,7 +260,8 @@ class Battle(object):
         damage = self.damage(user, move, target)
 
         if self.debug:
-            print(user.name + " used " + move.name + ' doing ' + str(damage) + ' dmg')
+            print(user.name + " used " + move.name
+                  + ' doing ' + str(damage) + ' dmg')
 
         target.hp -= damage
         if target.hp <= 0:
@@ -294,6 +295,14 @@ class Battle(object):
                     status = move.secondary['status']
                     if target.status == '':
                         if status == 'brn' and ('Fire' in target.types or dex.ability_dex[target.ability].prevent_burn):
+                            pass
+                        if status == 'par' and ('Electric' in target.types or dex.ability_dex[target.ability].prevent_par):
+                            pass
+                        if status == 'psn' and (('Poison' in target.types or 'Steel' in target.types) and user.ability != 'corosion'):
+                            pass
+                        if status == 'psn' and dex.ability_dex[target.ability].prevent_psn:
+                            pass
+                        if status == 'slp' and dex.ability_dex[target.ability].prevent_slp:
                             pass
                         else:
                             target.status = move.secondary['status']

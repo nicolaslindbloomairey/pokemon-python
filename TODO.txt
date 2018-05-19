@@ -1,4 +1,5 @@
 Status moves
+status conditions
 Mega evolution speed should be used
 priority queue can should be updated by certain moves
 residual effects

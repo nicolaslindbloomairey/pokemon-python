@@ -156,7 +156,7 @@ class Pokemon(object):
     def get_speed(self):
         modifier = dex.boosts[self.boosts['spe']]
         if self.status == 'par' and self.ability != 'quickfeet':
-            modifier *= 1.5
+            modifier *= 0.5
         if self.item == 'choicescarf':
             modifier *= 1.5
         if self.item in ['ironball', 'machobrace', 'powerbracer', 'powerbelt', 'powerlens', 'powerband', 'poweranklet', 'powerweight']:

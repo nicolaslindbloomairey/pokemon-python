@@ -666,7 +666,8 @@
         "id": "immunity",
         "name": "Immunity",
         "rating": 2,
-        "num": 17
+        "num": 17,
+        "prevent_psn": true
     },
     "imposter": {
         "desc": "On switch-in, this Pokemon Transforms into the opposing Pokemon that is facing it. If there is no Pokemon at that position, this Pokemon does not Transform.",
@@ -706,7 +707,8 @@
         "id": "insomnia",
         "name": "Insomnia",
         "rating": 2,
-        "num": 15
+        "num": 15,
+        "prevent_slp": true
     },
     "intimidate": {
         "desc": "On switch-in, this Pokemon lowers the Attack of adjacent opposing Pokemon by 1 stage. Pokemon behind a substitute are immune.",
@@ -793,7 +795,8 @@
         "id": "limber",
         "name": "Limber",
         "rating": 1.5,
-        "num": 7
+        "num": 7,
+        "prevents_par": true
     },
     "liquidooze": {
         "shortDesc": "This Pokemon damages those draining HP from it for as much as they would heal.",
@@ -1796,7 +1799,8 @@
         "id": "vitalspirit",
         "name": "Vital Spirit",
         "rating": 2,
-        "num": 72
+        "num": 72,
+        "prevent_slp": true
     },
     "voltabsorb": {
         "desc": "This Pokemon is immune to Electric-type moves and restores 1/4 of its maximum HP, rounded down, when hit by an Electric-type move.",

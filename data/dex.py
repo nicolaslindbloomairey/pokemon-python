@@ -67,7 +67,7 @@ for i in pokemon_raw_data:
 #------------
 #ABILITIES
 #------------
-abilityAttributes = ['id', 'desc', 'shortDesc', 'name', 'rating', 'num', 'prevent_burn'] 
+abilityAttributes = ['id', 'desc', 'shortDesc', 'name', 'rating', 'num', 'prevent_burn', 'prevent_par', 'prevent_slp', 'prevent_psn'] 
 ability_dex = {}
 
 Ability = namedtuple('Ability', abilityAttributes) #way more props, supressweather, onmodifymovepriority, onbasepowerpriority
