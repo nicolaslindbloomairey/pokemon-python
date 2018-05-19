@@ -269,15 +269,13 @@ class Battle(object):
 
         # stat changing moves
         if move.boosts is not None:
-            for stat in move.boosts:
-                target.boosts[stat] += move.boosts[stat]
+            target.boost(move.boosts)
         if move.volatileStatus is not None:
             target.volatile_statuses.add(move.volatileStatus)
 
         if move.self is not None:
             if 'boosts' in move.self:
-                for stat in move.self['boosts']:
-                    user.boosts[stat] += move.self['boosts'][stat]
+                user.boost(move.self['boosts'])
             if 'volatileStatus' in move.self:
                 target.volatile_statuses.add(move.self['volatileStatus'])
 
@@ -289,8 +287,7 @@ class Battle(object):
             #print(str(temp) + '<' + str(check))
             if temp < check:
                 if 'boosts' in move.secondary:
-                    for stat in move.secondary['boosts']:
-                        target.boosts[stat] += move.secondary['boosts'][stat]
+                    target.boost(move.secondary['boosts'])
                 if 'status' in move.secondary:
                     status = move.secondary['status']
                     if target.status == '':
@@ -316,8 +313,7 @@ class Battle(object):
             #print(str(temp) + '<' + str(check))
             if temp < check:
                 if 'boosts' in move.tertiary:
-                    for stat in move.tertiary['boosts']:
-                        target.boosts[stat] += move.tertiary['boosts'][stat]
+                    target.boost(move.secondary['boosts'])
                 if 'status' in move.tertiary:
                     status = move.tertiary['status']
                     if target.status == '':
@@ -383,7 +379,8 @@ class Battle(object):
 
         # moves hitting protect
         #print(str(target.volatile_statuses))
-        if 'protect' in target.volatile_statuses and move.flags['protect']:
+        #print(str(move.flags))
+        if 'protect' in target.volatile_statuses and 'protect' in move.flags:
             return False
 
         # protect moves accuracy

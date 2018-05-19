@@ -8,3 +8,4 @@ zmoves
 zmoves break protect
 correct targeting
 duration effects
+fix fang moves effects

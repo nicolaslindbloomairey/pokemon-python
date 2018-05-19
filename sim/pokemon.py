@@ -91,6 +91,15 @@ class Pokemon(object):
             self.hp = self.stats.hp
             self.maxhp = self.hp
 
+    def boost(self, boosts):
+        for stat in boosts:
+            self.boosts[stat] += boosts[stat]
+            if self.boosts[stat] > 6:
+                self.boosts[stat] = 6
+            if self.boosts[stat] < -6:
+                self.boosts[stat] = -6
+
+
     def get_attack(self):
         modifier = dex.boosts[self.boosts['atk']]
         if self.ability == 'hugepower' or self.ability == 'purepower':
