@@ -13,7 +13,7 @@ class Pokemon(object):
 
         self.species = re.sub(r'\W+', '', pokemon_set['species'].lower())
 
-        self.nature = self.pokemon_set.get('nature', 'hardy')
+        self.nature = pokemon_set.get('nature', 'hardy')
 
         self.template = dex.pokedex[self.species]
 
@@ -27,6 +27,8 @@ class Pokemon(object):
         self.position = 0
         self.burned = False
 
+        self.is_switching = False
+
         self.boosts = {
             'atk': 0,
             'def': 0,
@@ -37,13 +39,13 @@ class Pokemon(object):
             'evasion': 0
         }
         self.volatile_statuses = set()
-        
+
         self.active = False
         self.active_turns = 0
 
         self.level = pokemon_set.get('level', 50)
 
-        self.base_ability = self.pokemon_set.get('ability', self.template.abilities.normal0)
+        self.base_ability = pokemon_set.get('ability', self.template.abilities.normal0)
         self.base_ability = re.sub(r'\W+', '', self.base_ability.lower())
         self.ability = self.base_ability
         self.item = pokemon_set.get('item', 'pokeball')
@@ -141,7 +143,7 @@ class Pokemon(object):
         if self.ability == 'flowergift' and self.battle.weather == 'sunny':
             modifier *= 2
         if 'Rock' in self.types and self.battle.weather == 'sandstorm':
-            modifier *= 1.5 
+            modifier *= 1.5
         if self.item == 'assaultvest':
             modifier *= 1.5
         if self.species == 'clamperl' and self.item == 'deepseascale':
@@ -179,8 +181,10 @@ class Pokemon(object):
         if self.ability == 'slowstart' and self.active_turns < 5:
             modifier *= 0.5
         if self.battle.trickroom:
-            modifier *= -1
-            
+            # this is effectively the negative
+            # invert the order but keep everything in the range 0-12096
+            return 12096 - (self.stats.speed * modifier)
+
         return self.stats.speed * modifier
 
     def get_accuracy(self):
@@ -192,21 +196,18 @@ class Pokemon(object):
         return modifier
 
     def calculate_stats(self):
-#       hp
+        # hp
         hp = math.floor(( (self.pokemon_set['ivs'].hp + (2 * self.template.baseStats.hp) + (self.pokemon_set['evs'].hp/4) ) * (self.level/100) ) + 10 + self.level )
 
         stats = ['attack', 'defense', 'specialattack', 'specialdefense', 'speed']
         cal = []
         for stat in stats:
+            # other stat calculation
             cal.append(math.floor(math.floor((((getattr(self.pokemon_set['ivs'],stat) + (2 * getattr(self.template.baseStats, stat)) + (getattr(self.pokemon_set['evs'],stat)/4) ) * (self.level/100) ) + 5)) * dex.nature_dex[self.nature].values[stat] ))
 
         self.stats = dex.Stats(hp, cal[0], cal[1], cal[2], cal[3], cal[4])
-
-
-#        print(self.name, self.nature, self.pokemon_set['evs'], self.stats)
 
     def faint(self):
         self.hp = 0
         self.fainted = True
         self.side.pokemon_left -= 1
-    

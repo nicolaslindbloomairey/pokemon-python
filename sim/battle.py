@@ -1,8 +1,8 @@
-#from dex import ModdedDex
 from sim.side import Side
 from data import dex
 import random
 import math
+import heapq
 
 class Battle(object):
     def __init__(self, debug=True, rng=True):
@@ -21,7 +21,8 @@ class Battle(object):
         self.winner = None
         self.ended = False
         self.started = False
-        self.request = 'move'
+        #self.request = 'real'
+        self.pseudo_turn = False
         self.trickroom = False
 
     def join(self, side_id, team=None):
@@ -32,9 +33,13 @@ class Battle(object):
         self.join(0)
         self.join(1)
         while not self.ended:
-            self.sides[0].choice = self.sides[0].ai.decide(self) 
-            self.sides[1].choice = self.sides[1].ai.decide(self) 
+
+            # let the ai pick what each side will do
+            for side in self.sides:
+                side.ai_decide()
+
             self.do_turn()
+
             if self.turn > 500:
                 print('ERROR TURN COUNTER IS OVER 500')
                 break
@@ -42,96 +47,93 @@ class Battle(object):
     def __str__(self):
         out = ['\n']
         out.append('Turn ' + str(self.turn) + '\n')
-        out.append(str(self.sides[0].pokemon_left) + " : " + str(self.sides[1].pokemon_left) + '\n')
+        out.append(str(self.sides[0].pokemon_left)
+                       + " : "
+                       + str(self.sides[1].pokemon_left)
+                       + '\n')
         for i in range(2):
-            out.append(self.sides[i].name + "|" + str(self.sides[i].active_pokemon))
+            out.append(self.sides[i].name
+                       + "|"
+                       + str(self.sides[i].active_pokemon))
+            out.append('\n')
+            out.append(str(self.sides[i].choice))
             out.append('\n')
         del out[-1]
         return ''.join(out)
 
-    def do_turn(self):
-        if self.request != 'switch':
-            self.turn += 1
-            self.sides[0].active_pokemon.active_turns += 1
-            self.sides[1].active_pokemon.active_turns += 1
 
-        # if there is no choice, pick a random one
-        if self.request == 'move':
-            for i in range(2):
-                if self.sides[i].choice is None:
-                    self.sides[i].choice = dex.Decision('move', random.randint(0, 3))
+
+    def do_turn(self):
+        '''
+        to be called once both sides have made their decisions
+        
+        updates the game state according to the decisions
+        '''
+
+
+        for side in self.sides:
+            if side.choice is None:
+                # error - one or more sides is missing a decsion
+                raise ValueError('one or more sides is missing a decision')
+
+        self.turn += 1
+
+        for side in self.sides:
+            side.active_pokemon.active_turns += 1
 
         # print the state of the battle
         if self.debug:
             print(self)
 
-        #Switches because of a fainted pokemon
-        # pseudo turn
-        for i in range(2):
-            if self.sides[i].request == 'switch':
-                self.sides[i].switch()
 
-        # real turn
-        if self.request == 'move':
+        # create priority queue and references to both sides
+        action_queue = []
 
-            # switches and pursuit
-            if self.sides[0].choice != None and self.sides[1].choice != None:
-                if self.sides[0].choice.type == 'switch' and self.sides[1].choice.type == 'switch':
-                    #faster pokemon switches out first
-                    #this needs fixing
-                    self.sides[0].switch()
-                    self.sides[1].switch()
-                elif self.sides[0].choice.type != 'switch' and self.sides[1].choice.type == 'switch':
-                    # if other pokemon used pursuit
-                    if self.sides[0].active_pokemon.moves[self.sides[0].choice.selection] == 'pursuit':
-                        self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
-                    self.sides[1].switch()
-                elif self.sides[0].choice.type == 'switch' and self.sides[1].choice.type != 'switch':
-                    # if other pokemon used pursuit
-                    if self.sides[1].active_pokemon.moves[self.sides[1].choice.selection] == 'pursuit':
-                        self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
-                    self.sides[0].switch()
-                else:
-                    pass
+        for side in self.sides:
+            # add the switches to the queue
+            if side.choice.type == 'switch':
+                user = side.active_pokemon
+                move = 'switch'
+                target = side.choice.selection
+                action = dex.Action(user, move, target) 
+                action_tuple = (self.resolve_priority(action), action)
 
-            # mega evolution
-            if self.sides[0].choice.mega and self.sides[1].choice.mega:
-                if self.sides[0].active_pokemon.get_speed() > self.sides[1].active_pokemon.get_speed():
-                    self.sides[0].active_pokemon.mega_evolve()
-                    self.sides[1].active_pokemon.mega_evolve()
-                elif self.sides[1].active_pokemon.get_speed() > self.sides[0].active_pokemon.get_speed():
-                    self.sides[1].active_pokemon.mega_evolve()
-                    self.sides[0].active_pokemon.mega_evolve()
-            elif self.sides[0].choice.mega:
-                    self.sides[0].active_pokemon.mega_evolve()
-            elif self.sides[1].choice.mega:
-                    self.sides[1].active_pokemon.mega_evolve()
+                heapq.heappush(action_queue, action_tuple)
 
+            # add the moves to the queue
+            elif side.choice.type == 'move':
+                
+                # add the mega evolutions as a seperate action
+                if side.choice.mega:
+                    user = side.active_pokemon
+                    move = 'mega'
+                    action = dex.Action(user, move)
+                    action_tuple = (self.resolve_priority(action), action)
 
+                    heapq.heappush(action_queue, action_tuple)
 
-            #turn order by speed stat
-            if self.sides[0].active_pokemon.get_speed() > self.sides[1].active_pokemon.get_speed():
-                self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
-                self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
-            elif self.sides[1].active_pokemon.get_speed() > self.sides[0].active_pokemon.get_speed():
-                self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
-                self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
+                # actually add the moves to the queue
+                user = side.active_pokemon
+                move = dex.move_dex[user.moves[side.choice.selection]]
+                target = self.sides[0 if side.id else 1]
+                action = dex.Action(user, move, target)
+                action_tuple = (self.resolve_priority(action), action)
+
+                heapq.heappush(action_queue, action_tuple)
+
             else:
-                if random.random() > 50:
-                    self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
-                    self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
-                else:
-                    self.run_move(self.sides[1].active_pokemon, self.sides[1].choice, self.sides[0].active_pokemon)
-                    self.run_move(self.sides[0].active_pokemon, self.sides[0].choice, self.sides[1].active_pokemon)
+                # dont add any action to the queue
+                # this is here for the 'pass' decision
+                pass
+                
 
-#       do switches
-#       mega evolution
-#       priority moves
-#       items, abilities
-#       trick room
-#       order of speed stat
+        while action_queue:
+            priority, next_action = heapq.heappop(action_queue) 
+            if self.debug:
+                print(str(priority))
+            self.run_action(next_action)
 
-#       run all the decisions
+
 
         #request the next turns move
         self.request = 'move'
@@ -140,49 +142,121 @@ class Battle(object):
         #check if a pokemon fainted and insert a pseudo turn
         for i in range(2):
             if self.sides[i].active_pokemon.fainted:
+                # flag this side for a switch
                 self.sides[i].request = 'switch'
-                self.request = 'switch'
+                self.pseudo_turn = True
                 if self.sides[0 if i else 1].active_pokemon.fainted == False:
                     self.sides[0 if i else 1].request = 'pass'
 
 #       check for a winner
 #       end the while true once the game ends
-        for i in range(2):
-            if self.sides[i].pokemon_left == 0:
+        for side in self.sides:
+            if not side.pokemon_left:
                 self.ended = True
-                self.winner = 0 if i else 1
+                self.winner = side.id
 
-    def run_move(self, user, decision, target):
+    def resolve_priority(self, action):
+        '''
+        returns a number
+        (action_priority_tier * 13000) + user.get_speed() + random.random()
+
+        lower number is the higher priority
+
+        multiply tier by 13_000 because 12_096 is maximum calculated speed
+        stat of any pokemon
+
+        add random.random() to the allow the priority queue to handle possible
+        ties with a coin flip
+
+        priority tiers
+            0-pursuit on a pokemon that is switching out but not yet fainted
+                -if mega, mega first then pursuit
+            1-switches
+                -calculated speed
+            2-mega
+                -calculated speed
+                -update this pokemons later actions with new calculated speed
+            3-15-moves
+                - +5 to -7 priority tiers
+                    -Gale Wings, Prankster, Triage affect priority tier
+                -calculated speed
+                    -Full Incense, Lagging Tail, Stall go last in priority tier
+                    -Quick Claw, Custap Berry go first in priority tier
+                    -Trick Room
+
+        the priority queue can also be re-ordered by certain effects
+        ex. Round, Dancer, Instruct, Pledge moves, After You, Quash
+                
+        '''
+
+        # apt - action priority tier as defined above
+        action_priority_tier = None
+
+        if action.move == 'switch':
+            action_priority_tier = 1
+
+        elif action.move == 'mega':
+            action_priority_tier = 2
+
+        elif action.move.id == 'pursuit' and action.target.is_switching:
+            action_priority_tier = 0
+
+        else:
+            action_priority_tier = 3 + (5 - action.move.priority)
+
+        #action_priority_tier should never be None here
+
+        # get_speed() returns higher number = faster speed
+        # priority speed needs to be lower number = faster speed
+        speed = 12096 - action.user.get_speed()
+
+        # multiply priority tier by 13000 because it supercededes speed
+        priority = action_priority_tier * 13000
+
+        tie_breaker = random.random()
+
+        return priority + speed + tie_breaker
+
+    def run_action(self, action):
+        # action is set up three different ways
+
+        # one way for switches
+        if action.move == 'switch':
+            action.user.side.switch(action.target)
+
+        # another for mega evolutions
+        elif action.move == 'mega':
+            action.user.mega_evolve()
+
+        # and lastly for moves
+        else:
+            self.run_move(action.user, action.move, action.target.active_pokemon)
+
+
+    def run_move(self, user, move, target):
         if user.fainted:
+            if self.debug:
+                print(user.name + " fainted before they could move")
             return
 
-        #  selection = random.randint(0, 3) if decision is not None else decision.selection
-        if decision == None:
-            selection = random.randint(0, 3)
-        else:
-            selection = decision.selection
-
-        move = dex.move_dex[user.moves[selection]]
-#       accuracy_check
-        #print(self.accuracy_check(user,move,target))
+        # accuracy_check
         if self.accuracy_check(user, move, target):
             damage = self.damage(user, move, target)
             if self.debug:
                 print(user.name + " used " + move.name + ' doing ' + str(damage) + ' dmg')
-#           move hit! do damage
-            #print(self.damage(user, move, target))
+            # move hit! do damage
             target.hp -= damage
         else:
-#           move missed! do noting
+            # move missed! do noting
             if self.debug:
                 print(user.name + " used " + move.name + " but it missed!")
-            pass
+            return
 
         if target.hp <= 0:
             target.faint()
 
 
-#       secondary effects
+        # secondary effects
         if move.secondary is not None and target.fainted != True:
             temp = random.randint(0, 99)
             check = move.secondary['chance']
@@ -201,6 +275,7 @@ class Battle(object):
                 if 'volatileStatus' in move.secondary:
                     target.volatile_statuses.add(move.secondary['volatileStatus'])
 
+        # tertiary effects only exist for Ice Fang, Fire Fang, and Thunder Fang
         if move.tertiary is not None and target.fainted != True:
             temp = random.randint(0, 99)
             check = move.tertiary['chance']

@@ -2,6 +2,9 @@
 *.class
 *.pyc
 
+#swp files
+*.swp
+
 # Log file
 *.log
 

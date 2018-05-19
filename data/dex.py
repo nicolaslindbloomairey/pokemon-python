@@ -29,6 +29,9 @@ class Decision(namedtuple('Decision', ['type', 'selection', 'mega', 'zmove'])):
     def __new__(cls, type, selection, mega=False, zmove=False):
         return super(Decision, cls).__new__(cls, type, selection, mega, zmove)
         
+class Action(namedtuple('Action', ['user', 'move', 'target', 'zmove'])):
+    def __new__(cls, user, move, target=None, zmove=False):
+        return super(Action, cls).__new__(cls, user, move, target, zmove)
 
 #-------------
 #POKEDEX
