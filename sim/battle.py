@@ -71,7 +71,11 @@ class Battle(object):
         '''
 
 
+
+
         for side in self.sides:
+            side.active_pokemon.volatile_statuses = set()
+
             if side.choice is None:
                 # error - one or more sides is missing a decsion
                 raise ValueError('one or more sides is missing a decision')
@@ -115,7 +119,12 @@ class Battle(object):
                 # actually add the moves to the queue
                 user = side.active_pokemon
                 move = dex.move_dex[user.moves[side.choice.selection]]
-                target = self.sides[0 if side.id else 1]
+                if move.target == 'self':
+                    target = side
+                elif move.target == 'normal':
+                    target = self.sides[0 if side.id else 1]
+                else:
+                    target = self.sides[0 if side.id else 1]
                 action = dex.Action(user, move, target)
                 action_tuple = (self.resolve_priority(action), action)
 
@@ -240,20 +249,36 @@ class Battle(object):
             return
 
         # accuracy_check
-        if self.accuracy_check(user, move, target):
-            damage = self.damage(user, move, target)
-            if self.debug:
-                print(user.name + " used " + move.name + ' doing ' + str(damage) + ' dmg')
-            # move hit! do damage
-            target.hp -= damage
-        else:
+        if not self.accuracy_check(user, move, target):
             # move missed! do noting
             if self.debug:
                 print(user.name + " used " + move.name + " but it missed!")
             return
 
+        #move hit, continue
+
+        damage = self.damage(user, move, target)
+
+        if self.debug:
+            print(user.name + " used " + move.name + ' doing ' + str(damage) + ' dmg')
+
+        target.hp -= damage
         if target.hp <= 0:
             target.faint()
+
+        # stat changing moves
+        if move.boosts is not None:
+            for stat in move.boosts:
+                target.boosts[stat] += move.boosts[stat]
+        if move.volatileStatus is not None:
+            target.volatile_statuses.add(move.volatileStatus)
+
+        if move.self is not None:
+            if 'boosts' in move.self:
+                for stat in move.self['boosts']:
+                    user.boosts[stat] += move.self['boosts'][stat]
+            if 'volatileStatus' in move.self:
+                target.volatile_statuses.add(move.self['volatileStatus'])
 
 
         # secondary effects
@@ -346,12 +371,39 @@ class Battle(object):
         return math.floor(damage)
 
     def accuracy_check(self, user, move, target):
-#       returns a boolean whether the move hit the target
+
+        # moves hitting protect
+        #print(str(target.volatile_statuses))
+        if 'protect' in target.volatile_statuses and move.flags['protect']:
+            return False
+
+        # protect moves accuracy
+        if move.id in ['protect', 'detect', 'endure', 'wide guard', 'quick guard', 'spikyshield', 'kingsshield', 'banefulbunker']:
+            rand_float = random.random()
+            n = user.protect_n
+            user.protect_n += 3
+            #print(str(self.rng) + " " + str(n))
+            if not self.rng and n > 0:
+                return False
+            if n == 0 or rand_float < (1.0 / n):
+                return True
+            return False
+
+        # flinched
+        if 'flinch' in user.volatile_statuses:
+            return False
+
+        if move.accuracy is True:
+            return True
+
+        # fake out
+        if move.id == 'fakeout' and user.active_turns > 1:
+            return False
+        # returns a boolean whether the move hit the target
         temp = random.randint(0, 99)
         accuracy = user.get_accuracy()
         evasion = target.get_evasion()
         check = (move.accuracy * accuracy * evasion)
-        #print(temp, check)
         return temp < check 
         
     def choose(self, side_id, choice):

@@ -26,6 +26,7 @@ class Pokemon(object):
         self.status = ''
         self.position = 0
         self.burned = False
+        self.protect_n = 0
 
         self.is_switching = False
 

@@ -1,0 +1,9 @@
+Status moves
+Mega evolution speed should be used
+priority queue can should be updated by certain moves
+residual effects
+critical hits
+zmoves
+zmoves break protect
+correct targeting
+duration effects

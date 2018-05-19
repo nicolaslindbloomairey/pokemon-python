@@ -125,7 +125,7 @@ for i in items_raw_data:
 #moves_raw_data
 #---------
 
-moveAttributes = ['id', 'name', 'num', 'accuracy', 'basePower', 'category', 'desc', 'shortDesc', 'pp', 'priority', 'flags', 'boosts', 'drain', 'isZ', 'critRatio', 'secondary', 'tertiary', 'target', 'type', 'zMovePower', 'zMoveBoosts', 'contestType']
+moveAttributes = ['id', 'name', 'num', 'accuracy', 'basePower', 'self', 'volatileStatus', 'category', 'desc', 'shortDesc', 'pp', 'priority', 'flags', 'boosts', 'drain', 'isZ', 'critRatio', 'secondary', 'tertiary', 'target', 'type', 'zMovePower', 'zMoveBoosts', 'contestType']
 move_dex = {}
 
 Move = namedtuple('Move', moveAttributes) #some missing props

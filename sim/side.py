@@ -36,6 +36,8 @@ class Side(object):
         '''
         self.request = 'move'
 
+        self.used_zmove = False
+
     def ai_decide(self):
         self.choice = self.ai.decide(self.battle)
 
