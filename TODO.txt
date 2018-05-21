@@ -1,11 +1,11 @@
 Status moves
 status conditions
 Mega evolution speed should be used
-priority queue can should be updated by certain moves
+priority queue can should be updated by certain actions, eg. mega evolution
 residual effects
 critical hits
-zmoves
-zmoves break protect
 correct targeting
 duration effects
 fix fang moves effects
+add pp
+zmoves of status moves

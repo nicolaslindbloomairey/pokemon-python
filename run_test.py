@@ -3,6 +3,7 @@ from test.test_stat import TestStatCalc
 from test.test_decisions import TestDecisions
 from test.test_mega import TestMega
 from test.test_protect import TestProtect
+from test.test_zmove import TestZMove
 import unittest
 
 suite = unittest.TestSuite()
@@ -11,5 +12,6 @@ suite.addTest(TestStatCalc())
 suite.addTest(TestDecisions())
 suite.addTest(TestMega())
 suite.addTest(TestProtect())
+suite.addTest(TestZMove())
 
 unittest.TextTestRunner().run(suite)

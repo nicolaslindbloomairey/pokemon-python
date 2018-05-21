@@ -29,9 +29,9 @@ class Decision(namedtuple('Decision', ['type', 'selection', 'mega', 'zmove'])):
     def __new__(cls, type, selection, mega=False, zmove=False):
         return super(Decision, cls).__new__(cls, type, selection, mega, zmove)
         
-class Action(namedtuple('Action', ['user', 'move', 'target', 'zmove'])):
-    def __new__(cls, user, move, target=None, zmove=False):
-        return super(Action, cls).__new__(cls, user, move, target, zmove)
+class Action(namedtuple('Action', ['user', 'move', 'target', 'zmove', 'base_move'])):
+    def __new__(cls, user, move, target=None, zmove=False, base_move=None):
+        return super(Action, cls).__new__(cls, user, move, target, zmove, base_move)
 
 #-------------
 #POKEDEX
@@ -108,7 +108,7 @@ for i in formats_raw_data:
 #items_raw_data
 #---------
 
-itemAttributes = ['id', 'name', 'spritenum', 'isBerry', 'zMove', 'zMoveFrom', 'zMoveUser', 'megaStone', 'megaEvolves', 'num', 'gen', 'desc']
+itemAttributes = ['id', 'name', 'spritenum', 'isBerry', 'zMove', 'zMoveFrom', 'zMoveUser', 'zMoveType', 'megaStone', 'megaEvolves', 'num', 'gen', 'desc']
 item_dex = {}
 
 Item = namedtuple('Item', itemAttributes) #some missing props
@@ -128,7 +128,15 @@ for i in items_raw_data:
 moveAttributes = ['id', 'name', 'num', 'accuracy', 'basePower', 'self', 'volatileStatus', 'category', 'desc', 'shortDesc', 'pp', 'priority', 'flags', 'boosts', 'drain', 'isZ', 'critRatio', 'secondary', 'tertiary', 'target', 'type', 'zMovePower', 'zMoveBoosts', 'contestType']
 move_dex = {}
 
-Move = namedtuple('Move', moveAttributes) #some missing props
+MoveTuple = namedtuple('Move', moveAttributes) #some missing props
+
+class Move(MoveTuple):
+    def set_zpower(self, power):
+        self.zpower = power
+
+    def get_zpower(self):
+        return self.zpower
+        
 
 for i in moves_raw_data:
     for a in moveAttributes:
@@ -136,6 +144,27 @@ for i in moves_raw_data:
             moves_raw_data[i][a] = None
 
     move_dex[i] = Move._make([moves_raw_data[i][j] for j in moveAttributes])
+
+zmove_chart = {
+    'normaliumz': 'breakneckblitz',
+    'fightiniumz': 'alloutpummeling',
+    'flyiniumz': 'supersonicskystrike',
+    'poisoniumz': 'aciddownpour',
+    'groundiumz': 'tectonicrage',
+    'rockiumz': 'continentalcrush',
+    'buginiumz': 'savagespinout',
+    'ghostiumz': 'neverendingnightmare',
+    'steeliumz': 'corkscrewcrash',
+    'firiumz': 'infernooverdrive',
+    'wateriumz': 'hydrovortex',
+    'grassiumz': 'bloomdoom',
+    'electriumz': 'gigavolthavoc',
+    'psychiumz': 'shatteredpsyche',
+    'iciumz': 'subzeroslammer',
+    'dragoniumz': 'devastatingdrake',
+    'darkiniumz': 'blackholeeclipse',
+    'fariumz': 'twinkletackle'
+}
 
 #--------
 #TypeChart

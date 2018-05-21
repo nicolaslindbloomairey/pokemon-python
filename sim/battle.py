@@ -3,6 +3,7 @@ from data import dex
 import random
 import math
 import heapq
+import re
 
 class Battle(object):
     def __init__(self, debug=True, rng=True):
@@ -61,38 +62,7 @@ class Battle(object):
         del out[-1]
         return ''.join(out)
 
-
-
-    def do_turn(self):
-        '''
-        to be called once both sides have made their decisions
-        
-        updates the game state according to the decisions
-        '''
-
-
-
-
-        for side in self.sides:
-            side.active_pokemon.volatile_statuses = set()
-
-            if side.choice is None:
-                # error - one or more sides is missing a decsion
-                raise ValueError('one or more sides is missing a decision')
-
-        self.turn += 1
-
-        for side in self.sides:
-            side.active_pokemon.active_turns += 1
-
-        # print the state of the battle
-        if self.debug:
-            print(self)
-
-
-        # create priority queue and references to both sides
-        action_queue = []
-
+    def populate_action_queue(self, action_queue):
         for side in self.sides:
             # add the switches to the queue
             if side.choice.type == 'switch':
@@ -116,9 +86,24 @@ class Battle(object):
 
                     heapq.heappush(action_queue, action_tuple)
 
-                # actually add the moves to the queue
                 user = side.active_pokemon
+
+                # if the move is Z
                 move = dex.move_dex[user.moves[side.choice.selection]]
+                if side.choice.zmove and user.can_z(move):
+                    item = dex.item_dex[user.item]
+                    if item.zMove is True:
+                        zmove_id = dex.zmove_chart[item.id]
+                    else:
+                        zmove_id = re.sub(r'\W+', '', item.zMove.lower())
+                    base_move = move
+                    move = dex.move_dex[zmove_id]
+
+                    # update the zmove power 
+                    if move.basePower == 1:
+                        move = move._replace(basePower = base_move.zMovePower)
+
+                # actually add the moves to the queue
                 if move.target == 'self':
                     target = side
                 elif move.target == 'normal':
@@ -136,6 +121,37 @@ class Battle(object):
                 pass
                 
 
+    def do_turn(self):
+        '''
+        to be called once both sides have made their decisions
+        
+        updates the game state according to the decisions
+        '''
+
+        for side in self.sides:
+            side.active_pokemon.volatile_statuses = set()
+
+            if side.choice is None:
+                # error - one or more sides is missing a decsion
+                raise ValueError('one or more sides is missing a decision')
+
+        self.turn += 1
+
+        for side in self.sides:
+            side.active_pokemon.active_turns += 1
+
+        # print the state of the battle
+        if self.debug:
+            print(self)
+
+
+        # create priority queue and references to both sides
+        action_queue = []
+
+        # populate action queue
+        self.populate_action_queue(action_queue)
+
+        # run each each action in the queue
         while action_queue:
             priority, next_action = heapq.heappop(action_queue) 
             if self.debug:
@@ -255,6 +271,9 @@ class Battle(object):
                 print(user.name + " used " + move.name + " but it missed!")
             return
 
+        if move.isZ is not None:
+            user.side.used_zmove = True
+
         #move hit, continue
 
         damage = self.damage(user, move, target)
@@ -328,10 +347,13 @@ class Battle(object):
 
     def damage(self, user, move, target):
         damage = 0
+
+        power = move.basePower
+        
         if move.category == 'Special':
-            damage = ((((((2 * user.level) / 5) + 2) * user.get_specialattack() * move.basePower / target.get_specialdefense()) / 50) + 2) 
+            damage = ((((((2 * user.level) / 5) + 2) * user.get_specialattack() * power / target.get_specialdefense()) / 50) + 2) 
         elif move.category == 'Physical':
-            damage = ((((((2 * user.level) / 5) + 2) * user.get_attack() * move.basePower / target.get_defense()) / 50) + 2) 
+            damage = ((((((2 * user.level) / 5) + 2) * user.get_attack() * power / target.get_defense()) / 50) + 2) 
         elif move.category == 'Status':
             pass
 
@@ -366,6 +388,8 @@ class Battle(object):
         if user.burned and move.category == 'Physical' and user.ability != 'guts':
             modifier *= 0.5
 #       other
+        if move.isZ is not None and 'protect' in target.volatile_statuses:
+            modifier *= 0.25
 
         #floor damage before applying modifier
         damage = math.floor(damage)

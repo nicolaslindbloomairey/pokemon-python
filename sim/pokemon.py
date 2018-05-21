@@ -91,6 +91,19 @@ class Pokemon(object):
             self.hp = self.stats.hp
             self.maxhp = self.hp
 
+    def can_z(self, move):
+        item = dex.item_dex[self.item]
+        if self.side.used_zmove:
+            return False
+        if item.zMoveType is not None and move.type != item.zMoveType:
+            return False
+        if item.zMoveUser is not None and self.name not in item.zMoveUser:
+            return False
+        if item.zMoveFrom is not None and move.name != item.zMoveFrom:
+            return False
+        return True
+
+
     def boost(self, boosts):
         for stat in boosts:
             self.boosts[stat] += boosts[stat]
