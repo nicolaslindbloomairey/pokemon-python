@@ -25360,6 +25360,75 @@
         ],
         "tier": "PU"
     },
+    "meowsticmale": {
+        "num": 678,
+        "species": "Meowstic",
+        "baseForme": "M",
+        "types": [
+            "Psychic"
+        ],
+        "gender": "M",
+        "baseStats": {
+            "hp": 74,
+            "atk": 48,
+            "def": 76,
+            "spa": 83,
+            "spd": 81,
+            "spe": 104
+        },
+        "abilities": {
+            "0": "Keen Eye",
+            "1": "Infiltrator",
+            "H": "Prankster"
+        },
+        "heightm": 0.6,
+        "weightkg": 8.5,
+        "color": "Blue",
+        "prevo": "espurr",
+        "evoLevel": 25,
+        "eggGroups": [
+            "Field"
+        ],
+        "otherFormes": [
+            "meowsticf"
+        ],
+        "tier": "PU"
+    },
+
+    "meowstic": {
+        "num": 678,
+        "species": "Meowstic",
+        "baseForme": "M",
+        "types": [
+            "Psychic"
+        ],
+        "gender": "M",
+        "baseStats": {
+            "hp": 74,
+            "atk": 48,
+            "def": 76,
+            "spa": 83,
+            "spd": 81,
+            "spe": 104
+        },
+        "abilities": {
+            "0": "Keen Eye",
+            "1": "Infiltrator",
+            "H": "Prankster"
+        },
+        "heightm": 0.6,
+        "weightkg": 8.5,
+        "color": "Blue",
+        "prevo": "espurr",
+        "evoLevel": 25,
+        "eggGroups": [
+            "Field"
+        ],
+        "otherFormes": [
+            "meowsticf"
+        ],
+        "tier": "PU"
+    },
     "meowsticf": {
         "num": 678,
         "species": "Meowstic-F",

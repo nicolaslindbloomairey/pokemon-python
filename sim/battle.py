@@ -223,7 +223,7 @@ class Battle(object):
         elif action.move == 'mega':
             action_priority_tier = 2
 
-        elif action.move.id == 'pursuit' and action.target.is_switching:
+        elif action.move.id == 'pursuit' and action.target.active_pokemon.is_switching:
             action_priority_tier = 0
 
         else:
