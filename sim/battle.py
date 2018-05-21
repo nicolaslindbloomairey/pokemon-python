@@ -418,6 +418,9 @@ class Battle(object):
             if n == 0 or rand_float < (1.0 / n):
                 return True
             return False
+        else:
+            # if the move is not a protect move, reset the counter
+            user.protect_n = 0
 
         # flinched
         if 'flinch' in user.volatile_statuses:
