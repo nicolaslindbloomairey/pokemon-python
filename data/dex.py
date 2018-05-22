@@ -125,7 +125,7 @@ for i in items_raw_data:
 #moves_raw_data
 #---------
 
-moveAttributes = ['id', 'status', 'name', 'num', 'accuracy', 'basePower', 'self', 'volatileStatus', 'category', 'desc', 'shortDesc', 'pp', 'priority', 'flags', 'boosts', 'drain', 'isZ', 'critRatio', 'secondary', 'tertiary', 'target', 'type', 'zMovePower', 'zMoveBoosts', 'contestType']
+moveAttributes = ['id', 'status', 'name', 'num', 'accuracy', 'basePower', 'self', 'traps', 'volatileStatus', 'category', 'desc', 'shortDesc', 'pp', 'priority', 'flags', 'boosts', 'drain', 'isZ', 'critRatio', 'secondary', 'tertiary', 'target', 'type', 'zMovePower', 'zMoveBoosts', 'contestType']
 move_dex = {}
 
 MoveTuple = namedtuple('Move', moveAttributes) #some missing props
@@ -272,4 +272,11 @@ boosts = {
     4: 3.0,
     5: 3.5,
     6: 4.0,
+}
+
+crit = {
+    0: 1/24,
+    1: 1/8,
+    2: 1/2,
+    3: 1
 }

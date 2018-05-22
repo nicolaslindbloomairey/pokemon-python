@@ -12,7 +12,7 @@
         "priority": 0,
         "flags": {},
         "isZ": "pikashuniumz",
-        "critRatio": 3,
+        "critRatio": 2,
         
         "target": "normal",
         "type": "Electric",
@@ -246,7 +246,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "any",
         "type": "Flying",
@@ -315,7 +315,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "allAdjacentFoes",
         "type": "Flying",
@@ -429,6 +429,7 @@
         "secondary": {
             "chance": 100
         },
+        "traps": true,
         "target": "normal",
         "type": "Steel",
         "zMovePower": 160,
@@ -693,7 +694,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Bug",
@@ -1233,7 +1234,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         "secondary": {
             "chance": 10,
             "status": "brn"
@@ -1284,6 +1285,7 @@
             "mirror": 1
         },
         
+        "traps": true,
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -2694,7 +2696,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Water",
@@ -2743,7 +2745,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Fighting",
@@ -2770,7 +2772,7 @@
             "chance": 10,
             "status": "psn"
         },
-        "critRatio": 2,
+        "critRatio": 1,
         "target": "normal",
         "type": "Poison",
         "zMovePower": 140,
@@ -3846,7 +3848,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Ground",
@@ -8315,7 +8317,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Fighting",
@@ -8510,7 +8512,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Grass",
@@ -9345,6 +9347,7 @@
             "mirror": 1
         },
         
+        "traps": true,
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -10487,7 +10490,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Dark",
@@ -11328,7 +11331,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         "secondary": {
             "chance": 10,
             "status": "psn"
@@ -11868,7 +11871,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Psychic",
@@ -12274,7 +12277,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "allAdjacentFoes",
         "type": "Grass",
@@ -12325,7 +12328,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "allAdjacentFoes",
         "type": "Normal",
@@ -13557,7 +13560,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Ghost",
@@ -14044,7 +14047,7 @@
             "mirror": 1,
             "distance": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         "secondary": {
             "chance": 30,
             "volatileStatus": "flinch"
@@ -14173,7 +14176,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Normal",
@@ -14762,7 +14765,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Dragon",
@@ -15248,7 +15251,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "critRatio": 2,
+        "critRatio": 1,
         
         "target": "normal",
         "type": "Rock",
@@ -16343,6 +16346,7 @@
             "nonsky": 1
         },
         
+        "traps": true,
         "target": "allAdjacentFoes",
         "type": "Ground",
         "zMovePower": 175,

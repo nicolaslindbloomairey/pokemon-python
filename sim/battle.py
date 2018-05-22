@@ -47,19 +47,19 @@ class Battle(object):
 
     def __str__(self):
         out = ['\n']
-        out.append('Turn ' + str(self.turn) + '\n')
-        out.append(str(self.sides[0].pokemon_left)
-                       + " : "
-                       + str(self.sides[1].pokemon_left)
-                       + '\n')
-        for i in range(2):
-            out.append(self.sides[i].name
-                       + "|"
-                       + str(self.sides[i].active_pokemon))
-            out.append('\n')
-            out.append(str(self.sides[i].choice))
-            out.append('\n')
-        del out[-1]
+        out.append('Turn ' + str(self.turn))
+        #out.append(str(self.sides[0].pokemon_left)
+        #               + " : "
+        #               + str(self.sides[1].pokemon_left)
+        #               + '\n')
+        #for i in range(2):
+        #    out.append(self.sides[i].name
+        #               + "|"
+        #               + str(self.sides[i].active_pokemon))
+        #    out.append('\n')
+            #out.append(str(self.sides[i].choice))
+            #out.append('\n')
+        #del out[-1]
         return ''.join(out)
 
     def populate_action_queue(self, action_queue):
@@ -154,8 +154,8 @@ class Battle(object):
         # run each each action in the queue
         while action_queue:
             priority, next_action = heapq.heappop(action_queue) 
-            if self.debug:
-                print(str(priority))
+            #if self.debug:
+                #print(str(priority))
             self.run_action(next_action)
 
         # do status checks
@@ -282,8 +282,8 @@ class Battle(object):
         # accuracy_check
         if not self.accuracy_check(user, move, target):
             # move missed! do noting
-            if self.debug:
-                print(user.name + " used " + move.name + " but it missed!")
+            #if self.debug:
+            #    print(user.name + " used " + move.name + " but it missed!")
             return
 
         if move.isZ is not None:
@@ -293,9 +293,6 @@ class Battle(object):
 
         damage = self.damage(user, move, target)
 
-        if self.debug:
-            print(user.name + " used " + move.name
-                  + ' doing ' + str(damage) + ' dmg')
 
         target.damage(damage)
         if move.drain is not None:
@@ -313,10 +310,6 @@ class Battle(object):
             if 'volatileStatus' in move.self:
                 target.volatile_statuses.add(move.self['volatileStatus'])
 
-        # primary effects
-        if move.status is not None and target.fainted != True:
-            if target.status == '':
-                target.status = move.status
 
         # accupressure
         # raises a random stat that is not maxed already by 2
@@ -331,7 +324,13 @@ class Battle(object):
                     user.boosts[boost_stat] = 6
 
 
+        # primary effects
+        if move.status is not None and target.fainted != True:
+            if target.status == '':
+                target.status = move.status
         
+        if move.traps == True:
+            target.trapped = True
 
 
         # secondary effects
@@ -383,14 +382,19 @@ class Battle(object):
     def damage(self, user, move, target):
         damage = 0
 
+        crit = False
+        crit_chance = user.crit_chance + (move.critRatio if move.critRatio is not None else 0)
+        if move.id == 'frostbreath' or move.id == 'stormthrow' or (random.random() < dex.crit[crit_chance] and self.rng):
+            crit = True
+
         power = move.basePower
         if move.id == 'acrobatics' and user.item == '':
             power *= 2
-        
+
         if move.category == 'Special':
-            damage = ((((((2 * user.level) / 5) + 2) * user.get_specialattack() * power / target.get_specialdefense()) / 50) + 2) 
+            damage = ((((((2 * user.level) / 5) + 2) * user.get_specialattack(crit) * power / target.get_specialdefense(crit)) / 50) + 2) 
         elif move.category == 'Physical':
-            damage = ((((((2 * user.level) / 5) + 2) * user.get_attack() * power / target.get_defense()) / 50) + 2) 
+            damage = ((((((2 * user.level) / 5) + 2) * user.get_attack(crit) * power / target.get_defense(crit)) / 50) + 2) 
         elif move.category == 'Status':
             pass
 
@@ -412,6 +416,9 @@ class Battle(object):
         else:
             modifier *= 1.0
 #       if crit *=1.5
+        if crit:
+            modifier *= 1.5
+
 #       random float
         if (self.rng):
             modifier *= random.uniform(0.85, 1.0)
@@ -433,6 +440,16 @@ class Battle(object):
 #       apply modifier
         damage *= modifier
         #print(str(damage))
+        damage = math.floor(damage)
+        if self.debug:
+            if crit and move.category != "Status":
+                print(user.fullname + " used " + move.name
+                      + ' doing ' + str(damage) + ' dmg with a crit!')
+            elif move.category == 'Status':
+                print(user.fullname + " used " + move.name)
+            else:
+                print(user.fullname + " used " + move.name
+                      + ' doing ' + str(damage) + ' dmg.')
 
         return math.floor(damage)
 
@@ -446,14 +463,21 @@ class Battle(object):
 
         if user.status == 'par' and random.random() < 0.25:
             # full paralyze
+            if self.debug:
+                print(user.fullname + " is fully paralyzed.")
             return False
         # asleep pokemon miss unless they use snore or sleeptalk
         elif user.status == 'slp':
             if move.id != 'snore' and move.id != 'sleeptalk':
+
+                if self.debug:
+                    print(user.fullname + " is asleep.")
                 return False
 
             
         if 'protect' in target.volatile_statuses and 'protect' in move.flags:
+            if self.debug:
+                print(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
             return False
 
         # protect moves accuracy
@@ -488,6 +512,8 @@ class Battle(object):
         check = 100
         if self.rng:
             check = (move.accuracy * accuracy * evasion)
+        if self.debug and temp >= check:
+            print(user.name + " used " + move.name + " but it missed!")
         return temp < check 
         
     def choose(self, side_id, choice):

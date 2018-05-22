@@ -18,6 +18,8 @@ class Pokemon(object):
         self.template = dex.pokedex[self.species]
 
         self.name = pokemon_set.get('name', self.template.species)
+        self.fullname = "Nic's " if not self.side_id else "Sam's "
+        self.fullname += self.name
 
         self.moves = pokemon_set.get('moves', ['tackle']*4)
         self.base_moves = self.moves
@@ -30,7 +32,9 @@ class Pokemon(object):
         self.toxic_n = 1
 
         self.is_switching = False
+        self.trapped = False
 
+        self.crit_chance = 0
         self.boosts = {
             'atk': 0,
             'def': 0,
@@ -115,8 +119,10 @@ class Pokemon(object):
                 self.boosts[stat] = -6
 
 
-    def get_attack(self):
+    def get_attack(self, crit):
         modifier = dex.boosts[self.boosts['atk']]
+        if crit and modifier < 1:
+            modifier = 1
         if self.ability == 'hugepower' or self.ability == 'purepower':
             modifier *= 2
         if self.ability == 'flowergift' and self.battle.weather == 'sunny':
@@ -137,8 +143,10 @@ class Pokemon(object):
             modifier = 2
         return self.stats.attack * modifier
 
-    def get_defense(self):
+    def get_defense(self, crit):
         modifier = dex.boosts[self.boosts['def']]
+        if crit and modifier > 1:
+            modifier = 1
         if self.ability == 'marvelscale' and self.status != '':
             modifier *= 1.5
         if self.ability == 'grasspelt' and self.battle.terrain == 'grassy':
@@ -149,8 +157,10 @@ class Pokemon(object):
             modifier = 1.5
         return self.stats.defense * modifier
 
-    def get_specialattack(self):
+    def get_specialattack(self, crit):
         modifier = dex.boosts[self.boosts['spa']]
+        if crit and modifier < 1:
+            modifier = 1
         if self.ability == 'solarpower' and self.battle.weather == 'sunny':
             modifier *= 1.5
         if self.ability == 'defeatist' and self.hp / self.maxhp <= 0.5:
@@ -163,8 +173,10 @@ class Pokemon(object):
             modifier = 2
         return self.stats.specialattack * modifier
 
-    def get_specialdefense(self):
+    def get_specialdefense(self, crit):
         modifier = dex.boosts[self.boosts['spd']]
+        if crit and modifier > 1:
+            modifier = 1
         if self.ability == 'flowergift' and self.battle.weather == 'sunny':
             modifier *= 2
         if 'Rock' in self.types and self.battle.weather == 'sandstorm':
@@ -247,6 +259,9 @@ class Pokemon(object):
             self.faint()
 
     def faint(self):
+        if self.battle.debug:
+            print(self.fullname + ' fainted')
+        self.trapped = False
         self.hp = 0
         self.fainted = True
         self.side.pokemon_left -= 1

@@ -20,5 +20,5 @@ print( str(zero) + " | " + str(one))
 
 battle = Battle()
 battle.run()
-print('')
-print(battle.sides[battle.winner].name + ' wins')
+#print('')
+#print(battle.sides[battle.winner].name + ' wins')

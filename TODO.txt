@@ -1,11 +1,16 @@
-Status moves
-status conditions
 Mega evolution speed should be used
 priority queue can should be updated by certain actions, eg. mega evolution
-residual effects
-critical hits
 correct targeting
 duration effects
-fix fang moves effects
+revamp move effect system
 add pp
 zmoves of status moves
+
+-------------------------------
+moves that need to be implemented (i am skipping)
+------------------------------
+After You
+Ally Switch
+Aqua Ring
+Arm Thrust
+Aromatherapy

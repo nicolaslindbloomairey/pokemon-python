@@ -80,6 +80,8 @@ class Side(object):
 
     # switch the active pokemon to the pokemon in index: position
     def switch(self, position):
+        if self.active_pokemon.trapped:
+            return
 
         # if the selected pokemon is fainted do a default switch
         if self.pokemon[position].fainted:
@@ -94,9 +96,9 @@ class Side(object):
         pokemon_in.active = True
 
         if self.battle.debug:
-            print(pokemon_out.name
+            print(pokemon_out.fullname
                   + ' switches out for '
-                  + pokemon_in.name)
+                  + pokemon_in.fullname)
 
     # switch to the first non-fainted pokemon on your team
     def default_switch(self):
