@@ -125,7 +125,7 @@ for i in items_raw_data:
 #moves_raw_data
 #---------
 
-moveAttributes = ['id', 'name', 'num', 'accuracy', 'basePower', 'self', 'volatileStatus', 'category', 'desc', 'shortDesc', 'pp', 'priority', 'flags', 'boosts', 'drain', 'isZ', 'critRatio', 'secondary', 'tertiary', 'target', 'type', 'zMovePower', 'zMoveBoosts', 'contestType']
+moveAttributes = ['id', 'status', 'name', 'num', 'accuracy', 'basePower', 'self', 'volatileStatus', 'category', 'desc', 'shortDesc', 'pp', 'priority', 'flags', 'boosts', 'drain', 'isZ', 'critRatio', 'secondary', 'tertiary', 'target', 'type', 'zMovePower', 'zMoveBoosts', 'contestType']
 move_dex = {}
 
 MoveTuple = namedtuple('Move', moveAttributes) #some missing props
@@ -273,8 +273,3 @@ boosts = {
     5: 3.5,
     6: 4.0,
 }
-
-#learnset? pokemon -> move -> how it can learn it
-
-#flags? move -> integer
-

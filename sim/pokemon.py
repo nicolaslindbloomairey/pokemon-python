@@ -27,6 +27,7 @@ class Pokemon(object):
         self.position = 0
         self.burned = False
         self.protect_n = 0
+        self.toxic_n = 1
 
         self.is_switching = False
 
@@ -49,7 +50,7 @@ class Pokemon(object):
         self.base_ability = pokemon_set.get('ability', self.template.abilities.normal0)
         self.base_ability = re.sub(r'\W+', '', self.base_ability.lower())
         self.ability = self.base_ability
-        self.item = pokemon_set.get('item', 'pokeball')
+        self.item = pokemon_set.get('item', '')
         self.lost_item = False
 
         self.types = self.template.types
@@ -74,7 +75,7 @@ class Pokemon(object):
 
     def mega_evolve(self):
         canmega = False
-        if dex.item_dex[self.item].megaStone is not None:
+        if self.item != '' and dex.item_dex[self.item].megaStone is not None:
             megaspecies = re.sub(r'\W+', '', dex.item_dex[self.item].megaStone.lower())
             if re.sub(r'\W+', '', dex.item_dex[self.item].megaEvolves.lower()) == self.species:
                 canmega = True
@@ -85,6 +86,7 @@ class Pokemon(object):
             self.species = megaspecies
             self.template = dex.pokedex[self.species]
             self.base_ability = self.template.abilities.normal0
+            self.base_ability = re.sub(r'\W+', '', self.base_ability.lower())
             self.ability = self.base_ability
             self.types = self.template.types
             self.calculate_stats()
@@ -229,6 +231,20 @@ class Pokemon(object):
             cal.append(math.floor(math.floor((((getattr(self.pokemon_set['ivs'],stat) + (2 * getattr(self.template.baseStats, stat)) + (getattr(self.pokemon_set['evs'],stat)/4) ) * (self.level/100) ) + 5)) * dex.nature_dex[self.nature].values[stat] ))
 
         self.stats = dex.Stats(hp, cal[0], cal[1], cal[2], cal[3], cal[4])
+
+    def damage(self, amount, flag=None):
+        if flag is None:
+            self.hp -= amount
+        elif flag == 'percentmax':
+            damage = math.floor(self.maxhp*amount)
+            damage = 1 if damage < 1 else damage
+            self.hp -= math.floor(self.maxhp*amount)
+        elif flag == 'percentcurrent':
+            damage = math.floor(self.hp*amount)
+            damage = 1 if damage < 1 else damage
+            self.hp -= math.floor(self.hp*amount)
+        if self.hp <= 0:
+            self.faint()
 
     def faint(self):
         self.hp = 0

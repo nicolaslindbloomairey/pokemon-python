@@ -222,6 +222,7 @@
             "mirror": 1,
             "distance": 1
         },
+        "ignore_accuracy": true,
         
         "target": "any",
         "type": "Flying",
@@ -747,6 +748,7 @@
             "distance": 1
         },
         
+        "ignore_accuracy": true,
         "target": "any",
         "type": "Fighting",
         "zMovePower": 160,
@@ -3250,6 +3252,7 @@
             "authentic": 1
         },
         
+        "ignore_accuracy": true,
         "target": "allAdjacentFoes",
         "type": "Fairy",
         "zMovePower": 100,
@@ -4475,6 +4478,7 @@
             "mirror": 1
         },
         
+        "ignore_accuracy": true,
         "target": "normal",
         "type": "Dark",
         "zMovePower": 120,
@@ -9123,6 +9127,7 @@
             "mirror": 1
         },
         
+        "ignore_accuracy": true,
         "target": "normal",
         "type": "Grass",
         "zMovePower": 120,
@@ -9168,6 +9173,7 @@
             "mirror": 1
         },
         
+        "ignore_accuracy": true,
         "target": "normal",
         "type": "Steel",
         "zMovePower": 120,
@@ -13604,6 +13610,7 @@
             "punch": 1
         },
         
+        "ignore_accuracy": true,
         "target": "normal",
         "type": "Ghost",
         "zMovePower": 120,
@@ -13789,6 +13796,7 @@
             "mirror": 1
         },
         
+        "ignore_accuracy": true,
         "target": "normal",
         "type": "Electric",
         "zMovePower": 120,
@@ -15842,6 +15850,7 @@
             "mirror": 1
         },
         
+        "ignore_accuracy": true,
         "target": "allAdjacentFoes",
         "type": "Normal",
         "zMovePower": 120,
@@ -17195,6 +17204,7 @@
             "mirror": 1
         },
         
+        "ignore_accuracy": true,
         "target": "normal",
         "type": "Fighting",
         "zMovePower": 140,

@@ -1,3 +1,9 @@
+#--------------
+# instead of using this file
+# just run
+# python3 -m unittest discover test/
+# or
+# python3 -m unittest discover -v test/
 from test.test_moves import TestDamageCalc
 from test.test_stat import TestStatCalc
 from test.test_decisions import TestDecisions

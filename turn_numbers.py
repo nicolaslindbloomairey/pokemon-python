@@ -2,7 +2,7 @@ from sim.battle import Battle
 zero = 0
 one = 0
 turncount = 0
-num_battles = 5000
+num_battles = 100
 for i in range(num_battles):
     battle = Battle(False)
 

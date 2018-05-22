@@ -158,6 +158,21 @@ class Battle(object):
                 print(str(priority))
             self.run_action(next_action)
 
+        # do status checks
+        for side in self.sides:
+            pokemon = side.active_pokemon
+            if pokemon.status == 'brn':
+                pokemon.damage(0.0625, flag='percentmax')
+            elif pokemon.status == 'psn':
+                pokemon.damage(0.125, flag='percentmax')
+            elif pokemon.status == 'tox':
+                damage = 0.0625*pokemon.toxic_n
+                pokemon.damage(damage, flag='percentmax')
+                pokemon.toxic_n += 1
+            elif pokemon.status == 'frz':
+                #twenty percent chance to be thawed
+                if random.random() < 0.20:
+                    pokemon.status == ''
 
 
         #request the next turns move
@@ -282,9 +297,9 @@ class Battle(object):
             print(user.name + " used " + move.name
                   + ' doing ' + str(damage) + ' dmg')
 
-        target.hp -= damage
-        if target.hp <= 0:
-            target.faint()
+        target.damage(damage)
+        if move.drain is not None:
+            user.damage(-(math.floor(damage * move.drain[0] / move.drain[1])))
 
         # stat changing moves
         if move.boosts is not None:
@@ -297,6 +312,26 @@ class Battle(object):
                 user.boost(move.self['boosts'])
             if 'volatileStatus' in move.self:
                 target.volatile_statuses.add(move.self['volatileStatus'])
+
+        # primary effects
+        if move.status is not None and target.fainted != True:
+            if target.status == '':
+                target.status = move.status
+
+        # accupressure
+        # raises a random stat that is not maxed already by 2
+        if move.id == 'acupressure':
+            possible_stats = [stat for stat in user.boosts if user.boosts[stat] < 6]
+
+            if len(possible_stats) > 0:
+                rand_int = random.randint(0, len(possible_stats)-1)
+                boost_stat = possible_stats[rand_int]
+                user.boosts[boost_stat] += 2
+                if user.boosts[boost_stat] > 6:
+                    user.boosts[boost_stat] = 6
+
+
+        
 
 
         # secondary effects
@@ -349,6 +384,8 @@ class Battle(object):
         damage = 0
 
         power = move.basePower
+        if move.id == 'acrobatics' and user.item == '':
+            power *= 2
         
         if move.category == 'Special':
             damage = ((((((2 * user.level) / 5) + 2) * user.get_specialattack() * power / target.get_specialdefense()) / 50) + 2) 
@@ -400,10 +437,22 @@ class Battle(object):
         return math.floor(damage)
 
     def accuracy_check(self, user, move, target):
+        #if not self.rng:
+        #    return True
 
         # moves hitting protect
         #print(str(target.volatile_statuses))
         #print(str(move.flags))
+
+        if user.status == 'par' and random.random() < 0.25:
+            # full paralyze
+            return False
+        # asleep pokemon miss unless they use snore or sleeptalk
+        elif user.status == 'slp':
+            if move.id != 'snore' and move.id != 'sleeptalk':
+                return False
+
+            
         if 'protect' in target.volatile_statuses and 'protect' in move.flags:
             return False
 
@@ -436,7 +485,9 @@ class Battle(object):
         temp = random.randint(0, 99)
         accuracy = user.get_accuracy()
         evasion = target.get_evasion()
-        check = (move.accuracy * accuracy * evasion)
+        check = 100
+        if self.rng:
+            check = (move.accuracy * accuracy * evasion)
         return temp < check 
         
     def choose(self, side_id, choice):
