@@ -91,9 +91,21 @@ class Side(object):
         pokemon_out = self.active_pokemon
         pokemon_in = self.pokemon[position]
 
-        pokemon_out.is_switching = False
+        #switch
         self.active_pokemon = pokemon_in
+
         pokemon_in.active = True
+        pokemon_out.is_switching = False
+        pokemon_out.aqua_ring = False
+        self.boosts = {
+            'atk': 0,
+            'def': 0,
+            'spa': 0,
+            'spd': 0,
+            'spe': 0,
+            'accuracy': 0,
+            'evasion': 0
+        }
 
         if self.battle.debug:
             print(pokemon_out.fullname

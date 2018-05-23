@@ -30,9 +30,12 @@ class Pokemon(object):
         self.burned = False
         self.protect_n = 0
         self.toxic_n = 1
+        self.sleep_n = 0
 
         self.is_switching = False
         self.trapped = False
+
+        self.aqua_ring = False
 
         self.crit_chance = 0
         self.boosts = {

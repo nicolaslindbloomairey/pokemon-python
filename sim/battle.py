@@ -76,7 +76,7 @@ class Battle(object):
 
             # add the moves to the queue
             elif side.choice.type == 'move':
-                
+
                 # add the mega evolutions as a seperate action
                 if side.choice.mega:
                     user = side.active_pokemon
@@ -144,7 +144,6 @@ class Battle(object):
         if self.debug:
             print(self)
 
-
         # create priority queue and references to both sides
         action_queue = []
 
@@ -173,7 +172,19 @@ class Battle(object):
                 #twenty percent chance to be thawed
                 if random.random() < 0.20:
                     pokemon.status == ''
+            elif side.active_pokemon.status == 'slp':
+                side.active_pokemon.sleep_n -= 1
+                if side.active_pokemon.sleep_n == 0:
+                    side.active_pokemon.status = ''
 
+            if pokemon.aqua_ring:
+                if pokemon.item == 'bigroot':
+                    pokemon.damage(-(1/12), 'percentmaxhp')
+                else:
+                    pokemon.damage(-(1/16), 'percentmaxhp')
+
+
+        
 
         #request the next turns move
         self.request = 'move'
@@ -296,7 +307,16 @@ class Battle(object):
 
         target.damage(damage)
         if move.drain is not None:
-            user.damage(-(math.floor(damage * move.drain[0] / move.drain[1])))
+            if user.item == 'bigroot':
+                user.damage(-(math.floor(damage * move.drain[0] / move.drain[1] * 1.3)))
+            else:
+                user.damage(-(math.floor(damage * move.drain[0] / move.drain[1])))
+
+        if move.id == 'aquaring':
+            user.aqua_ring = True
+        if move.id == 'ingrain':
+            user.aqua_ring = True
+            user.trapped = True
 
         # stat changing moves
         if move.boosts is not None:
@@ -328,6 +348,8 @@ class Battle(object):
         if move.status is not None and target.fainted != True:
             if target.status == '':
                 target.status = move.status
+                if move.status == 'slp':
+                    target.sleep_n = random.randint(1, 3)
         
         if move.traps == True:
             target.trapped = True
