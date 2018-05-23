@@ -108,6 +108,12 @@ class Battle(object):
                         move = move._replace(base_power = base_move.z_move.base_power)
                         move = move._replace(category = base_move.category)
 
+                    z_move = move.z_move._replace(boosts=base_move.z_move.boosts)
+                    z_move = move.z_move._replace(effect=base_move.z_move.effect)
+                    move = move._replace(z_move=z_move)
+
+
+
                 # actually add the moves to the queue
                 if move.target_type == 'self':
                     target = side
@@ -295,7 +301,151 @@ class Battle(object):
                 print(user.name + " fainted before they could move")
             return
 
+
         user.last_used_move = move.id
+
+        # update the moves power
+        if move.id == 'beatup':
+            power = 0
+            for pokemon in user.side.pokemon:
+                power += (dex.pokedex[pokemon.id].baseStats.attack / 10) + 5
+            move = move._replace(base_power = power)
+        
+        if move.id == 'crushgrip' or move.id == 'wringout':
+            power = math.floor(120 * (target.hp / target.maxhp))
+            if power < 1:
+                power = 1
+            move = move._replace(base_power = power)
+
+        if move.id == 'electroball':
+            power = 1
+            speed = target.stats.speed / user.stats.speed
+            if speed <= 0.25:
+                power = 150
+            if speed > 0.25:
+                power = 120
+            if speed > .3333:
+                power = 80
+            if speed > 0.5:
+                power = 60
+            if speed_diff > 1:
+                power = 40
+            move = move._replace(base_power = power)
+
+        if move.id == 'eruption' or move.id == 'waterspout':
+            power = math.floor(150 * (user.hp / user.maxhp))
+            if power < 1:
+                power = 1
+            move = move._replace(base_power = power)
+
+        if move.id == 'flail' or move.id == 'reversal':
+            power = 1
+            hp = user.hp / user.maxhp
+            if hp < 0.0417:
+                power = 200
+            if hp >= 0.0417:
+                power = 150
+            if hp > 0.1042:
+                power = 100
+            if hp > 0.2083:
+                power = 80
+            if hp > 0.3542:
+                power = 40
+            if hp >= 0.6875:
+                power = 20
+            move = move._replace(base_power = power)
+
+        if move.id == 'fling':
+            #default base power will be 30
+            power = dex.fling.get(user.item, 30)
+            move = move._replace(base_power = power)
+            if user.item == 'kingsrock' or user.item == 'razorfang':
+                move = move._replace(primary, {'boosts': None, 'status': None, 'volatile_status': 'flinch', 'self': None})
+            elif user.item == 'flameorb':
+                move = move._replace(primary, {'boosts': None, 'status': 'brn', 'volatile_status': None, 'self': None})
+            elif user.item == 'toxicorb':
+                move = move._replace(primary, {'boosts': None, 'status': 'tox', 'volatile_status': None, 'self': None})
+            elif user.item == 'lightball':
+                move = move._replace(primary, {'boosts': None, 'status': 'par', 'volatile_status': None, 'self': None})
+            elif user.item == 'poisonbarb':
+                move = move._replace(primary, {'boosts': None, 'status': 'psn', 'volatile_status': None, 'self': None})
+
+        # assume max base_power for return and frustration
+        if move.id == 'frustration' or move.id == 'return':
+            move = move._replace(base_power = 102)
+
+        if move.id == 'grassknot':
+            power = 1
+            if target.weightkg >= 200:
+                power = 120
+            if target.weightkg < 200:
+                power = 100
+            if target.weightkg < 100:
+                power = 80
+            if target.weightkg < 50:
+                power = 60
+            if target.weightkg < 25:
+                power = 40
+            if target.weightkg < 10:
+                power = 20
+            move = move._replace(base_power = power)
+
+        if move.id == 'heatcrash' or move.id == 'heavyslam':
+            power = 1
+            weight = target.weightm / user.weightm
+            if weight > 0.5:
+                power = 40
+            if weight < 0.5:
+                power = 60
+            if weight < 0.333:
+                power = 80
+            if weight < 0.25:
+                power = 100
+            if weight < 0.20:
+                power = 120
+            move = move._replace(base_power = power)
+
+        if move.id == 'gyroball':
+            power = math.floor(25 * (target.get_speed() / user.get_speed()))
+            if power < 1:
+                power = 1
+            move = move._replace(base_power = power)
+
+        if move.id == 'magnitude':
+            power = random.choice(dex.magnitude_power)
+            move = move._replace(base_power = power)
+
+        if move.id == 'naturalgift':
+            item = dex.item_dex[user.item]
+            if item.isBerry:
+                move = move._replace(base_power = item.naturalGift['basePower'])
+                move = move._replace(type = item.naturalGift['type'])
+        
+        if move.id == 'powertrip' or move.id == 'storedpower':
+            power = 20
+            for stat in user.boosts:
+                if user.boosts[stat] > 0:
+                    power += (user.boosts[stat] * 20)
+            move = move._replace(base_power = power)
+
+        if move.id == 'present':
+            power = random.choice([0, 0, 120, 80, 80, 80, 40, 40, 40, 40])
+            move = move._replace(base_power = power)
+
+        if move.id == 'punishment':
+            power = 60
+            for stat in target.boosts:
+                if target.boosts[stat] > 0:
+                    power += (target.boosts[stat] * 20)
+            if power > 200:
+                power = 200
+            move = move._replace(base_power = power)
+
+        if move.id == 'spitup':
+            power = 100 * user.stockpile
+            move = move._replace(base_power = power)
+            user.stockpile = 0
+
 
         # baneful bunker
         if 'banefulbunker' in target.volatile_statuses:
@@ -366,6 +516,23 @@ class Battle(object):
         else:
             user.damage(-(math.floor(damage * move.drain)))
 
+        #heal moves
+        user.damage(-(move.heal), flag='percentmaxhp')
+
+        #heal moves that depend on weather
+        if move.id in ['moonlight', 'morningsun', 'synthesis']:
+            if self.weather == '':
+                user.damage(-(0.5), flag='percentmaxhp')
+            elif self.weather == 'sunlight':
+                user.damage(-(0.66), flag='percentmaxhp')
+            else:
+                user.damage(-(0.25), flag='percentmaxhp')
+        if move.id == 'shoreup':
+            if self.weather == 'sandstorm':
+                user.damage(-(0.66), flag='percentmaxhp')
+            else:
+                user.damage(-(0.50), flag='percentmaxhp')
+
         #recoil moves
         if move.recoil.damage != 0:
             if move.recoil.condition == 'hit':
@@ -374,6 +541,9 @@ class Battle(object):
                 if move.recoil.type == 'damage':
                     user.damage(damage* move.recoil.damage)
 
+        # terrain moves 
+        if move.terrain is not None:
+            self.terrain = move.terrain
 
 
         # accupressure

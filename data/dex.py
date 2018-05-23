@@ -38,7 +38,7 @@ class Action(namedtuple('Action', ['user', 'move', 'target', 'zmove', 'base_move
 #-------------
 
 pokemonAttributes = ['id', 'num', 'species', 'baseSpecies', 'forme', 'formeLetter', 'types', 
-                        'genderRatio', 'baseStats', 'abilities', 'height', 'weight', 'color',
+                        'genderRatio', 'baseStats', 'abilities', 'heightm', 'weightkg', 'color',
                         'prevo', 'evos', 'evoLevel', 'eggGroups', 'otherFormes', 'tier', 'requiredItem']
 pokedex = {}
 
@@ -108,7 +108,7 @@ for i in formats_raw_data:
 #items_raw_data
 #---------
 
-itemAttributes = ['id', 'name', 'spritenum', 'isBerry', 'zMove', 'zMoveFrom', 'zMoveUser', 'zMoveType', 'megaStone', 'megaEvolves', 'num', 'gen', 'desc']
+itemAttributes = ['id', 'name', 'spritenum', 'isBerry', 'naturalGift', 'zMove', 'zMoveFrom', 'zMoveUser', 'zMoveType', 'megaStone', 'megaEvolves', 'num', 'gen', 'desc']
 item_dex = {}
 
 Item = namedtuple('Item', itemAttributes) #some missing props
@@ -349,3 +349,20 @@ no_metronome = {
     "vcreate",
     "wideguard"
 }
+
+# i shouldn't be using this, instead, i should be using the info in items.json
+fling = {
+    'flameorb': 30,
+    'kingsrock': 30,
+    'lightball': 30,
+    'mentalherb': 10,
+    'poisonbarb': 70,
+    'razorfang': 30,
+    'toxicorb': 30,
+    'whiteherb': 10,
+    'ironball': 130,
+    'hardstone': 100,
+    'rarebone': 100,
+}
+
+magnitude_power = [10, 30, 30, 50, 50, 50, 50, 70, 70, 70, 70, 70, 70, 90, 90, 90, 90, 110, 110, 150]
