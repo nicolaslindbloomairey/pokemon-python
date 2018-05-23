@@ -16,6 +16,7 @@ class TestProtect(unittest.TestCase):
 
         pidgeot = battle.sides[0].active_pokemon
         self.assertEqual(pidgeot.hp, pidgeot.maxhp)
+        self.assertTrue('protect' in pidgeot.volatile_statuses)
 
     def test_protect_fails(self):
         battle = Battle(debug=False, rng=False)
@@ -33,6 +34,7 @@ class TestProtect(unittest.TestCase):
 
         pidgeot = battle.sides[0].active_pokemon
         self.assertEqual(pidgeot.hp, pidgeot.maxhp-24)
+        self.assertFalse('protect' in pidgeot.volatile_statuses)
 
     def test_protect_one_turn(self):
         battle = Battle(debug=False, rng=False)

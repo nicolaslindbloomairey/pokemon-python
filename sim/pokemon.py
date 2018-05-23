@@ -12,6 +12,7 @@ class Pokemon(object):
         self.pokemon_set = pokemon_set
 
         self.species = re.sub(r'\W+', '', pokemon_set['species'].lower())
+        self.id = self.species
 
         self.nature = pokemon_set.get('nature', 'hardy')
 
@@ -23,6 +24,10 @@ class Pokemon(object):
 
         self.moves = pokemon_set.get('moves', ['tackle']*4)
         self.base_moves = self.moves
+
+        #self.pp = {}
+        #for move in self.moves:
+        #    self.pp.put(move, dex.move_dex[move].pp)
 
         self.fainted = False
         self.status = ''
@@ -36,6 +41,14 @@ class Pokemon(object):
         self.trapped = False
 
         self.aqua_ring = False
+
+        self.stockpile = 0
+
+        self.substitute = False
+        self.substitute_hp = 0
+
+        self.last_damaging_move = None
+        self.last_used_move = None
 
         self.crit_chance = 0
         self.boosts = {
@@ -59,6 +72,7 @@ class Pokemon(object):
         self.ability = self.base_ability
         self.item = pokemon_set.get('item', '')
         self.lost_item = False
+        self.last_used_item = None
 
         self.types = self.template.types
 
@@ -79,6 +93,18 @@ class Pokemon(object):
         for each in info:
             out += str(each)+ '|'
         return out
+
+    def form_change(self, species):
+        self.species = species
+        self.id = self.species
+        self.template = dex.pokedex[self.species]
+        self.base_ability = self.template.abilities.normal0
+        self.base_ability = re.sub(r'\W+', '', self.base_ability.lower())
+        self.ability = self.base_ability
+        self.types = self.template.types
+        self.calculate_stats()
+        self.hp = self.stats.hp
+        self.maxhp = self.hp
 
     def mega_evolve(self):
         canmega = False
@@ -112,8 +138,43 @@ class Pokemon(object):
             return False
         return True
 
+    def cure_status(self):
+        if self.status == '':
+            return False
+        self.toxic_n = 0
+        self.status = ''
+        return True
+
+    def add_status(self, status, source=None):
+        if self.status != '':
+            return False
+        if status is None:
+            return False
+
+        if status == 'brn' and ('Fire' in self.types or dex.ability_dex[self.ability].prevent_burn):
+            return False
+        if status == 'par' and ('Electric' in self.types or dex.ability_dex[self.ability].prevent_par):
+            return False
+        if (status == 'psn' or status == 'tox') and ('Poison' in self.types or 'Steel' in self.types):
+            if source is not None and source.ability == 'corrosion':
+                pass
+            else:
+                return False
+        if (status == 'psn' or status == 'tox') and dex.ability_dex[self.ability].prevent_psn:
+            return False
+        if status == 'slp' and dex.ability_dex[self.ability].prevent_slp:
+            return False
+
+        if status == 'slp':
+            self.sleep_n = random.randint(1, 3)
+
+
+        self.status = status
+        return True
 
     def boost(self, boosts):
+        if boosts is None:
+            return
         for stat in boosts:
             self.boosts[stat] += boosts[stat]
             if self.boosts[stat] > 6:
@@ -248,6 +309,8 @@ class Pokemon(object):
         self.stats = dex.Stats(hp, cal[0], cal[1], cal[2], cal[3], cal[4])
 
     def damage(self, amount, flag=None):
+        if self.fainted:
+            return 
         if flag is None:
             self.hp -= amount
         elif flag == 'percentmax':
@@ -258,6 +321,11 @@ class Pokemon(object):
             damage = math.floor(self.hp*amount)
             damage = 1 if damage < 1 else damage
             self.hp -= math.floor(self.hp*amount)
+
+        if 'endure' in self.volatile_statuses and self.hp < 1:
+            self.hp = 1
+        if self.hp > self.maxhp:
+            self.hp = self.maxhp
         if self.hp <= 0:
             self.faint()
 

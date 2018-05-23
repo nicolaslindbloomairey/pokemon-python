@@ -88,8 +88,12 @@ class Battle(object):
 
                 user = side.active_pokemon
 
+                if 'encore' in user.volatile_statuses and user.last_used_move is not None:
+                    move = dex.move_dex[user.last_used_move]
+                else:
+                    move = dex.move_dex[user.moves[side.choice.selection]]
+
                 # if the move is Z
-                move = dex.move_dex[user.moves[side.choice.selection]]
                 if side.choice.zmove and user.can_z(move):
                     item = dex.item_dex[user.item]
                     if item.zMove is True:
@@ -100,13 +104,14 @@ class Battle(object):
                     move = dex.move_dex[zmove_id]
 
                     # update the zmove power 
-                    if move.basePower == 1:
-                        move = move._replace(basePower = base_move.zMovePower)
+                    if move.base_power == 1:
+                        move = move._replace(base_power = base_move.z_move.base_power)
+                        move = move._replace(category = base_move.category)
 
                 # actually add the moves to the queue
-                if move.target == 'self':
+                if move.target_type == 'self':
                     target = side
-                elif move.target == 'normal':
+                elif move.target_type == 'normal':
                     target = self.sides[0 if side.id else 1]
                 else:
                     target = self.sides[0 if side.id else 1]
@@ -290,6 +295,22 @@ class Battle(object):
                 print(user.name + " fainted before they could move")
             return
 
+        user.last_used_move = move.id
+
+        # baneful bunker
+        if 'banefulbunker' in target.volatile_statuses:
+            if move.flags.contact:
+                user.add_status('psn')
+
+        # spiky shield
+        if 'spikeyshield' in target.volatile_statuses:
+            user.damage(0.125, flag='percentmaxhp')
+
+        if move.recoil.damage != 0:
+            if move.recoil.condition == 'always':
+                if move.recoil.type == 'maxhp':
+                    user.damage(move.recoil.damage, flag='percentmaxhp')
+
         # accuracy_check
         if not self.accuracy_check(user, move, target):
             # move missed! do noting
@@ -297,45 +318,67 @@ class Battle(object):
             #    print(user.name + " used " + move.name + " but it missed!")
             return
 
-        if move.isZ is not None:
+        # assist
+        if move.id == 'assist':
+            move = dex.move_dex[target.moves[random.randint(0, 3)]]
+        
+        # metronome
+        if move.id == 'metronome':
+            while move.id in dex.no_metronome:
+                move = dex.move_dex[random.choice(dex.move_dex.keys())]
+
+        # mimic
+        if move.id == 'mimic':
+            if target.last_used_move is not None:
+                user.moves.pop('mimic')
+                user.move.append(target.last_used_move)
+                move = dex.move_dex[target.last_used_move]
+
+        # copycat
+        if move.id == 'copycat':
+            if target.last_used_move is not None:
+                move = dex.move_dex[target.last_used_move]
+
+        if move.id == 'naturepower':
+            move = dex.move_dex['triattack']
+
+        # mirror move
+        if move.id == 'mirror move':
+            if target.last_used_move is not None:
+                move = dex.move_dex[target.last_used_move]
+
+        # zmove pp
+        if move.z_move.crystal is not None:
             user.side.used_zmove = True
 
-        #move hit, continue
 
+        # do damage
         damage = self.damage(user, move, target)
-
-
         target.damage(damage)
-        if move.drain is not None:
-            if user.item == 'bigroot':
-                user.damage(-(math.floor(damage * move.drain[0] / move.drain[1] * 1.3)))
-            else:
-                user.damage(-(math.floor(damage * move.drain[0] / move.drain[1])))
 
-        if move.id == 'aquaring':
-            user.aqua_ring = True
-        if move.id == 'ingrain':
-            user.aqua_ring = True
-            user.trapped = True
+        # update flag
+        if damage > 0:
+            target.last_damaging_move = move.id
 
-        # stat changing moves
-        if move.boosts is not None:
-            target.boost(move.boosts)
-        if move.volatileStatus is not None:
-            target.volatile_statuses.add(move.volatileStatus)
+        #drain moves
+        if user.item == 'bigroot':
+            user.damage(-(math.floor(damage * move.drain * 1.3)))
+        else:
+            user.damage(-(math.floor(damage * move.drain)))
 
-        if move.self is not None:
-            if 'boosts' in move.self:
-                user.boost(move.self['boosts'])
-            if 'volatileStatus' in move.self:
-                target.volatile_statuses.add(move.self['volatileStatus'])
+        #recoil moves
+        if move.recoil.damage != 0:
+            if move.recoil.condition == 'hit':
+                if move.recoil.type == 'maxhp':
+                    user.damage(move.recoil.damage, flag='percentmaxhp')
+                if move.recoil.type == 'damage':
+                    user.damage(damage* move.recoil.damage)
+
 
 
         # accupressure
-        # raises a random stat that is not maxed already by 2
         if move.id == 'acupressure':
             possible_stats = [stat for stat in user.boosts if user.boosts[stat] < 6]
-
             if len(possible_stats) > 0:
                 rand_int = random.randint(0, len(possible_stats)-1)
                 boost_stat = possible_stats[rand_int]
@@ -343,73 +386,322 @@ class Battle(object):
                 if user.boosts[boost_stat] > 6:
                     user.boosts[boost_stat] = 6
 
+        # aqua ring
+        if move.id == 'aquaring':
+            user.aqua_ring = True
 
-        # primary effects
-        if move.status is not None and target.fainted != True:
-            if target.status == '':
-                target.status = move.status
-                if move.status == 'slp':
-                    target.sleep_n = random.randint(1, 3)
+        # ingrain
+        if move.id == 'ingrain':
+            user.aqua_ring = True
+            user.trapped = True
+
+        # aromatherapy
+        if move.id == 'aromatherapy' or move.id == 'healbell': 
+            for pokemon in user.side.pokemon:
+                pokemon.cure_status()
+
+
+        # belly drum
+        if move.id == 'bellydrum' and user.hp > (0.5 * user.maxhp):
+            user.boost({'atk': 6})
+            user.damage(0.5, flag='percentmax')
+
+        # bestow
+        if move.id == 'bestow':
+            if user.item != '' and target.item == '':
+                target.item = user.item
+                user.item = ''
+
+        # camouflage
+        # every battle played using the sim is a 'link battle'
+        if move.id == 'camouflage':
+            user.types = ['Normal']
+
+        # conversion
+        move_types = []
+        if move.id == 'conversion':
+            for move in user.moves:
+                if dex.move_dex[move].type not in user.types:
+                    move_types.append(dex.move_dex[move].type)
+            if len(move_types) > 0:
+                user.types = [move_types[random.randint(0, len(move_types)-1)]]
+
+        # conversion 2
+        if move.id == 'conversion2':
+            if user.last_damaging_move is not None:
+                for type in dex.typechart_dex[dex.move_dex[user.last_damaging_move].type].damage_taken:
+                    if type not in user.types:
+                        move_types.append(type)
+            if len(move_types) > 0:
+                user.types = [move_types[random.randint(0, len(move_types)-1)]]
+
+        # curse
+        if move.id == 'curse' and 'Ghost' not in user.types:
+            user.boost({'atk': 1, 'def': 1, 'spe': -1})
+
+        # defog
+        if move.id == 'defog':
+            target.boost({'evasion': -1})
+            target.side.side_condition = set()
+
+        # entrainment
+        if move.id == 'entrainment':
+            target.ability = user.ability
+
+        # flower shield
+        if move.id == 'flowershield':
+            if 'Grass' in user.types:
+                user.boost({'def': 1})
+            if 'Grass' in target.types:
+                target.boost({'def': 1})
+
+        # focus energy
+        if move.id == 'focusenergy':
+            user.crit_ratio += 2
+
+        # forests curse
+        if move.id == 'forestscurse':
+            target.types.append('Grass')
+
+        # gastro acid
+        if move.id == 'gastroacid':
+            target.ability = ''
+
+        # guard split
+        if move.id == 'guardsplit':
+            avg_def = (user.stats.defense + target.stats.defense)/2
+            avg_spd = (user.stats.specialdefense + target.stats.specialdefense)/2
+
+            user.stats._replace(defense = avg_def)
+            target.stats._replace(defense = avg_def)
+
+            user.stats._replace(specialdefense = avg_spd)
+            target.stats._replace(specialdefense = avg_spd)
+
+        # guard swap
+        if move.id == 'guardswap':
+            user_def = user.stats.defense
+            target_def = target.stats.defense
+
+            user_spd = user.stats.specialdefense
+            target_spd = target.stats.specialdefense
+
+            user.stats._replace(defense = target_def)
+            target.stats._replace(defense = user_def)
+
+            user.stats._replace(specialdefense = target_spd)
+            target.stats._replace(specialdefense = user_spd)
+
+        # heart swap
+        if move.id == 'heartswap':
+            user_boosts = user.boosts
+            target_boosts = target.boosts
+
+            user.boosts = target_boosts
+            target.boosts = user_boosts
+
+        # kinggsheild
+        if move.id == 'kingsshield' and user.id == 'aegislash':
+            user.form_change('aegislashshield')
+
+        # pain split
+        if move.id == 'painsplit':
+            avg_hp = (user.hp + target.hp) /2
+            user.hp = avg_hp if avg_hp < user.maxhp else user.maxhp
+            target.hp = avg_hp if avg_hp < target.maxhp else target.maxhp
+
+        # power split
+        if move.id == 'powersplit':
+            avg_atk = (user.stats.attack + target.stats.attack)/2
+            avg_spa = (user.stats.specialattack + target.stats.specialattack)/2
+
+            user.stats._replace(attack = avg_atk)
+            target.stats._replace(attack = avg_atk)
+
+            user.stats._replace(specialattack = avg_spa)
+            target.stats._replace(specialattack = avg_spa)
+
+        # power swap
+        if move.id == 'powerswap':
+            user_atk = user.stats.attack
+            target_atk = target.stats.attack
+
+            user_spa = user.stats.specialattack
+            target_spa = target.stats.specialattack
+
+            user.stats._replace(attack = target_atk)
+            target.stats._replace(attack = user_atk)
+
+            user.stats._replace(specialattack = target_spa)
+            target.stats._replace(specialattack = user_spa)
+
+        # power trick
+        if move.id == 'powertrick':
+            user_atk = user.stats.attack
+            user_spa = user.stats.specialattack
+
+            user.stats._replace(specialattack = user_atk)
+            user.stats._replace(attack = user_spa)
+
+        # psychoshift
+        if move.id == 'psychoshift':
+            if target.add_status(user.status):
+                user.cure_status()
+
+        # psychup
+        if move.id == 'psychup':
+            user.boosts = target.boosts
+
+        # purify
+        if move.id == 'purify':
+            if target.cure_status():
+                user.damage(-0.5, flag='percentmaxhp')
         
+        # recycle
+        if move.id == 'recycle':
+            if user.last_used_item is not None and user.item == '':
+                user.item = user.last_used_item
+
+        # reflect type
+        if move.id == 'reflecttype':
+            user.types = target.types
+
+        # refresh
+        if move.id == 'refresh':
+            if user.status in ['brn', 'par', 'psn', 'tox']:
+                user.cure_status()
+
+        # rest
+        if move.id == 'rest':
+            if user.status != 'slp':
+                user.status = 'slp'
+                user.sleep_n = 2
+                user.damage(-1, flag='percentmaxhp')
+
+        # role play
+        if move.id == 'roleplay':
+            user.ability = target.ability
+
+        # simple beam
+        if move.id == 'simplebeam':
+            target.ability = 'simple'
+
+        # sketch
+        if move.id == 'sketch':
+            if target.last_used_move is not None:
+                user.moves.remove('sketch')
+                user.moves.append(target.last_used_move)
+
+        # skill swap
+        if move.id == 'skillswap':
+            user_ability = user.ability
+            target_ability = target.ability
+
+            user.ability = target_ability
+            target.ability = user_ability
+
+        # sleep talk
+        if move.id == 'sleeptalk':
+            if user.status == 'slp' and len(user.moves) > 1:
+                while move.id == 'sleeptalk':
+                    move = dex.move_dex[user.moves[random.randint(0, len(user.moves)-1)]]
+
+        # soak
+        if move.id == 'soak':
+            target.types = ['Water']
+
+        # speed swap
+        if move.id == 'speedswap':
+            user_speed = user.stats.speed
+            target_speed = target.stats.speed
+
+            user.stats._replace(speed = target_speed)
+            target.stats._replace(speed = user_speed)
+
+        # stockpile
+        if move.id == 'stockpile':
+            user.stockpile += 1
+            if user.stockpile > 3:
+                user.stockpile = 3
+            user.boost({'def': 1, 'spd': 1})
+
+        # strength sap
+        if move.id == 'strengthsap':
+            if target.boost['atk'] != -6:
+                user.damage(-(target.get_attack()))
+                target.boost({'atk': -1})
+
+        # substitute
+        if move.id == 'substitute':
+            if not user.substitute and user.hp > user.maxhp*0.25:
+                user.substitute = True
+                user.damage(0.25, flag='percentmaxhp')
+                user.substitute_hp = math.floor(0.25 * user.maxhp)
+
+        # switcheroo and trick
+        if move.id == 'switcheroo' or move.id == 'trick':
+            user_item = user.item
+            target_item = target.item
+
+            user.item = target_item
+            target.item = user_item
+
+        # topsy-turvy
+        if move.id == 'topsyturvy':
+            for stat in target.boosts:
+                target.boosts[stat] = -target.boost[stat]
+
+        # trick or treat
+        if move.id == 'trickortreat':
+            target.types.append('Ghost')
+
+        # worry seed
+        if move.id == 'worryseed':
+            target.ability = 'insomnia'
+
+        # trapping moves
         if move.traps == True:
             target.trapped = True
 
 
+        # stat changing moves 
+        # primary effects
+        if move.primary['boosts'] is not None:
+            target.boost(move.primary['boosts'])
+        if move.primary['volatile_status'] is not None:
+            target.volatile_statuses.add(move.primary['volatile_status'])
+
+        if move.primary['self'] is not None:
+            if 'boosts' in move.primary['self']:
+                user.boost(move.primary['self']['boosts'])
+            if 'volatile_status' in move.primary['self']:
+                user.volatile_statuses.add(move.primary['self']['volatile_status'])
+
+        if move.primary['status'] is not None:
+            target.add_status(move.primary['status'])
+
         # secondary effects
-        if move.secondary is not None and target.fainted != True:
-            temp = random.randint(0, 99)
-            check = move.secondary['chance']
-            #print(str(temp) + '<' + str(check))
-            if temp < check:
-                if 'boosts' in move.secondary:
-                    target.boost(move.secondary['boosts'])
-                if 'status' in move.secondary:
-                    status = move.secondary['status']
-                    if target.status == '':
-                        if status == 'brn' and ('Fire' in target.types or dex.ability_dex[target.ability].prevent_burn):
-                            pass
-                        if status == 'par' and ('Electric' in target.types or dex.ability_dex[target.ability].prevent_par):
-                            pass
-                        if status == 'psn' and (('Poison' in target.types or 'Steel' in target.types) and user.ability != 'corosion'):
-                            pass
-                        if status == 'psn' and dex.ability_dex[target.ability].prevent_psn:
-                            pass
-                        if status == 'slp' and dex.ability_dex[target.ability].prevent_slp:
-                            pass
-                        else:
-                            target.status = move.secondary['status']
-                if 'volatileStatus' in move.secondary:
-                    target.volatile_statuses.add(move.secondary['volatileStatus'])
-
-        # tertiary effects only exist for Ice Fang, Fire Fang, and Thunder Fang
-        if move.tertiary is not None and target.fainted != True:
-            temp = random.randint(0, 99)
-            check = move.tertiary['chance']
-            #print(str(temp) + '<' + str(check))
-            if temp < check:
-                if 'boosts' in move.tertiary:
-                    target.boost(move.secondary['boosts'])
-                if 'status' in move.tertiary:
-                    status = move.tertiary['status']
-                    if target.status == '':
-                        if status == 'brn' and ('Fire' in target.types or dex.ability_dex[target.ability].prevent_burn):
-                            pass
-                        else:
-                            target.status = move.tertiary['status']
-                if 'volatileStatus' in move.tertiary:
-                    target.volatile_statuses.add(move.tertiary['volatileStatus'])
-            
-
+        for effect in move.secondary:
+            if not target.fainted:
+                temp = random.randint(0, 99)
+                check = effect['chance']
+                if temp < check:
+                    if 'boosts' in effect:
+                        target.boost(effect['boosts'])
+                    if 'status' in effect:
+                        target.add_status(effect['status'], user)
+                    if 'volatileStatus' in effect:
+                        target.volatile_statuses.add(effect['volatileStatus'])
 
     def damage(self, user, move, target):
         damage = 0
 
         crit = False
-        crit_chance = user.crit_chance + (move.critRatio if move.critRatio is not None else 0)
-        if move.id == 'frostbreath' or move.id == 'stormthrow' or (random.random() < dex.crit[crit_chance] and self.rng):
+        crit_chance = user.crit_chance + (move.crit_ratio if move.crit_ratio is not None else 0)
+        if crit_chance >= 3 or (random.random() < dex.crit[crit_chance] and self.rng):
             crit = True
 
-        power = move.basePower
+        power = move.base_power
         if move.id == 'acrobatics' and user.item == '':
             power *= 2
 
@@ -454,8 +746,10 @@ class Battle(object):
         if user.burned and move.category == 'Physical' and user.ability != 'guts':
             modifier *= 0.5
 #       other
-        if move.isZ is not None and 'protect' in target.volatile_statuses:
+        if move.z_move.crystal is not None and 'protect' in target.volatile_statuses:
             modifier *= 0.25
+        # helping hand
+
 
         #floor damage before applying modifier
         damage = math.floor(damage)
@@ -490,17 +784,21 @@ class Battle(object):
             return False
         # asleep pokemon miss unless they use snore or sleeptalk
         elif user.status == 'slp':
-            if move.id != 'snore' and move.id != 'sleeptalk':
+            if not move.sleep_usable:
 
                 if self.debug:
                     print(user.fullname + " is asleep.")
                 return False
 
-            
-        if 'protect' in target.volatile_statuses and 'protect' in move.flags:
+        if 'protect' in target.volatile_statuses and move.flags.protect:
             if self.debug:
                 print(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
             return False
+        if 'banefulbunker' in target.volatile_statuses and move.flags.protect:
+            if self.debug:
+                print(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
+            return False
+            
 
         # protect moves accuracy
         if move.id in ['protect', 'detect', 'endure', 'wide guard', 'quick guard', 'spikyshield', 'kingsshield', 'banefulbunker']:

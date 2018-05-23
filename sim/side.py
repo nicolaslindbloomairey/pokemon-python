@@ -26,6 +26,7 @@ class Side(object):
 
         self.active_pokemon = None
         self.volatile_statuses = set()
+        self.side_conditions = set()
 
         '''
             current request is one of

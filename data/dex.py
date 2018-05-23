@@ -125,25 +125,33 @@ for i in items_raw_data:
 #moves_raw_data
 #---------
 
-moveAttributes = ['id', 'status', 'name', 'num', 'accuracy', 'basePower', 'self', 'traps', 'volatileStatus', 'category', 'desc', 'shortDesc', 'pp', 'priority', 'flags', 'boosts', 'drain', 'isZ', 'critRatio', 'secondary', 'tertiary', 'target', 'type', 'zMovePower', 'zMoveBoosts', 'contestType']
+move_attributes = ['num', 'accuracy', 'category', 'desc', 'id', 'name', 'pp',
+                   'priority', 'flags', 'type', 'terrain', 'traps', 'crit_ratio',
+                   'ignore_accuracy', 'weather', 'drain', 'heal', 'recoil',
+                   'target_type', 'base_power', 'short_desc', 'ignore_ability',
+                   'ignore_defensive', 'ignore_evasion', 'ignore_immunity', 
+                   'breaks_protect', 'defensive_category', 'force_switch', 
+                   'future_move', 'unreleased', 'viable', 'multi_hit',
+                   'no_faint', 'no_pp_boosts', 'no_sketch', 'pseudo_weather',
+                   'thaws_target', 'self_switch', 'side_condition', 'sleep_usable',
+                   'true_damage', 'primary', 'secondary', 'z_move']
+flags = ['pulse', 'bullet', 'sound', 'powder', 'authentic', 'nonsky', 'distance',
+         'dance', 'mystery', 'protect', 'snatch', 'recharge', 'gravity', 'mirror',
+         'contact', 'punch', 'defrost', 'charge', 'bite', 'reflectable', 'heal']
+recoil_attributes = ['damage', 'type', 'condition']
+z_move = ['boosts', 'crystal', 'effect', 'base_power']
 move_dex = {}
 
-MoveTuple = namedtuple('Move', moveAttributes) #some missing props
-
-class Move(MoveTuple):
-    def set_zpower(self, power):
-        self.zpower = power
-
-    def get_zpower(self):
-        return self.zpower
+Move = namedtuple('Move', move_attributes) #some missing props
+Flags = namedtuple('Flags', flags)
+Recoil = namedtuple('Recoil', recoil_attributes)
+ZMove = namedtuple('ZMove', z_move)
         
-
-for i in moves_raw_data:
-    for a in moveAttributes:
-        if a not in moves_raw_data[i]:
-            moves_raw_data[i][a] = None
-
-    move_dex[i] = Move._make([moves_raw_data[i][j] for j in moveAttributes])
+for move in moves_raw_data:
+    moves_raw_data[move]['flags'] = Flags._make([moves_raw_data[move]['flags'][flag] for flag in flags])
+    moves_raw_data[move]['recoil'] = Recoil._make([moves_raw_data[move]['recoil'][attribute] for attribute in recoil_attributes])
+    moves_raw_data[move]['z_move'] = ZMove._make([moves_raw_data[move]['z_move'][attribute] for attribute in z_move])
+    move_dex[move] = Move._make([moves_raw_data[move][attribute] for attribute in move_attributes])
 
 zmove_chart = {
     'normaliumz': 'breakneckblitz',
@@ -171,7 +179,7 @@ zmove_chart = {
 #---------
 
 typechartAttributes = ['damage_taken', 'HPivs']
-damagetakenAttributes = ['prankster', 'par', 'brn', 'trapped', 'powder', 'sandstorm', 'hail', 'frz', 'psn', 'tox', 'Bug', 'Dark', 'Dragon', 'Electric', 'Fairy', 'Fighting', 'Fire', 'Flying', 'Ghost', 'Grass', 'Ground', 'Ice', 'Normal', 'Poison', 'Psychic', 'Rock', 'Steel', 'Water']
+damagetakenAttributes = ['Bug', 'Dark', 'Dragon', 'Electric', 'Fairy', 'Fighting', 'Fire', 'Flying', 'Ghost', 'Grass', 'Ground', 'Ice', 'Normal', 'Poison', 'Psychic', 'Rock', 'Steel', 'Water']
 
 typechart_dex = {}
 

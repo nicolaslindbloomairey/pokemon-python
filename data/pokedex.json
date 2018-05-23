@@ -25554,6 +25554,38 @@
         ],
         "tier": "Uber"
     },
+    "aegislashshield": {
+        "num": 681,
+        "species": "Aegislash",
+        "baseForme": "Shield",
+        "types": [
+            "Steel",
+            "Ghost"
+        ],
+        "baseStats": {
+            "hp": 60,
+            "atk": 50,
+            "def": 150,
+            "spa": 50,
+            "spd": 150,
+            "spe": 60
+        },
+        "abilities": {
+            "0": "Stance Change"
+        },
+        "heightm": 1.7,
+        "weightkg": 53,
+        "color": "Brown",
+        "prevo": "doublade",
+        "evoLevel": 35,
+        "eggGroups": [
+            "Mineral"
+        ],
+        "otherFormes": [
+            "aegislashblade"
+        ],
+        "tier": "Uber"
+    },
     "aegislashblade": {
         "num": 681,
         "species": "Aegislash-Blade",
