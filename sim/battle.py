@@ -60,7 +60,6 @@ class Battle(object):
                 self.error = True
                 break
         if self.debug or self.error:
-            print(self.debug_log)
             print(''.join(self.debug_log))
 
     def __str__(self):
