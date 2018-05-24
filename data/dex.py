@@ -365,4 +365,23 @@ fling = {
     'rarebone': 100,
 }
 
+type_resist_berries = {
+    'occaberry': 'Fire',
+    'passhoberry': 'Water',
+    'wacanberry': 'Electric',
+    'rindoberry': 'Grass',
+    'yacheberry': 'Ice',
+    'chopleberry': 'Fighting',
+    'kebiaberry': 'Poison',
+    'shucaberry': 'Ground',
+    'cobaberry': 'Flying',
+    'payapaberry': 'Psychic',
+    'tangaberry': 'Bug',
+    'chartiberry': 'Rock',
+    'kasibberry': 'Ghost',
+    'habanberry': 'Dragon',
+    'colburberry': 'Dark',
+    'babiriberry': 'Steel',
+}
+
 magnitude_power = [10, 30, 30, 50, 50, 50, 50, 70, 70, 70, 70, 70, 70, 90, 90, 90, 90, 110, 110, 150]

@@ -385,211 +385,31 @@ class Battle(object):
             self.log(user.name + " fainted before they could move")
             return
 
+        # subtract pp
         # struggle and zmoves do not have pp
         if move.id != 'struggle' and move.z_move.crystal is None:
             user.pp[move.id] -= 1
-            self.log(move.name + ' has ' + str(user.pp[move.id]) + ' pp left')
+            #self.log(move.name + ' has ' + str(user.pp[move.id]) + ' pp left')
+
+            # remove the move from the pokemons move list if it has no pp left
             if user.pp[move.id] == 0:
                 user.moves.remove(move.id)
 
         user.last_used_move = move.id
 
-        # update the moves power
-        if move.id == 'beatup':
-            power = 0
-            for pokemon in user.side.pokemon:
-                power += (dex.pokedex[pokemon.id].baseStats.attack / 10) + 5
-            move = move._replace(base_power = power)
-        
-        if move.id == 'crushgrip' or move.id == 'wringout':
-            power = math.floor(120 * (target.hp / target.maxhp))
-            if power < 1:
-                power = 1
-            move = move._replace(base_power = power)
-
-        if move.id == 'electroball':
-            power = 1
-            speed = target.stats.speed / user.stats.speed
-            if speed <= 0.25:
-                power = 150
-            if speed > 0.25:
-                power = 120
-            if speed > .3333:
-                power = 80
-            if speed > 0.5:
-                power = 60
-            if speed > 1:
-                power = 40
-            move = move._replace(base_power = power)
-
-        if move.id == 'eruption' or move.id == 'waterspout':
-            power = math.floor(150 * (user.hp / user.maxhp))
-            if power < 1:
-                power = 1
-            move = move._replace(base_power = power)
-
-        if move.id == 'flail' or move.id == 'reversal':
-            power = 1
-            hp = user.hp / user.maxhp
-            if hp < 0.0417:
-                power = 200
-            if hp >= 0.0417:
-                power = 150
-            if hp > 0.1042:
-                power = 100
-            if hp > 0.2083:
-                power = 80
-            if hp > 0.3542:
-                power = 40
-            if hp >= 0.6875:
-                power = 20
-            move = move._replace(base_power = power)
-
-        if move.id == 'fling':
-            #default base power will be 30
-            power = dex.fling.get(user.item, 30)
-            move = move._replace(base_power = power)
-            if user.item == 'kingsrock' or user.item == 'razorfang':
-                move = move._replace(primary, {'boosts': None, 'status': None, 'volatile_status': 'flinch', 'self': None})
-            elif user.item == 'flameorb':
-                move = move._replace(primary, {'boosts': None, 'status': 'brn', 'volatile_status': None, 'self': None})
-            elif user.item == 'toxicorb':
-                move = move._replace(primary, {'boosts': None, 'status': 'tox', 'volatile_status': None, 'self': None})
-            elif user.item == 'lightball':
-                move = move._replace(primary, {'boosts': None, 'status': 'par', 'volatile_status': None, 'self': None})
-            elif user.item == 'poisonbarb':
-                move = move._replace(primary, {'boosts': None, 'status': 'psn', 'volatile_status': None, 'self': None})
-
-        # assume max base_power for return and frustration
-        if move.id == 'frustration' or move.id == 'return':
-            move = move._replace(base_power = 102)
-
-        if move.id == 'grassknot':
-            power = 1
-            weight = dex.pokedex[target.id].weightkg
-            if weight >= 200:
-                power = 120
-            if weight < 200:
-                power = 100
-            if weight < 100:
-                power = 80
-            if weight < 50:
-                power = 60
-            if weight < 25:
-                power = 40
-            if weight < 10:
-                power = 20
-            move = move._replace(base_power = power)
-
-        if move.id == 'heatcrash' or move.id == 'heavyslam':
-            power = 1
-            weight = dex.pokedex[target.id].weightkg / dex.pokedex[user.id].weightkg
-            if weight > 0.5:
-                power = 40
-            if weight < 0.5:
-                power = 60
-            if weight < 0.333:
-                power = 80
-            if weight < 0.25:
-                power = 100
-            if weight < 0.20:
-                power = 120
-            move = move._replace(base_power = power)
-
-        if move.id == 'gyroball':
-            power = math.floor(25 * (target.get_speed() / user.get_speed()))
-            if power < 1:
-                power = 1
-            move = move._replace(base_power = power)
-
-        if move.id == 'magnitude':
-            power = random.choice(dex.magnitude_power)
-            move = move._replace(base_power = power)
-
-        if move.id == 'naturalgift':
-            item = dex.item_dex[user.item]
-            if item.isBerry:
-                move = move._replace(base_power = item.naturalGift['basePower'])
-                move = move._replace(type = item.naturalGift['type'])
-        
-        if move.id == 'powertrip' or move.id == 'storedpower':
-            power = 20
-            for stat in user.boosts:
-                if user.boosts[stat] > 0:
-                    power += (user.boosts[stat] * 20)
-            move = move._replace(base_power = power)
-
-        if move.id == 'present':
-            power = random.choice([0, 0, 120, 80, 80, 80, 40, 40, 40, 40])
-            move = move._replace(base_power = power)
-
-        if move.id == 'punishment':
-            power = 60
-            for stat in target.boosts:
-                if target.boosts[stat] > 0:
-                    power += (target.boosts[stat] * 20)
-            if power > 200:
-                power = 200
-            move = move._replace(base_power = power)
-
-        if move.id == 'spitup':
-            power = 100 * user.stockpile
-            move = move._replace(base_power = power)
-            user.stockpile = 0
-
-
-        # baneful bunker
-        if 'banefulbunker' in target.volatile_statuses:
-            if move.flags.contact:
-                user.add_status('psn')
-
-        # spiky shield
-        if 'spikeyshield' in target.volatile_statuses:
-            user.damage(0.125, flag='percentmaxhp')
-
-        if move.recoil.damage != 0:
-            if move.recoil.condition == 'always':
-                if move.recoil.type == 'maxhp':
-                    user.damage(move.recoil.damage, flag='percentmaxhp')
+        move = self.update_move_before_running(user, move, target)
 
         # accuracy_check
         if not self.accuracy_check(user, move, target):
-            # move missed! do noting
+            # move missed! do nothing
             return
 
-        # assist
-        if move.id == 'assist':
-            move = dex.move_dex[target.moves[random.randint(0, 3)]]
-        
-        # metronome
-        if move.id == 'metronome':
-            while move.id in dex.no_metronome:
-                move = dex.move_dex[random.choice(dex.move_dex.keys())]
-
-        # mimic
-        if move.id == 'mimic':
-            if target.last_used_move is not None:
-                user.moves.pop('mimic')
-                user.move.append(target.last_used_move)
-                move = dex.move_dex[target.last_used_move]
-
-        # copycat
-        if move.id == 'copycat':
-            if target.last_used_move is not None:
-                move = dex.move_dex[target.last_used_move]
-
-        if move.id == 'naturepower':
-            move = dex.move_dex['triattack']
-
-        # mirror move
-        if move.id == 'mirror move':
-            if target.last_used_move is not None:
-                move = dex.move_dex[target.last_used_move]
 
         # zmove pp
         if move.z_move.crystal is not None:
             user.side.used_zmove = True
 
+        # handle multi hit moves
         number_hits = 1
         if move.multi_hit is not None:
             number_hits = random.choice(move.multi_hit)
@@ -606,13 +426,521 @@ class Battle(object):
                 if not self.accuracy_check(user, move, target):
                     return
 
+            # damage calculation
             damage = self.damage(user, move, target)
+            # do the damage
+            # how much damage was actually done
+            # is limited by how much hp the target had left
             damage = target.damage(damage)
 
-        # update flag
         if damage > 0:
             target.last_damaging_move = move.id
 
+        # do unique move things
+        self.unique_moves_after_damage(user, move, target, damage)
+
+        # handle boosts and statuses
+        self.boosts_statuses(user, move, target)
+
+    def damage(self, user, move, target):
+
+        # status moves do zero dmg
+        # return early
+        if move.category == 'Status':
+            self.log(user.fullname + " used " + move.name)
+            return 0
+
+        damage = 0
+
+
+        crit = False
+
+        move_crit = move.crit_ratio if move.crit_ratio is not None else 0
+        crit_chance = user.crit_chance + move_crit
+        random_crit = random.random() < dex.crit[crit_chance] and self.rng
+
+        if crit_chance >= 3 or random_crit:
+            crit = True
+
+        power = move.base_power
+
+        if move.category == 'Special':
+            attack = user.get_specialattack(crit)
+            defense = target.get_specialdefense(crit)
+        elif move.category == 'Physical':
+            attack = user.get_attack(crit)
+            defense = target.get_defense(crit)
+
+        damage = ((((((2 * user.level) / 5) + 2) * attack * power / defense) / 50) + 2) 
+
+        #------------------------------------
+        # multiply the damage by each modifier
+        #------------------------------------
+        modifier = 1
+
+        # 0.75 if move has multiple targets, 1 otherwise
+
+        # weather
+        if self.weather == 'rain' or self.weather == 'heavy_rain':
+            if move.type == 'Water':
+                modifier *= 1.5
+            elif move.type == 'Fire':
+                modifier *= 0.5
+        elif self.weather == 'sunlight' or self.weather == 'heavy_sunlight':
+            if move.type == 'Water':
+                modifier *= 0.5
+            elif move.type == 'Fire':
+                modifier *= 1.5
+        else:
+            modifier *= 1.0
+
+        if crit:
+            modifier *= 1.5
+
+        # random float
+        # if rng is off always do max damage
+        if self.rng:
+            modifier *= random.uniform(0.85, 1.0)
+
+        # same type attack bonus
+        if move.type in user.types:
+            modifier *= 1.5
+
+        # type effectiveness
+        type_modifier = 1
+        for each in target.types:
+            type_effect = dex.typechart_dex[each].damage_taken[move.type]
+            type_modifier *= type_effect
+            modifier *= type_effect
+
+        # burn
+        if user.burned and move.category == 'Physical' and user.ability != 'guts':
+            modifier *= 0.5
+
+        # zmove going through protect
+        if move.z_move.crystal is not None and 'protect' in target.volatile_statuses:
+            modifier *= 0.25
+
+        # aurora veil, lightscreen, reflect
+        if 'auroraveil' in target.side.side_conditions and not crit and user.ability != 'infiltrator':
+            #double battle this should be 0.66
+            modifier *= 0.5
+        elif 'lightscreen' in target.side.side_conditions and move.category == 'Special' and not crit and user.ability != 'infiltrator':
+            #double battle this should be 0.66
+            modifier *= 0.5
+        elif 'reflect' in target.side.side_conditions and move.category == 'Physical'and not crit and user.ability != 'infiltrator':
+            #double battle this should be 0.66
+            modifier *= 0.5
+
+        if 'minimize' in target.volatile_statuses:
+            if move.id in ['dragonrush', 'bodyslam', 'heatcrash', 'heavyslam', 'phantomforce', 'shadowforce', 'stomp']:
+                modifier *= 2
+
+        #magnitude, earthquake, surf, whirlpool do double dmg to dig and dive states
+        
+        #----------------
+        #ability modifiers
+        #-----------------
+
+        if target.ability == 'fluffy':
+            if move.flags.contact and move.type != 'Fire':
+                modifier *= 0.5
+            elif not move.flags.contact and move.type == 'Fire':
+                modifier *= 2
+
+        elif target.ability == 'filter' or target.ability == 'prismarmor':
+            if type_modifier > 1:
+                modifier *= 0.75
+
+        # friend guard
+
+        elif target.ability in ['multiscale', 'shadowshield', 'solidrock']:
+            if target.hp == target.maxhp:
+                modifier *= 0.5
+
+        if user.ability == 'sniper':
+            if crit:
+                modifier *= 1.5
+        
+        elif user.ability == 'tintedlens':
+            if type_modifier < 1:
+                modifier *= 2
+
+        #--------------
+        # item modifiers    
+        #---------------
+        if target.item == 'chilanberry' and move.type == 'Normal':
+            modifier *= 0.5
+        if user.item == 'expertbelt' and type_modifier > 1:
+            modifier *= 1.2
+        if user.item == 'lifeorb':
+            modifier *= 1.3
+        if user.item == 'metronome':
+            modifier *= (1+(user.consecutive_move_uses*0.2))
+        # type-resist berries
+        if target.item in list(dex.type_resist_berries.keys()):
+            if dex.type_resist_berries[target.item] == move.type:
+                if type_modifier > 1:
+                    modifier *= 0.5
+
+        #floor damage before applying modifier
+        damage = math.floor(damage)
+
+        damage *= modifier
+        #floor again
+        damage = math.floor(damage)
+        if crit:
+            self.log(user.fullname + " used " + move.name
+                  + ' doing ' + str(damage) + ' dmg with a crit!')
+        else:
+            self.log(user.fullname + " used " + move.name
+                  + ' doing ' + str(damage) + ' dmg.')
+
+        return damage
+
+    def accuracy_check(self, user, move, target):
+        '''
+        check if the move works
+
+        check specific move requirements to not fail
+        at the end check accuracy
+
+        a False return here ends the run_move method
+        '''
+
+        if user.status == 'par' and random.random() < 0.25:
+            # full paralyze
+            self.log(user.fullname + " is fully paralyzed.")
+            return False
+        # asleep pokemon miss unless they use snore or sleeptalk
+        elif user.status == 'slp':
+            if not move.sleep_usable:
+
+                self.log(user.fullname + " is asleep.")
+                return False
+
+        if 'protect' in target.volatile_statuses and move.flags.protect:
+            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
+            return False
+        if 'banefulbunker' in target.volatile_statuses and move.flags.protect:
+            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
+            return False
+        if 'spikyshield' in target.volatile_statuses and move.flags.protect:
+            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
+            return False
+        if 'kingsshield' in target.volatile_statuses and move.flags.protect and move.category != 'Status':
+            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
+            return False
+            
+
+        # protect moves accuracy
+        if move.id in ['protect', 'detect', 'endure', 'wide guard', 'quick guard', 'spikyshield', 'kingsshield', 'banefulbunker']:
+            rand_float = random.random()
+            n = user.protect_n
+            user.protect_n += 3
+            #print(str(self.rng) + " " + str(n))
+            if not self.rng and n > 0:
+                return False
+            if n == 0 or rand_float < (1.0 / n):
+                return True
+            return False
+        else:
+            # if the move is not a protect move, reset the counter
+            user.protect_n = 0
+
+        # flinched
+        if 'flinch' in user.volatile_statuses:
+            return False
+
+
+        # fake out
+        if move.id == 'fakeout' and user.active_turns > 1:
+            return False
+
+        # taunt
+        if move.category == 'Status' and 'taunt' in user.volatile_statuses:
+            self.log(user.name + ' failed to move because of taunt')
+            return False
+
+        # these moves dont check accuracy in certain weather
+        if move.id == 'thunder' and self.weather == 'rain':
+            return True
+        if move.id == 'hurricane' and self.weather == 'rain':
+            return True
+        if move.id == 'blizzard' and self.weather == 'hail':
+            return True
+
+        # some moves don't check accuracy
+        if move.accuracy is True:
+            return True
+
+        # returns a boolean whether the move hit the target
+        temp = random.randint(0, 99)
+        accuracy = user.get_accuracy()
+        evasion = target.get_evasion()
+        check = 100
+        if self.rng:
+            check = (move.accuracy * accuracy * evasion)
+        if temp >= check:
+            self.log(user.name + " used " + move.name + " but it missed!")
+        return temp < check 
+        
+    def choose(self, side_id, choice):
+        self.sides[side_id].choice = choice 
+
+    def boosts_statuses(self, user, move, target):
+        # stat changing moves 
+        user_volatile_status = ''
+        target_volatile_status = ''
+        # primary effects
+        if move.primary['boosts'] is not None:
+            target.boost(move.primary['boosts'])
+        if move.primary['volatile_status'] is not None:
+            target_volatile_status = move.primary['volatile_status']
+            target.volatile_statuses.add(target_volatile_status)
+
+        if move.primary['self'] is not None:
+            if 'boosts' in move.primary['self']:
+                user.boost(move.primary['self']['boosts'])
+            if 'volatile_status' in move.primary['self']:
+                user_volatile_status = move.primary['self']['volatile_status']
+                user.volatile_statuses.add(user_volatile_status)
+
+        if move.primary['status'] is not None:
+            target.add_status(move.primary['status'])
+
+        # secondary effects
+        for effect in move.secondary:
+            if not target.fainted:
+                temp = random.randint(0, 99)
+                check = effect['chance']
+                if temp < check:
+                    if 'boosts' in effect:
+                        target.boost(effect['boosts'])
+                    if 'status' in effect:
+                        target.add_status(effect['status'], user)
+                    if 'volatile_status' in effect:
+                        target_volatile_status = effect['volatile_status']
+                        target.volatile_statuses.add(target_volatile_status)
+
+        if target_volatile_status == 'partiallytrapped':
+            target.bound_n = 4 if random.random() < 0.5 else 5
+            target.bound_damage = 1/16
+            if user.item == 'gripclaw':
+                target.bound_n = 7
+            if user.item == 'bindingband':
+                target.bound_damage = 1/8
+
+        if target_volatile_status == 'taunt':
+            target.taunt_n = 3
+
+
+    def update_move_before_running(self, user, move, target):
+        '''
+        returns the new move reference
+
+        some moves need to have their info updated based on the current state
+        before running. the namedtuple._replace returns a new namedtuple
+        instance with updated values so we dont have to worry about ruining the 
+        game data
+        '''
+        # update the moves power
+
+        # acrobatics
+        if move.id == 'acrobatics' and user.item == '':
+            power = move.base_power * 2
+            move = move._replace(base_power = power)
+
+        elif move.id == 'beatup':
+            power = 0
+            for pokemon in user.side.pokemon:
+                power += (dex.pokedex[pokemon.id].baseStats.attack / 10) + 5
+            move = move._replace(base_power = power)
+        
+        elif move.id == 'crushgrip' or move.id == 'wringout':
+            power = math.floor(120 * (target.hp / target.maxhp))
+            if power < 1:
+                power = 1
+            move = move._replace(base_power = power)
+
+        elif move.id == 'electroball':
+            power = 1
+            speed = target.stats.speed / user.stats.speed
+            if speed <= 0.25:
+                power = 150
+            if speed > 0.25:
+                power = 120
+            if speed > .3333:
+                power = 80
+            if speed > 0.5:
+                power = 60
+            if speed > 1:
+                power = 40
+            move = move._replace(base_power = power)
+
+        elif move.id == 'eruption' or move.id == 'waterspout':
+            power = math.floor(150 * (user.hp / user.maxhp))
+            if power < 1:
+                power = 1
+            move = move._replace(base_power = power)
+
+        elif move.id == 'flail' or move.id == 'reversal':
+            power = 1
+            hp = user.hp / user.maxhp
+            if hp < 0.0417:
+                power = 200
+            if hp >= 0.0417:
+                power = 150
+            if hp > 0.1042:
+                power = 100
+            if hp > 0.2083:
+                power = 80
+            if hp > 0.3542:
+                power = 40
+            if hp >= 0.6875:
+                power = 20
+            move = move._replace(base_power = power)
+
+        elif move.id == 'fling':
+            #default base power will be 30
+            power = dex.fling.get(user.item, 30)
+            move = move._replace(base_power = power)
+            if user.item == 'kingsrock' or user.item == 'razorfang':
+                move = move._replace(primary, {'boosts': None, 'status': None, 'volatile_status': 'flinch', 'self': None})
+            elif user.item == 'flameorb':
+                move = move._replace(primary, {'boosts': None, 'status': 'brn', 'volatile_status': None, 'self': None})
+            elif user.item == 'toxicorb':
+                move = move._replace(primary, {'boosts': None, 'status': 'tox', 'volatile_status': None, 'self': None})
+            elif user.item == 'lightball':
+                move = move._replace(primary, {'boosts': None, 'status': 'par', 'volatile_status': None, 'self': None})
+            elif user.item == 'poisonbarb':
+                move = move._replace(primary, {'boosts': None, 'status': 'psn', 'volatile_status': None, 'self': None})
+
+        # assume max base_power for return and frustration
+        elif move.id == 'frustration' or move.id == 'return':
+            move = move._replace(base_power = 102)
+
+        elif move.id == 'grassknot':
+            power = 1
+            weight = dex.pokedex[target.id].weightkg
+            if weight >= 200:
+                power = 120
+            if weight < 200:
+                power = 100
+            if weight < 100:
+                power = 80
+            if weight < 50:
+                power = 60
+            if weight < 25:
+                power = 40
+            if weight < 10:
+                power = 20
+            move = move._replace(base_power = power)
+
+        elif move.id == 'heatcrash' or move.id == 'heavyslam':
+            power = 1
+            weight = dex.pokedex[target.id].weightkg / dex.pokedex[user.id].weightkg
+            if weight > 0.5:
+                power = 40
+            if weight < 0.5:
+                power = 60
+            if weight < 0.333:
+                power = 80
+            if weight < 0.25:
+                power = 100
+            if weight < 0.20:
+                power = 120
+            move = move._replace(base_power = power)
+
+        elif move.id == 'gyroball':
+            power = math.floor(25 * (target.get_speed() / user.get_speed()))
+            if power < 1:
+                power = 1
+            move = move._replace(base_power = power)
+
+        elif move.id == 'magnitude':
+            power = random.choice(dex.magnitude_power)
+            move = move._replace(base_power = power)
+
+        elif move.id == 'naturalgift':
+            item = dex.item_dex[user.item]
+            if item.isBerry:
+                move = move._replace(base_power = item.naturalGift['basePower'])
+                move = move._replace(type = item.naturalGift['type'])
+        
+        elif move.id == 'powertrip' or move.id == 'storedpower':
+            power = 20
+            for stat in user.boosts:
+                if user.boosts[stat] > 0:
+                    power += (user.boosts[stat] * 20)
+            move = move._replace(base_power = power)
+
+        elif move.id == 'present':
+            power = random.choice([0, 0, 120, 80, 80, 80, 40, 40, 40, 40])
+            move = move._replace(base_power = power)
+
+        elif move.id == 'punishment':
+            power = 60
+            for stat in target.boosts:
+                if target.boosts[stat] > 0:
+                    power += (target.boosts[stat] * 20)
+            if power > 200:
+                power = 200
+            move = move._replace(base_power = power)
+
+        elif move.id == 'spitup':
+            power = 100 * user.stockpile
+            move = move._replace(base_power = power)
+            user.stockpile = 0
+
+        # assist
+        elif move.id == 'assist':
+            move = dex.move_dex[target.moves[random.randint(0, 3)]]
+        
+        # metronome
+        elif move.id == 'metronome':
+            while move.id in dex.no_metronome:
+                move = dex.move_dex[random.choice(dex.move_dex.keys())]
+
+        # mimic
+        elif move.id == 'mimic':
+            if target.last_used_move is not None:
+                user.moves.pop('mimic')
+                user.move.append(target.last_used_move)
+                move = dex.move_dex[target.last_used_move]
+
+        # copycat
+        elif move.id == 'copycat':
+            if target.last_used_move is not None:
+                move = dex.move_dex[target.last_used_move]
+
+        elif move.id == 'naturepower':
+            move = dex.move_dex['triattack']
+
+        # mirror move
+        elif move.id == 'mirror move':
+            if target.last_used_move is not None:
+                move = dex.move_dex[target.last_used_move]
+
+        # check non unique stuff
+        # baneful bunker
+        if 'banefulbunker' in target.volatile_statuses:
+            if move.flags.contact:
+                user.add_status('psn')
+
+        # spiky shield
+        if 'spikeyshield' in target.volatile_statuses:
+            user.damage(0.125, flag='percentmaxhp')
+
+        if move.recoil.damage != 0:
+            if move.recoil.condition == 'always':
+                if move.recoil.type == 'maxhp':
+                    user.damage(move.recoil.damage, flag='percentmaxhp')
+
+
+        return move
+
+    def unique_moves_after_damage(self, user, move, target, damage):
         #drain moves
         if user.item == 'bigroot':
             user.damage(-(math.floor(damage * move.drain * 1.3)))
@@ -962,209 +1290,3 @@ class Battle(object):
         if move.id == 'growth':
             if self.weather == 'sunlight':
                 target.boost(move.primary['self']['boosts'])
-
-        # stat changing moves 
-        user_volatile_status = ''
-        target_volatile_status = ''
-        # primary effects
-        if move.primary['boosts'] is not None:
-            target.boost(move.primary['boosts'])
-        if move.primary['volatile_status'] is not None:
-            target_volatile_status = move.primary['volatile_status']
-            target.volatile_statuses.add(target_volatile_status)
-
-        if move.primary['self'] is not None:
-            if 'boosts' in move.primary['self']:
-                user.boost(move.primary['self']['boosts'])
-            if 'volatile_status' in move.primary['self']:
-                user_volatile_status = move.primary['self']['volatile_status']
-                user.volatile_statuses.add(user_volatile_status)
-
-        if move.primary['status'] is not None:
-            target.add_status(move.primary['status'])
-
-        # secondary effects
-        for effect in move.secondary:
-            if not target.fainted:
-                temp = random.randint(0, 99)
-                check = effect['chance']
-                if temp < check:
-                    if 'boosts' in effect:
-                        target.boost(effect['boosts'])
-                    if 'status' in effect:
-                        target.add_status(effect['status'], user)
-                    if 'volatile_status' in effect:
-                        target_volatile_status = effect['volatile_status']
-                        target.volatile_statuses.add(target_volatile_status)
-
-        if target_volatile_status == 'partiallytrapped':
-            target.bound_n = 4 if random.random() < 0.5 else 5
-            target.bound_damage = 1/16
-            if user.item == 'gripclaw':
-                target.bound_n = 7
-            if user.item == 'bindingband':
-                target.bound_damage = 1/8
-
-        if target_volatile_status == 'taunt':
-            target.taunt_n = 3
-
-
-    def damage(self, user, move, target):
-        damage = 0
-
-        crit = False
-        crit_chance = user.crit_chance + (move.crit_ratio if move.crit_ratio is not None else 0)
-        if crit_chance >= 3 or (random.random() < dex.crit[crit_chance] and self.rng):
-            crit = True
-
-        power = move.base_power
-        if move.id == 'acrobatics' and user.item == '':
-            power *= 2
-
-        if move.category == 'Special':
-            damage = ((((((2 * user.level) / 5) + 2) * user.get_specialattack(crit) * power / target.get_specialdefense(crit)) / 50) + 2) 
-        elif move.category == 'Physical':
-            damage = ((((((2 * user.level) / 5) + 2) * user.get_attack(crit) * power / target.get_defense(crit)) / 50) + 2) 
-        elif move.category == 'Status':
-            pass
-
-#       multiply the damge by each modifier
-        modifier = 1
-
-#       0.75 if move has multiple targets, 1 otherwise
-#       weather
-        if self.weather == 'rain' or self.weather == 'heavy_rain':
-            if move.type == 'Water':
-                modifier *= 1.5
-            elif move.type == 'Fire':
-                modifier *= 0.5
-        elif self.weather == 'sunlight' or self.weather == 'heavy_sunlight':
-            if move.type == 'Water':
-                modifier *= 0.5
-            elif move.type == 'Fire':
-                modifier *= 1.5
-        else:
-            modifier *= 1.0
-#       if crit *=1.5
-        if crit:
-            modifier *= 1.5
-
-#       random float
-        if (self.rng):
-            modifier *= random.uniform(0.85, 1.0)
-#       STAB      
-        if move.type in user.types:
-            modifier *= 1.5
-#       type effectiveness
-        for each in target.types:
-            modifier *= dex.typechart_dex[each].damage_taken[move.type]
-#       burn
-        if user.burned and move.category == 'Physical' and user.ability != 'guts':
-            modifier *= 0.5
-#       other
-        if move.z_move.crystal is not None and 'protect' in target.volatile_statuses:
-            modifier *= 0.25
-        # helping hand
-
-
-        #floor damage before applying modifier
-        damage = math.floor(damage)
-#       apply modifier
-        damage *= modifier
-        #print(str(damage))
-        damage = math.floor(damage)
-        if crit and move.category != "Status":
-            self.log(user.fullname + " used " + move.name
-                  + ' doing ' + str(damage) + ' dmg with a crit!')
-        elif move.category == 'Status':
-            self.log(user.fullname + " used " + move.name)
-        else:
-            self.log(user.fullname + " used " + move.name
-                  + ' doing ' + str(damage) + ' dmg.')
-
-        return math.floor(damage)
-
-    def accuracy_check(self, user, move, target):
-        #if not self.rng:
-        #    return True
-
-        # moves hitting protect
-        #self.log(str(target.volatile_statuses))
-        #print(str(move.flags))
-
-        if user.status == 'par' and random.random() < 0.25:
-            # full paralyze
-            self.log(user.fullname + " is fully paralyzed.")
-            return False
-        # asleep pokemon miss unless they use snore or sleeptalk
-        elif user.status == 'slp':
-            if not move.sleep_usable:
-
-                self.log(user.fullname + " is asleep.")
-                return False
-
-        if 'protect' in target.volatile_statuses and move.flags.protect:
-            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
-            return False
-        if 'banefulbunker' in target.volatile_statuses and move.flags.protect:
-            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
-            return False
-        if 'spikyshield' in target.volatile_statuses and move.flags.protect:
-            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
-            return False
-        if 'kingsshield' in target.volatile_statuses and move.flags.protect and move.category != 'Status':
-            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
-            return False
-            
-
-        # protect moves accuracy
-        if move.id in ['protect', 'detect', 'endure', 'wide guard', 'quick guard', 'spikyshield', 'kingsshield', 'banefulbunker']:
-            rand_float = random.random()
-            n = user.protect_n
-            user.protect_n += 3
-            #print(str(self.rng) + " " + str(n))
-            if not self.rng and n > 0:
-                return False
-            if n == 0 or rand_float < (1.0 / n):
-                return True
-            return False
-        else:
-            # if the move is not a protect move, reset the counter
-            user.protect_n = 0
-
-        # flinched
-        if 'flinch' in user.volatile_statuses:
-            return False
-
-        if move.accuracy is True:
-            return True
-
-        # fake out
-        if move.id == 'fakeout' and user.active_turns > 1:
-            return False
-
-        # taunt
-        if move.category == 'Status' and 'taunt' in user.volatile_statuses:
-            self.log(user.name + ' failed to move because of taunt')
-            return False
-
-        if move.id == 'thunder' and self.weather == 'rain':
-            return True
-        if move.id == 'hurricane' and self.weather == 'rain':
-            return True
-        if move.id == 'blizzard' and self.weather == 'hail':
-            return True
-
-        # returns a boolean whether the move hit the target
-        temp = random.randint(0, 99)
-        accuracy = user.get_accuracy()
-        evasion = target.get_evasion()
-        check = 100
-        if self.rng:
-            check = (move.accuracy * accuracy * evasion)
-        if temp >= check:
-            self.log(user.name + " used " + move.name + " but it missed!")
-        return temp < check 
-        
-    def choose(self, side_id, choice):
-        self.sides[side_id].choice = choice 

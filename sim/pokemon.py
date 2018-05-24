@@ -53,6 +53,8 @@ class Pokemon(object):
         self.last_damaging_move = None
         self.last_used_move = None
 
+        self.consecutive_move_uses = 0
+
         self.crit_chance = 0
         self.boosts = {
             'atk': 0,
