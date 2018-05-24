@@ -126,7 +126,7 @@ for i in items_raw_data:
 #---------
 
 move_attributes = ['num', 'accuracy', 'category', 'desc', 'id', 'name', 'pp',
-                   'priority', 'flags', 'type', 'terrain', 'traps', 'crit_ratio',
+                   'priority', 'flags', 'type', 'terrain', 'crit_ratio',
                    'ignore_accuracy', 'weather', 'drain', 'heal', 'recoil',
                    'target_type', 'base_power', 'short_desc', 'ignore_ability',
                    'ignore_defensive', 'ignore_evasion', 'ignore_immunity', 

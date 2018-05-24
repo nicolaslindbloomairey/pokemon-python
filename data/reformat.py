@@ -94,7 +94,7 @@ def reformat_moves():
         moves[move]['self_switch'] = moves[move].pop('selfSwitch')
         moves[move]['side_condition'] = moves[move].pop('sideCondition')
         moves[move]['sleep_usable'] = moves[move].pop('sleepUsable')
-        moves[move]['volatile_status'] = moves[move].pop('volatileStatus')
+        moves[move]['volatile_status'] = moves[move].pop('volatile_status')
         moves[move]['true_damage'] = moves[move].pop('damage')
 
         moves[move]['crit_ratio'] = moves[move].pop('critRatio')

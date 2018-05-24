@@ -22,12 +22,12 @@ class Pokemon(object):
         self.fullname = "Nic's " if not self.side_id else "Sam's "
         self.fullname += self.name
 
-        self.moves = pokemon_set.get('moves', ['tackle']*4)
+        self.moves = list(pokemon_set.get('moves', ['tackle']*4))
         self.base_moves = self.moves
 
-        #self.pp = {}
-        #for move in self.moves:
-        #    self.pp.put(move, dex.move_dex[move].pp)
+        self.pp = {}
+        for move in self.moves:
+            self.pp[move] = dex.move_dex[move].pp
 
         self.fainted = False
         self.status = ''
@@ -36,6 +36,9 @@ class Pokemon(object):
         self.protect_n = 0
         self.toxic_n = 1
         self.sleep_n = 0
+        self.bound_n = 0
+        self.perishsong_n = 0
+        self.taunt_n = 0
 
         self.is_switching = False
         self.trapped = False
@@ -141,7 +144,7 @@ class Pokemon(object):
     def cure_status(self):
         if self.status == '':
             return False
-        self.toxic_n = 0
+        self.toxic_n = 1
         self.status = ''
         return True
 
@@ -309,29 +312,39 @@ class Pokemon(object):
         self.stats = dex.Stats(hp, cal[0], cal[1], cal[2], cal[3], cal[4])
 
     def damage(self, amount, flag=None):
+        old_hp = self.hp
         if self.fainted:
-            return 
+            return 0
         if flag is None:
-            self.hp -= amount
+            self.hp -= math.floor(amount)
         elif flag == 'percentmax':
             damage = math.floor(self.maxhp*amount)
-            damage = 1 if damage < 1 else damage
-            self.hp -= math.floor(self.maxhp*amount)
+            self.hp -= damage
+        elif flag == 'percentmaxhp':
+            damage = math.floor(self.maxhp*amount)
+            self.hp -= damage
         elif flag == 'percentcurrent':
             damage = math.floor(self.hp*amount)
-            damage = 1 if damage < 1 else damage
-            self.hp -= math.floor(self.hp*amount)
+            self.hp -= damage
 
         if 'endure' in self.volatile_statuses and self.hp < 1:
             self.hp = 1
+            self.battle.log(self.name + ' endured with 1 hp')
         if self.hp > self.maxhp:
             self.hp = self.maxhp
+
+        diff_hp = old_hp - self.hp
+        if diff_hp > 0:
+            self.battle.log(self.name + ' took ' + str(diff_hp) + ' dmg')
+        elif diff_hp < 0:
+            self.battle.log(self.name + ' healed ' + str(-(diff_hp)) + ' hp')
+
         if self.hp <= 0:
             self.faint()
+        return diff_hp
 
     def faint(self):
-        if self.battle.debug:
-            print(self.fullname + ' fainted')
+        self.battle.log(self.fullname + ' fainted')
         self.trapped = False
         self.hp = 0
         self.fainted = True

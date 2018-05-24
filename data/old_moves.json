@@ -341,7 +341,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "any",
         "type": "Flying",
@@ -429,7 +429,7 @@
         "secondary": {
             "chance": 100
         },
-        "traps": true,
+        "volatile_status": "cantescape",
         "target": "normal",
         "type": "Steel",
         "zMovePower": 160,
@@ -504,7 +504,7 @@
         "flags": {
             "snatch": 1
         },
-        "volatileStatus": "aquaring",
+        "volatile_status": "aquaring",
         "effect": {
             "onResidualOrder": 6
         },
@@ -557,6 +557,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -671,7 +675,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Ghost",
@@ -718,7 +722,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "volatileStatus": "attract",
+        "volatile_status": "attract",
         "effect": {
             "noCopy": true,
             "onBeforeMovePriority": 2
@@ -828,7 +832,7 @@
         "boosts": {
             "spe": 2
         },
-        "volatileStatus": "autotomize",
+        "volatile_status": "autotomize",
         "effect": {
             "noCopy": true,
             "onModifyWeightPriority": 1
@@ -904,7 +908,7 @@
         "priority": 4,
         "flags": {},
         "stallingMove": true,
-        "volatileStatus": "banefulbunker",
+        "volatile_status": "banefulbunker",
         "effect": {
             "duration": 1,
             "onTryHitPriority": 3
@@ -935,6 +939,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -1112,7 +1120,7 @@
             "contact": 1,
             "protect": 1
         },
-        "volatileStatus": "bide",
+        "volatile_status": "bide",
         "ignoreImmunity": true,
         "effect": {
             "duration": 3,
@@ -1141,7 +1149,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "volatileStatus": "partiallytrapped",
+        "volatile_status": "partiallytrapped",
         
         "target": "normal",
         "type": "Normal",
@@ -1167,7 +1175,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Dark",
@@ -1209,7 +1217,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "mustrecharge"
+            "volatile_status": "mustrecharge"
         },
         
         "target": "normal",
@@ -1285,7 +1293,7 @@
             "mirror": 1
         },
         
-        "traps": true,
+        "volatile_status": "cantescape",
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -1406,7 +1414,7 @@
         },
         "secondary": {
             "chance": 10,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Ground",
@@ -1430,6 +1438,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -1454,7 +1466,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "multihit": 2,
+        "multihit": [2],
         
         "target": "normal",
         "type": "Ground",
@@ -1829,6 +1841,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -1992,7 +2008,7 @@
         "flags": {
             "snatch": 1
         },
-        "volatileStatus": "charge",
+        "volatile_status": "charge",
         "effect": {
             "duration": 2,
             "onBasePowerPriority": 3
@@ -2086,7 +2102,7 @@
         "noSketch": true,
         "secondary": {
             "chance": 100,
-            "volatileStatus": "confusion"
+            "volatile_status": "confusion"
         },
         "target": "any",
         "type": "Flying",
@@ -2156,7 +2172,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "volatileStatus": "partiallytrapped",
+        "volatile_status": "partiallytrapped",
         
         "target": "normal",
         "type": "Water",
@@ -2318,6 +2334,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -2370,7 +2390,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "volatileStatus": "confusion",
+        "volatile_status": "confusion",
         
         "target": "normal",
         "type": "Ghost",
@@ -2396,7 +2416,7 @@
         },
         "secondary": {
             "chance": 10,
-            "volatileStatus": "confusion"
+            "volatile_status": "confusion"
         },
         "target": "normal",
         "type": "Psychic",
@@ -2870,7 +2890,7 @@
         "flags": {
             "authentic": 1
         },
-        "volatileStatus": "curse",
+        "volatile_status": "curse",
         "effect": {
             "onResidualOrder": 10
         },
@@ -2923,7 +2943,7 @@
         },
         "secondary": {
             "chance": 20,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "any",
         "type": "Dark",
@@ -3045,7 +3065,7 @@
         "boosts": {
             "def": 1
         },
-        "volatileStatus": "defensecurl",
+        "volatile_status": "defensecurl",
         "effect": {
             "noCopy": true
         },
@@ -3076,6 +3096,7 @@
             "authentic": 1
         },
         
+        "weather": "clear",
         "target": "normal",
         "type": "Flying",
         "zMoveBoost": {
@@ -3098,7 +3119,7 @@
         "flags": {
             "authentic": 1
         },
-        "volatileStatus": "destinybond",
+        "volatile_status": "destinybond",
         "effect": {
             "onBeforeMovePriority": -1,
             "onBeforeSwitchOutPriority": 1
@@ -3123,7 +3144,7 @@
         "priority": 4,
         "flags": {},
         "stallingMove": true,
-        "volatileStatus": "protect",
+        "volatile_status": "protect",
         
         "target": "self",
         "type": "Fighting",
@@ -3223,7 +3244,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "volatileStatus": "disable",
+        "volatile_status": "disable",
         "effect": {
             "duration": 4,
             "noCopy": true,
@@ -3331,7 +3352,7 @@
         },
         "secondary": {
             "chance": 20,
-            "volatileStatus": "confusion"
+            "volatile_status": "confusion"
         },
         "target": "normal",
         "type": "Normal",
@@ -3400,7 +3421,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "multihit": 2,
+        "multihit": [2],
         
         "target": "normal",
         "type": "Normal",
@@ -3423,7 +3444,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "multihit": 2,
+        "multihit": [2],
         
         "target": "normal",
         "type": "Fighting",
@@ -3448,6 +3469,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -3695,7 +3720,7 @@
         },
         "secondary": {
             "chance": 20,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Dragon",
@@ -3871,7 +3896,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "multihit": 2,
+        "multihit": [2],
         
         "target": "normal",
         "type": "Dragon",
@@ -3897,7 +3922,7 @@
         },
         "secondary": {
             "chance": 100,
-            "volatileStatus": "confusion"
+            "volatile_status": "confusion"
         },
         "target": "normal",
         "type": "Fighting",
@@ -4074,7 +4099,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "volatileStatus": "electrify",
+        "volatile_status": "electrify",
         "effect": {
             "duration": 1,
             "onModifyMovePriority": -2
@@ -4151,7 +4176,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "volatileStatus": "embargo",
+        "volatile_status": "embargo",
         "effect": {
             "duration": 5,
             "onResidualOrder": 18
@@ -4206,7 +4231,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "volatileStatus": "encore",
+        "volatile_status": "encore",
         "effect": {
             "duration": 3,
             "noCopy": true,
@@ -4256,7 +4281,7 @@
         "priority": 4,
         "flags": {},
         "stallingMove": true,
-        "volatileStatus": "endure",
+        "volatile_status": "endure",
         "effect": {
             "duration": 1,
             "onDamagePriority": -10
@@ -4383,7 +4408,7 @@
         },
         "secondary": {
             "chance": 10,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Psychic",
@@ -4553,7 +4578,7 @@
         },
         "secondary": {
             "chance": 100,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Normal",
@@ -4784,7 +4809,7 @@
         },
         "tertiary": {
                 "chance": 10,
-                "volatileStatus": "flinch"
+                "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Fire",
@@ -4886,7 +4911,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "volatileStatus": "partiallytrapped",
+        "volatile_status": "partiallytrapped",
         
         "target": "normal",
         "type": "Fire",
@@ -5165,7 +5190,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "volatileStatus": "confusion",
+        "volatile_status": "confusion",
         "boosts": {
             "spa": 1
         },
@@ -5367,7 +5392,7 @@
         "flags": {
             "snatch": 1
         },
-        "volatileStatus": "focusenergy",
+        "volatile_status": "focusenergy",
         "effect": {},
         
         "target": "self",
@@ -5415,7 +5440,7 @@
         "pp": 20,
         "priority": 2,
         "flags": {},
-        "volatileStatus": "followme",
+        "volatile_status": "followme",
         "effect": {
             "duration": 1,
             "onFoeRedirectTargetPriority": 1
@@ -5468,7 +5493,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "volatileStatus": "foresight",
+        "volatile_status": "foresight",
         "effect": {
             "noCopy": true
         },
@@ -5599,7 +5624,7 @@
             "nonsky": 1
         },
         "self": {
-            "volatileStatus": "mustrecharge"
+            "volatile_status": "mustrecharge"
         },
         
         "target": "normal",
@@ -5670,6 +5695,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -5721,6 +5750,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -5813,7 +5846,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "volatileStatus": "gastroacid",
+        "volatile_status": "gastroacid",
         "effect": {},
         
         "target": "normal",
@@ -5840,7 +5873,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "multihit": 2,
+        "multihit": [2],
         
         "target": "normal",
         "type": "Steel",
@@ -5969,7 +6002,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "mustrecharge"
+            "volatile_status": "mustrecharge"
         },
         
         "target": "normal",
@@ -6248,7 +6281,7 @@
         "flags": {
             "authentic": 1
         },
-        "volatileStatus": "grudge",
+        "volatile_status": "grudge",
         "effect": {
             "onBeforeMovePriority": 100
         },
@@ -6610,7 +6643,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Normal",
@@ -6656,7 +6689,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "volatileStatus": "healblock",
+        "volatile_status": "healblock",
         "effect": {
             "duration": 5,
             "onBeforeMovePriority": 6,
@@ -6767,7 +6800,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Psychic",
@@ -6883,7 +6916,7 @@
         "flags": {
             "authentic": 1
         },
-        "volatileStatus": "helpinghand",
+        "volatile_status": "helpinghand",
         "effect": {
             "duration": 1,
             "onBasePowerPriority": 3
@@ -7502,7 +7535,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "confusion"
+            "volatile_status": "confusion"
         },
         "target": "any",
         "type": "Flying",
@@ -7526,7 +7559,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "mustrecharge"
+            "volatile_status": "mustrecharge"
         },
         
         "target": "normal",
@@ -7591,7 +7624,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "mustrecharge"
+            "volatile_status": "mustrecharge"
         },
         
         "target": "normal",
@@ -7618,7 +7651,7 @@
         },
         "secondary": {
             "chance": 10,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Normal",
@@ -7825,7 +7858,7 @@
         },
         "tertiary": {
                 "chance": 10,
-                "volatileStatus": "flinch"
+                "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Ice",
@@ -7928,7 +7961,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Ice",
@@ -7953,6 +7986,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -8002,7 +8039,7 @@
             "snatch": 1,
             "authentic": 1
         },
-        "volatileStatus": "imprison",
+        "volatile_status": "imprison",
         "effect": {
             "noCopy": true,
             "onFoeBeforeMovePriority": 4
@@ -8095,7 +8132,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "volatileStatus": "partiallytrapped",
+        "volatile_status": "partiallytrapped",
         
         "target": "normal",
         "type": "Bug",
@@ -8117,7 +8154,7 @@
             "snatch": 1,
             "nonsky": 1
         },
-        "volatileStatus": "ingrain",
+        "volatile_status": "ingrain",
         "effect": {
             "onResidualOrder": 7
         },
@@ -8220,7 +8257,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Steel",
@@ -8365,7 +8402,7 @@
         "priority": 4,
         "flags": {},
         "stallingMove": true,
-        "volatileStatus": "kingsshield",
+        "volatile_status": "kingsshield",
         "effect": {
             "duration": 1,
             "onTryHitPriority": 3
@@ -8436,7 +8473,7 @@
         "flags": {
             "snatch": 1
         },
-        "volatileStatus": "laserfocus",
+        "volatile_status": "laserfocus",
         "effect": {
             "duration": 2
         },
@@ -8638,7 +8675,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "volatileStatus": "leechseed",
+        "volatile_status": "leechseed",
         "effect": {
             "onResidualOrder": 8
         },
@@ -9074,7 +9111,7 @@
         "pp": 15,
         "priority": 4,
         "flags": {},
-        "volatileStatus": "magiccoat",
+        "volatile_status": "magiccoat",
         "effect": {
             "duration": 1,
             "onTryHitPriority": 2
@@ -9151,7 +9188,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "volatileStatus": "partiallytrapped",
+        "volatile_status": "partiallytrapped",
         
         "target": "normal",
         "type": "Fire",
@@ -9220,7 +9257,7 @@
             "snatch": 1,
             "gravity": 1
         },
-        "volatileStatus": "magnetrise",
+        "volatile_status": "magnetrise",
         "effect": {
             "duration": 5,
             "onResidualOrder": 15
@@ -9347,7 +9384,7 @@
             "mirror": 1
         },
         
-        "traps": true,
+        "volatile_status": "cantescape",
         "target": "normal",
         "type": "Normal",
         "zMoveBoost": {
@@ -9825,7 +9862,7 @@
         "flags": {
             "snatch": 1
         },
-        "volatileStatus": "minimize",
+        "volatile_status": "minimize",
         "effect": {
             "noCopy": true
         },
@@ -9855,7 +9892,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "volatileStatus": "miracleeye",
+        "volatile_status": "miracleeye",
         "effect": {
             "noCopy": true
         },
@@ -10399,7 +10436,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Grass",
@@ -10512,7 +10549,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "volatileStatus": "nightmare",
+        "volatile_status": "nightmare",
         "effect": {
             "noCopy": true,
             "onResidualOrder": 9
@@ -10672,7 +10709,7 @@
             "authentic": 1,
             "mystery": 1
         },
-        "volatileStatus": "foresight",
+        "volatile_status": "foresight",
         
         "target": "normal",
         "type": "Normal",
@@ -10753,7 +10790,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "lockedmove"
+            "volatile_status": "lockedmove"
         },
         
         "target": "randomNormal",
@@ -10957,6 +10994,7 @@
             "onResidualOrder": 20
         },
         
+        "volatile_status": "perishsong",
         "target": "all",
         "type": "Normal",
         "zMoveEffect": "clearnegativeboost",
@@ -11002,7 +11040,7 @@
             "dance": 1
         },
         "self": {
-            "volatileStatus": "lockedmove"
+            "volatile_status": "lockedmove"
         },
         
         "target": "randomNormal",
@@ -11076,6 +11114,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -11403,7 +11445,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "volatileStatus": "powder",
+        "volatile_status": "powder",
         "effect": {
             "duration": 1,
             "onTryMovePriority": -1
@@ -11524,7 +11566,7 @@
         "flags": {
             "snatch": 1
         },
-        "volatileStatus": "powertrick",
+        "volatile_status": "powertrick",
         "effect": {},
         
         "target": "self",
@@ -11670,7 +11712,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "mustrecharge"
+            "volatile_status": "mustrecharge"
         },
         
         "target": "normal",
@@ -11692,7 +11734,7 @@
         "priority": 4,
         "flags": {},
         "stallingMove": true,
-        "volatileStatus": "protect",
+        "volatile_status": "protect",
         "effect": {
             "duration": 1,
             "onTryHitPriority": 3
@@ -11720,7 +11762,7 @@
         },
         "secondary": {
             "chance": 10,
-            "volatileStatus": "confusion"
+            "volatile_status": "confusion"
         },
         "target": "normal",
         "type": "Psychic",
@@ -12181,7 +12223,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "rage"
+            "volatile_status": "rage"
         },
         "effect": {
             "onBeforeMovePriority": 100
@@ -12206,7 +12248,7 @@
         "flags": {
             "powder": 1
         },
-        "volatileStatus": "ragepowder",
+        "volatile_status": "ragepowder",
         "effect": {
             "duration": 1,
             "onFoeRedirectTargetPriority": 1
@@ -12229,7 +12271,7 @@
         "pp": 5,
         "priority": 0,
         "flags": {},
-        "weather": "RainDance",
+        "weather": "rain",
         
         "target": "all",
         "type": "Water",
@@ -12663,7 +12705,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "mustrecharge"
+            "volatile_status": "mustrecharge"
         },
         
         "target": "normal",
@@ -12690,6 +12732,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -12716,7 +12762,7 @@
         },
         "secondary": {
             "chance": 20,
-            "volatileStatus": "confusion"
+            "volatile_status": "confusion"
         },
         "target": "normal",
         "type": "Normal",
@@ -12765,7 +12811,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "allAdjacentFoes",
         "type": "Rock",
@@ -12864,7 +12910,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "mustrecharge"
+            "volatile_status": "mustrecharge"
         },
         
         "target": "normal",
@@ -12913,7 +12959,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Fighting",
@@ -12967,7 +13013,7 @@
             2
         ],
         "self": {
-            "volatileStatus": "roost"
+            "volatile_status": "roost"
         },
         "effect": {
             "duration": 1,
@@ -13146,7 +13192,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "volatileStatus": "partiallytrapped",
+        "volatile_status": "partiallytrapped",
         
         "target": "normal",
         "type": "Ground",
@@ -13165,7 +13211,7 @@
         "pp": 10,
         "priority": 0,
         "flags": {},
-        "weather": "Sandstorm",
+        "weather": "sandstorm",
         
         "target": "all",
         "type": "Rock",
@@ -13845,7 +13891,7 @@
         },
         "secondary": {
             "chance": 10,
-            "volatileStatus": "confusion"
+            "volatile_status": "confusion"
         },
         "target": "normal",
         "type": "Bug",
@@ -14050,7 +14096,7 @@
         "critRatio": 1,
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "any",
         "type": "Flying",
@@ -14321,7 +14367,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "volatileStatus": "smackdown",
+        "volatile_status": "smackdown",
         "effect": {
             "noCopy": true
         },
@@ -14468,7 +14514,7 @@
         "flags": {
             "authentic": 1
         },
-        "volatileStatus": "snatch",
+        "volatile_status": "snatch",
         "effect": {
             "duration": 1
         },
@@ -14501,7 +14547,7 @@
         "sleepUsable": true,
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Normal",
@@ -14572,7 +14618,7 @@
         "priority": 4,
         "flags": {},
         "stallingMove": true,
-        "volatileStatus": "spikyshield",
+        "volatile_status": "spikyshield",
         "effect": {
             "duration": 1,
             "onTryHitPriority": 3
@@ -14864,6 +14910,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -15022,7 +15072,7 @@
             "reflectable": 1,
             "mystery": 1
         },
-        "volatileStatus": "spotlight",
+        "volatile_status": "spotlight",
         "effect": {
             "duration": 1,
             "onFoeRedirectTargetPriority": 2
@@ -15155,7 +15205,7 @@
         "flags": {
             "snatch": 1
         },
-        "volatileStatus": "stockpile",
+        "volatile_status": "stockpile",
         "effect": {
             "noCopy": true
         },
@@ -15205,7 +15255,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Normal",
@@ -15321,7 +15371,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Bug",
@@ -15521,7 +15571,7 @@
             "snatch": 1,
             "nonsky": 1
         },
-        "volatileStatus": "Substitute",
+        "volatile_status": "Substitute",
         "effect": {
             "onTryPrimaryHitPriority": -1
         },
@@ -15584,7 +15634,7 @@
         "pp": 5,
         "priority": 0,
         "flags": {},
-        "weather": "sunnyday",
+        "weather": "sunlight",
         
         "target": "all",
         "type": "Fire",
@@ -15687,7 +15737,7 @@
             "sound": 1,
             "authentic": 1
         },
-        "volatileStatus": "confusion",
+        "volatile_status": "confusion",
         
         "target": "normal",
         "type": "Normal",
@@ -15754,7 +15804,7 @@
             "mirror": 1,
             "mystery": 1
         },
-        "volatileStatus": "confusion",
+        "volatile_status": "confusion",
         "boosts": {
             "atk": 2
         },
@@ -15801,7 +15851,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "volatileStatus": "confusion",
+        "volatile_status": "confusion",
         
         "target": "normal",
         "type": "Fairy",
@@ -16017,6 +16067,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -16123,7 +16177,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "volatileStatus": "taunt",
+        "volatile_status": "taunt",
         "effect": {
             "duration": 3,
             "onResidualOrder": 12,
@@ -16220,7 +16274,7 @@
             "mirror": 1,
             "dance": 1
         },
-        "volatileStatus": "confusion",
+        "volatile_status": "confusion",
         
         "target": "allAdjacent",
         "type": "Normal",
@@ -16247,7 +16301,7 @@
             "gravity": 1,
             "mystery": 1
         },
-        "volatileStatus": "telekinesis",
+        "volatile_status": "telekinesis",
         "effect": {
             "duration": 3,
             "onAccuracyPriority": -1,
@@ -16319,7 +16373,7 @@
             "mirror": 1,
             "nonsky": 1
         },
-        "volatileStatus": "smackdown",
+        "volatile_status": "smackdown",
         "ignoreImmunity": {
             "Ground": true
         },
@@ -16346,7 +16400,7 @@
             "nonsky": 1
         },
         
-        "traps": true,
+        "volatile_status": "cantescape",
         "target": "allAdjacentFoes",
         "type": "Ground",
         "zMovePower": 175,
@@ -16369,7 +16423,7 @@
             "mirror": 1
         },
         "self": {
-            "volatileStatus": "lockedmove"
+            "volatile_status": "lockedmove"
         },
         
         "target": "randomNormal",
@@ -16454,7 +16508,7 @@
         },
         "tertiary": {
                 "chance": 10,
-                "volatileStatus": "flinch"
+                "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Electric",
@@ -16635,7 +16689,7 @@
             "mirror": 1,
             "authentic": 1
         },
-        "volatileStatus": "torment",
+        "volatile_status": "torment",
         "effect": {
             "noCopy": true
         },
@@ -16868,7 +16922,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "multihit": 3,
+        "multihit": [3],
         "multiaccuracy": true,
         
         "target": "normal",
@@ -16942,7 +16996,6 @@
             "mirror": 1
         },
         "multihit": [
-            2,
             2
         ],
         "secondary": {
@@ -16989,7 +17042,7 @@
         },
         "secondary": {
             "chance": 20,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "allAdjacentFoes",
         "type": "Dragon",
@@ -17038,7 +17091,7 @@
             "authentic": 1
         },
         "self": {
-            "volatileStatus": "uproar"
+            "volatile_status": "uproar"
         },
         "effect": {
             "duration": 3,
@@ -17354,7 +17407,7 @@
         },
         "secondary": {
             "chance": 20,
-            "volatileStatus": "confusion"
+            "volatile_status": "confusion"
         },
         "target": "any",
         "type": "Water",
@@ -17429,7 +17482,7 @@
         },
         "secondary": {
             "chance": 20,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Water",
@@ -17453,6 +17506,10 @@
         },
         "multihit": [
             2,
+            2,
+            3,
+            3,
+            4,
             5
         ],
         
@@ -17498,7 +17555,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "volatileStatus": "partiallytrapped",
+        "volatile_status": "partiallytrapped",
         
         "target": "normal",
         "type": "Water",
@@ -17809,7 +17866,7 @@
             "protect": 1,
             "mirror": 1
         },
-        "volatileStatus": "partiallytrapped",
+        "volatile_status": "partiallytrapped",
         
         "target": "normal",
         "type": "Normal",
@@ -17877,7 +17934,7 @@
             "reflectable": 1,
             "mirror": 1
         },
-        "volatileStatus": "yawn",
+        "volatile_status": "yawn",
         "effect": {
             "noCopy": true,
             "duration": 2
@@ -17934,7 +17991,7 @@
         },
         "secondary": {
             "chance": 20,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Psychic",
@@ -17960,7 +18017,7 @@
         },
         "secondary": {
             "chance": 30,
-            "volatileStatus": "flinch"
+            "volatile_status": "flinch"
         },
         "target": "normal",
         "type": "Electric",
@@ -18045,11 +18102,11 @@
             2
         ],
         "self": {
-            "volatileStatus": "mustrecharge"
+            "volatile_status": "mustrecharge"
         },
         "secondary": {
             "chance": 100,
-            "volatileStatus": "confusion",
+            "volatile_status": "confusion",
             "boosts": {
                 "def": -1,
                 "spa": -1

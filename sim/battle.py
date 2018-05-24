@@ -16,7 +16,8 @@ class Battle(object):
             self.active_pokemon.append(self.sides[i].active_pokemon)
         self.status = ''
 
-        self.weather = ''
+        # weather options - clear, sunlight, heavy_sunlight, rain, heavy_rain, sandstorm, hail, wind
+        self.weather = 'clear'
         self.terrain = ''
         self.turn = 0
         self.winner = None
@@ -26,13 +27,26 @@ class Battle(object):
         self.pseudo_turn = False
         self.trickroom = False
 
-    def join(self, side_id, team=None):
+        self.players = 0
+
+        self.error = False
+        self.debug_log = []
+
+    def join(self, side_id=None, team=None):
+        if side_id is None:
+            side_id = self.players
+        if side_id > 1:
+            return
         self.sides[side_id].populate_team(team)
+        self.players += 1
+
+    def log(self, message):
+        self.debug_log.append(str(message) + '\n')
 
     #method that runs the entire battle
     def run(self):
-        self.join(0)
-        self.join(1)
+        while self.players != 2:
+            self.join()
         while not self.ended:
 
             # let the ai pick what each side will do
@@ -42,8 +56,12 @@ class Battle(object):
             self.do_turn()
 
             if self.turn > 500:
-                print('ERROR TURN COUNTER IS OVER 500')
+                self.log('ERROR TURN COUNTER IS OVER 500')
+                self.error = True
                 break
+        if self.debug or self.error:
+            print(self.debug_log)
+            print(''.join(self.debug_log))
 
     def __str__(self):
         out = ['\n']
@@ -88,10 +106,14 @@ class Battle(object):
 
                 user = side.active_pokemon
 
-                if 'encore' in user.volatile_statuses and user.last_used_move is not None:
-                    move = dex.move_dex[user.last_used_move]
+                if side.choice.selection == 'struggle':
+                    move = dex.move_dex['struggle']
                 else:
-                    move = dex.move_dex[user.moves[side.choice.selection]]
+
+                    if 'encore' in user.volatile_statuses and user.last_used_move is not None:
+                        move = dex.move_dex[user.last_used_move]
+                    else:
+                        move = dex.move_dex[user.moves[side.choice.selection]]
 
                 # if the move is Z
                 if side.choice.zmove and user.can_z(move):
@@ -130,6 +152,98 @@ class Battle(object):
                 # dont add any action to the queue
                 # this is here for the 'pass' decision
                 pass
+
+    def end_of_turn(self):
+        if self.pseudo_turn:
+            return
+
+        #------------------
+        # END OF TURN STUFF
+        #------------------
+
+        # weather stuff
+        if self.weather in ['sunlight', 'rain', 'sandstorm', 'hail']:
+            self.weather_n -= 1
+            if self.weather_n == 0:
+                self.weather = 'clear'
+
+        for side in self.sides:
+            pokemon = side.active_pokemon
+            if self.weather == 'sandstorm': 
+                if 'Steel' not in pokemon.types and 'Rock' not in pokemon.types and 'Ground' not in pokemon.types:
+                    if pokemon.item != 'safetygoggles':
+                        pokemon.damage(1/16, flag='percentmaxhp')
+            if self.weather == 'hail': 
+                if 'Ice' not in pokemon.types:
+                    if pokemon.item != 'safetygoggles':
+                        pokemon.damage(1/16, flag='percentmaxhp')
+
+
+        # volatile statuses
+        for side in self.sides:
+            pokemon = side.active_pokemon
+
+            # bound
+            if 'partiallytrapped' in pokemon.volatile_statuses:
+                pokemon.damage(pokemon.bound_damage, flag='percentmaxhp')
+                pokemon.bound_n -= 1
+                if pokemon.bound_n == 0:
+                    pokemon.volatile_statues.remove('partiallytrapped')
+
+            # aqua ring
+            if pokemon.aqua_ring:
+                if pokemon.item == 'bigroot':
+                    pokemon.damage(-(1/12), 'percentmaxhp')
+                else:
+                    pokemon.damage(-(1/16), 'percentmaxhp')
+
+            # leech seed
+            if 'leechseed' in pokemon.volatile_statuses:
+                foe = self.sides[0 if pokemon.side_id else 1].active_pokemon
+                foe.damage(-(pokemon.damage(1/8, 'percentmaxhp')) * (1.3 if foe.item == 'bigroot' else 1))
+
+            # nightmare
+            if 'nightmare' in pokemon.volatile_statuses:
+                if pokemon.status == 'slp':
+                    pokemon.damage(1/4, 'percentmaxhp')
+
+            # perish song
+            if 'perishsong' in pokemon.volatile_statuses:
+                pokemon.perishsong_n -= 1
+                if pokemon.perishsong_n == 0:
+                    pokemon.faint()
+
+            if 'taunt' in pokemon.volatile_statuses:
+                pokemon.taunt_n -= 1
+                if pokemon.taunt_n == 0:
+                    pokemon.volatile_statuses.remove('taunt')
+
+            # curse
+            if 'curse' in pokemon.volatile_statuses:
+                if 'Ghost' in pokemon.types:
+                    pokemon.damage(0.25, flag='percentmaxhp')
+
+        # do major status checks
+        for side in self.sides:
+            pokemon = side.active_pokemon
+            if pokemon.status == 'brn':
+                pokemon.damage(0.0625, flag='percentmax')
+            elif pokemon.status == 'psn':
+                pokemon.damage(0.125, flag='percentmax')
+            elif pokemon.status == 'tox':
+                damage = 0.0625*pokemon.toxic_n
+                pokemon.damage(damage, flag='percentmax')
+                pokemon.toxic_n += 1
+            elif pokemon.status == 'frz':
+                #twenty percent chance to be thawed
+                if random.random() < 0.20:
+                    pokemon.status == ''
+                if self.weather == 'sunlight':
+                    pokemon.cure_status()
+            elif pokemon.status == 'slp':
+                pokemon.sleep_n -= 1
+                if pokemon.sleep_n == 0:
+                    pokemon.cure_status()
                 
 
     def do_turn(self):
@@ -152,8 +266,7 @@ class Battle(object):
             side.active_pokemon.active_turns += 1
 
         # print the state of the battle
-        if self.debug:
-            print(self)
+        self.log(self)
 
         # create priority queue and references to both sides
         action_queue = []
@@ -164,40 +277,12 @@ class Battle(object):
         # run each each action in the queue
         while action_queue:
             priority, next_action = heapq.heappop(action_queue) 
-            #if self.debug:
-                #print(str(priority))
             self.run_action(next_action)
-
-        # do status checks
-        for side in self.sides:
-            pokemon = side.active_pokemon
-            if pokemon.status == 'brn':
-                pokemon.damage(0.0625, flag='percentmax')
-            elif pokemon.status == 'psn':
-                pokemon.damage(0.125, flag='percentmax')
-            elif pokemon.status == 'tox':
-                damage = 0.0625*pokemon.toxic_n
-                pokemon.damage(damage, flag='percentmax')
-                pokemon.toxic_n += 1
-            elif pokemon.status == 'frz':
-                #twenty percent chance to be thawed
-                if random.random() < 0.20:
-                    pokemon.status == ''
-            elif side.active_pokemon.status == 'slp':
-                side.active_pokemon.sleep_n -= 1
-                if side.active_pokemon.sleep_n == 0:
-                    side.active_pokemon.status = ''
-
-            if pokemon.aqua_ring:
-                if pokemon.item == 'bigroot':
-                    pokemon.damage(-(1/12), 'percentmaxhp')
-                else:
-                    pokemon.damage(-(1/16), 'percentmaxhp')
-
-
         
+        self.end_of_turn()
 
         #request the next turns move
+        self.pseudo_turn = False
         self.request = 'move'
         for i in range(2):
             self.sides[i].request = 'move'
@@ -297,10 +382,15 @@ class Battle(object):
 
     def run_move(self, user, move, target):
         if user.fainted:
-            if self.debug:
-                print(user.name + " fainted before they could move")
+            self.log(user.name + " fainted before they could move")
             return
 
+        # struggle and zmoves do not have pp
+        if move.id != 'struggle' and move.z_move.crystal is None:
+            user.pp[move.id] -= 1
+            self.log(move.name + ' has ' + str(user.pp[move.id]) + ' pp left')
+            if user.pp[move.id] == 0:
+                user.moves.remove(move.id)
 
         user.last_used_move = move.id
 
@@ -328,7 +418,7 @@ class Battle(object):
                 power = 80
             if speed > 0.5:
                 power = 60
-            if speed_diff > 1:
+            if speed > 1:
                 power = 40
             move = move._replace(base_power = power)
 
@@ -376,23 +466,24 @@ class Battle(object):
 
         if move.id == 'grassknot':
             power = 1
-            if target.weightkg >= 200:
+            weight = dex.pokedex[target.id].weightkg
+            if weight >= 200:
                 power = 120
-            if target.weightkg < 200:
+            if weight < 200:
                 power = 100
-            if target.weightkg < 100:
+            if weight < 100:
                 power = 80
-            if target.weightkg < 50:
+            if weight < 50:
                 power = 60
-            if target.weightkg < 25:
+            if weight < 25:
                 power = 40
-            if target.weightkg < 10:
+            if weight < 10:
                 power = 20
             move = move._replace(base_power = power)
 
         if move.id == 'heatcrash' or move.id == 'heavyslam':
             power = 1
-            weight = target.weightm / user.weightm
+            weight = dex.pokedex[target.id].weightkg / dex.pokedex[user.id].weightkg
             if weight > 0.5:
                 power = 40
             if weight < 0.5:
@@ -464,8 +555,6 @@ class Battle(object):
         # accuracy_check
         if not self.accuracy_check(user, move, target):
             # move missed! do noting
-            #if self.debug:
-            #    print(user.name + " used " + move.name + " but it missed!")
             return
 
         # assist
@@ -501,10 +590,24 @@ class Battle(object):
         if move.z_move.crystal is not None:
             user.side.used_zmove = True
 
+        number_hits = 1
+        if move.multi_hit is not None:
+            number_hits = random.choice(move.multi_hit)
+            if user.ability == 'skilllink':
+                number_hits = move.multi_hit[-1]
 
+        #---------------
         # do damage
-        damage = self.damage(user, move, target)
-        target.damage(damage)
+        #---------------
+
+        for i in range(number_hits):
+
+            if i != 1 and move.id == 'triplekick':
+                if not self.accuracy_check(user, move, target):
+                    return
+
+            damage = self.damage(user, move, target)
+            damage = target.damage(damage)
 
         # update flag
         if damage > 0:
@@ -517,11 +620,12 @@ class Battle(object):
             user.damage(-(math.floor(damage * move.drain)))
 
         #heal moves
-        user.damage(-(move.heal), flag='percentmaxhp')
+        if move.heal > 0:
+            user.damage(-(move.heal), flag='percentmaxhp')
 
         #heal moves that depend on weather
         if move.id in ['moonlight', 'morningsun', 'synthesis']:
-            if self.weather == '':
+            if self.weather == 'clear':
                 user.damage(-(0.5), flag='percentmaxhp')
             elif self.weather == 'sunlight':
                 user.damage(-(0.66), flag='percentmaxhp')
@@ -545,6 +649,18 @@ class Battle(object):
         if move.terrain is not None:
             self.terrain = move.terrain
 
+        # weather moves
+        if move.weather is not None and self.weather != move.weather:
+            self.weather = move.weather
+            self.weather_n = 5
+            if user.item == 'heatrock' and self.weather == 'sunlight':
+                self.weather_n = 8
+            if user.item == 'damprock' and self.weather == 'rain':
+                self.weather_n = 8
+            if user.item == 'smoothrock' and self.weather == 'sandstorm':
+                self.weather_n = 8
+            if user.item == 'icyrock' and self.weather == 'hail':
+                self.weather_n = 8
 
         # accupressure
         if move.id == 'acupressure':
@@ -596,6 +712,8 @@ class Battle(object):
             if len(move_types) > 0:
                 user.types = [move_types[random.randint(0, len(move_types)-1)]]
 
+        # this causes an attribute error and i dont know why
+        # attrubiteError starts here
         # conversion 2
         if move.id == 'conversion2':
             if user.last_damaging_move is not None:
@@ -829,23 +947,38 @@ class Battle(object):
         if move.id == 'worryseed':
             target.ability = 'insomnia'
 
-        # trapping moves
-        if move.traps == True:
-            target.trapped = True
+        # breaks protect
+        if move.breaks_protect:
+            if 'protect' in target.volatile_statuses:
+                target.volatile_statuses.remove('protect')
+            if 'banefulbunker' in target.volatile_statuses:
+                target.volatile_statuses.remove('banefulbunker')
+            if 'spikyshield' in target.volatile_statuses:
+                target.volatile_statuses.remove('spikyshield')
+            if 'kingsshield' in target.volatile_statuses:
+                target.volatile_statuses.remove('kingsshield')
 
+        # growth (the move) does another stat boost in the sun
+        if move.id == 'growth':
+            if self.weather == 'sunlight':
+                target.boost(move.primary['self']['boosts'])
 
         # stat changing moves 
+        user_volatile_status = ''
+        target_volatile_status = ''
         # primary effects
         if move.primary['boosts'] is not None:
             target.boost(move.primary['boosts'])
         if move.primary['volatile_status'] is not None:
-            target.volatile_statuses.add(move.primary['volatile_status'])
+            target_volatile_status = move.primary['volatile_status']
+            target.volatile_statuses.add(target_volatile_status)
 
         if move.primary['self'] is not None:
             if 'boosts' in move.primary['self']:
                 user.boost(move.primary['self']['boosts'])
             if 'volatile_status' in move.primary['self']:
-                user.volatile_statuses.add(move.primary['self']['volatile_status'])
+                user_volatile_status = move.primary['self']['volatile_status']
+                user.volatile_statuses.add(user_volatile_status)
 
         if move.primary['status'] is not None:
             target.add_status(move.primary['status'])
@@ -860,8 +993,21 @@ class Battle(object):
                         target.boost(effect['boosts'])
                     if 'status' in effect:
                         target.add_status(effect['status'], user)
-                    if 'volatileStatus' in effect:
-                        target.volatile_statuses.add(effect['volatileStatus'])
+                    if 'volatile_status' in effect:
+                        target_volatile_status = effect['volatile_status']
+                        target.volatile_statuses.add(target_volatile_status)
+
+        if target_volatile_status == 'partiallytrapped':
+            target.bound_n = 4 if random.random() < 0.5 else 5
+            target.bound_damage = 1/16
+            if user.item == 'gripclaw':
+                target.bound_n = 7
+            if user.item == 'bindingband':
+                target.bound_damage = 1/8
+
+        if target_volatile_status == 'taunt':
+            target.taunt_n = 3
+
 
     def damage(self, user, move, target):
         damage = 0
@@ -887,12 +1033,12 @@ class Battle(object):
 
 #       0.75 if move has multiple targets, 1 otherwise
 #       weather
-        if self.weather == 'rain':
+        if self.weather == 'rain' or self.weather == 'heavy_rain':
             if move.type == 'Water':
                 modifier *= 1.5
             elif move.type == 'Fire':
                 modifier *= 0.5
-        elif self.weather == 'sunlight':
+        elif self.weather == 'sunlight' or self.weather == 'heavy_sunlight':
             if move.type == 'Water':
                 modifier *= 0.5
             elif move.type == 'Fire':
@@ -927,15 +1073,14 @@ class Battle(object):
         damage *= modifier
         #print(str(damage))
         damage = math.floor(damage)
-        if self.debug:
-            if crit and move.category != "Status":
-                print(user.fullname + " used " + move.name
-                      + ' doing ' + str(damage) + ' dmg with a crit!')
-            elif move.category == 'Status':
-                print(user.fullname + " used " + move.name)
-            else:
-                print(user.fullname + " used " + move.name
-                      + ' doing ' + str(damage) + ' dmg.')
+        if crit and move.category != "Status":
+            self.log(user.fullname + " used " + move.name
+                  + ' doing ' + str(damage) + ' dmg with a crit!')
+        elif move.category == 'Status':
+            self.log(user.fullname + " used " + move.name)
+        else:
+            self.log(user.fullname + " used " + move.name
+                  + ' doing ' + str(damage) + ' dmg.')
 
         return math.floor(damage)
 
@@ -944,29 +1089,31 @@ class Battle(object):
         #    return True
 
         # moves hitting protect
-        #print(str(target.volatile_statuses))
+        #self.log(str(target.volatile_statuses))
         #print(str(move.flags))
 
         if user.status == 'par' and random.random() < 0.25:
             # full paralyze
-            if self.debug:
-                print(user.fullname + " is fully paralyzed.")
+            self.log(user.fullname + " is fully paralyzed.")
             return False
         # asleep pokemon miss unless they use snore or sleeptalk
         elif user.status == 'slp':
             if not move.sleep_usable:
 
-                if self.debug:
-                    print(user.fullname + " is asleep.")
+                self.log(user.fullname + " is asleep.")
                 return False
 
         if 'protect' in target.volatile_statuses and move.flags.protect:
-            if self.debug:
-                print(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
+            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
             return False
         if 'banefulbunker' in target.volatile_statuses and move.flags.protect:
-            if self.debug:
-                print(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
+            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
+            return False
+        if 'spikyshield' in target.volatile_statuses and move.flags.protect:
+            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
+            return False
+        if 'kingsshield' in target.volatile_statuses and move.flags.protect and move.category != 'Status':
+            self.log(target.fullname + ' is protected from ' + user.fullname + "'s " + move.name)
             return False
             
 
@@ -995,6 +1142,19 @@ class Battle(object):
         # fake out
         if move.id == 'fakeout' and user.active_turns > 1:
             return False
+
+        # taunt
+        if move.category == 'Status' and 'taunt' in user.volatile_statuses:
+            self.log(user.name + ' failed to move because of taunt')
+            return False
+
+        if move.id == 'thunder' and self.weather == 'rain':
+            return True
+        if move.id == 'hurricane' and self.weather == 'rain':
+            return True
+        if move.id == 'blizzard' and self.weather == 'hail':
+            return True
+
         # returns a boolean whether the move hit the target
         temp = random.randint(0, 99)
         accuracy = user.get_accuracy()
@@ -1002,8 +1162,8 @@ class Battle(object):
         check = 100
         if self.rng:
             check = (move.accuracy * accuracy * evasion)
-        if self.debug and temp >= check:
-            print(user.name + " used " + move.name + " but it missed!")
+        if temp >= check:
+            self.log(user.name + " used " + move.name + " but it missed!")
         return temp < check 
         
     def choose(self, side_id, choice):
