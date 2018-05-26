@@ -90,7 +90,6 @@ class Pokemon(object):
         self.hp = self.stats.hp
         self.maxhp = self.hp
 
-
     def __str__(self):
         info = [self.name, self.nature, self.ability, self.level, self.status, self.hp]
         info.append(self.volatile_statuses)

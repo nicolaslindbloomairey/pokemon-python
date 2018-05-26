@@ -13,9 +13,16 @@ class TestDecisions(unittest.TestCase):
         battle.choose(1, dex.Decision('move', 0))
         battle.do_turn()
 
-        self.assertEqual(battle.sides[0].active_pokemon.species, 'magnezone')
-        self.assertEqual(battle.sides[0].pokemon[0].hp, battle.sides[0].pokemon[0].maxhp)
-        self.assertEqual(battle.sides[0].active_pokemon.hp, battle.sides[0].active_pokemon.maxhp-3)
+        mew = battle.sides[0].pokemon[0]
+        mewtwo = battle.sides[0].pokemon[1]
+        magnezone = battle.sides[0].pokemon[2]
+
+        pidgey = battle.sides[1].pokemon[0]
+
+
+        self.assertEqual(battle.sides[0].active_pokemon[0].species, 'magnezone')
+        self.assertEqual(mew.hp, mew.maxhp)
+        self.assertEqual(magnezone.hp, magnezone.maxhp-3)
     
     def runTest(self):
         self.test_switch()

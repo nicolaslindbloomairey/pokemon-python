@@ -14,7 +14,7 @@ class TestBurn(unittest.TestCase):
         battle.choose(1, dex.Decision('move', 0))
         battle.do_turn()
 
-        pidgey = battle.sides[0].active_pokemon
+        pidgey = battle.sides[0].pokemon[0]
         self.assertEqual(pidgey.hp, pidgey.maxhp-math.floor(pidgey.maxhp*0.0625))
 
     def runTest(self):

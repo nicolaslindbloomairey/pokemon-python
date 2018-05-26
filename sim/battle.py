@@ -6,14 +6,15 @@ import heapq
 import re
 
 class Battle(object):
-    def __init__(self, debug=True, rng=True):
+    def __init__(self, doubles=False, debug=True, rng=True):
+        self.doubles = doubles
         self.rng = rng
         self.debug = debug
         self.sides = []
-        self.active_pokemon = []
         for i in range(2):
             self.sides.append(Side(self, i))
-            self.active_pokemon.append(self.sides[i].active_pokemon)
+
+
         self.status = ''
 
         # weather options - clear, sunlight, heavy_sunlight, rain, heavy_rain, sandstorm, hail, wind
@@ -31,6 +32,7 @@ class Battle(object):
 
         self.error = False
         self.debug_log = []
+        self.setup_ran = False
 
     def join(self, side_id=None, team=None):
         if side_id is None:
@@ -43,15 +45,33 @@ class Battle(object):
     def log(self, message):
         self.debug_log.append(str(message) + '\n')
 
+    # run once both players are here
+    def set_up(self):
+        # single battle, 0 is side0, 1 is side1
+        # double battle, 0 is side0active0, 1 is side0active1, 2 is side1active0...
+        if not self.doubles:
+            self.active_pokemon = [self.sides[0].active_pokemon[0],
+                                   self.sides[1].active_pokemon[0]]
+        elif self.doubles:
+            self.active_pokemon = [self.sides[0].active_pokemon[0],
+                                   self.sides[0].active_pokemon[1],
+                                   self.sides[1].active_pokemon[0],
+                                   self.sides[1].active_pokemon[1]]
+
+        self.setup_ran = True
+
+
     #method that runs the entire battle
     def run(self):
         while self.players != 2:
             self.join()
+
+        self.set_up()
         while not self.ended:
 
             # let the ai pick what each side will do
             for side in self.sides:
-                side.ai_decide()
+                side.default_decide()
 
             self.do_turn()
 
@@ -81,76 +101,100 @@ class Battle(object):
 
     def populate_action_queue(self, action_queue):
         for side in self.sides:
-            # add the switches to the queue
-            if side.choice.type == 'switch':
-                user = side.active_pokemon
-                move = 'switch'
-                target = side.choice.selection
-                action = dex.Action(user, move, target) 
-                action_tuple = (self.resolve_priority(action), action)
-
-                heapq.heappush(action_queue, action_tuple)
-
-            # add the moves to the queue
-            elif side.choice.type == 'move':
-
-                # add the mega evolutions as a seperate action
-                if side.choice.mega:
-                    user = side.active_pokemon
-                    move = 'mega'
-                    action = dex.Action(user, move)
+            n = 2 if self.doubles else 1
+            for i in range(n):
+                # add the switches to the queue
+                if side.choice[i].type == 'switch':
+                    user = side.active_pokemon[i]
+                    move = 'switch'
+                    target = side.choice[i].selection
+                    action = dex.Action(user, move, target) 
                     action_tuple = (self.resolve_priority(action), action)
 
                     heapq.heappush(action_queue, action_tuple)
 
-                user = side.active_pokemon
+                # add the moves to the queue
+                elif side.choice[i].type == 'move':
 
-                if side.choice.selection == 'struggle':
-                    move = dex.move_dex['struggle']
-                else:
+                    # add the mega evolutions as a seperate action
+                    if side.choice[i].mega:
+                        user = side.active_pokemon[i]
+                        move = 'mega'
+                        action = dex.Action(user, move)
+                        action_tuple = (self.resolve_priority(action), action)
 
-                    if 'encore' in user.volatile_statuses and user.last_used_move is not None:
-                        move = dex.move_dex[user.last_used_move]
+                        heapq.heappush(action_queue, action_tuple)
+
+                    user = side.active_pokemon[i]
+
+                    if side.choice[i].selection == 'struggle':
+                        move = dex.move_dex['struggle']
                     else:
-                        move = dex.move_dex[user.moves[side.choice.selection]]
 
-                # if the move is Z
-                if side.choice.zmove and user.can_z(move):
-                    item = dex.item_dex[user.item]
-                    if item.zMove is True:
-                        zmove_id = dex.zmove_chart[item.id]
+                        if 'encore' in user.volatile_statuses and user.last_used_move is not None:
+                            move = dex.move_dex[user.last_used_move]
+                        else:
+                            move = dex.move_dex[user.moves[side.choice[i].selection]]
+
+                    # if the move is Z
+                    if side.choice[i].zmove and user.can_z(move):
+                        item = dex.item_dex[user.item]
+                        if item.zMove is True:
+                            zmove_id = dex.zmove_chart[item.id]
+                        else:
+                            zmove_id = re.sub(r'\W+', '', item.zMove.lower())
+                        base_move = move
+                        move = dex.move_dex[zmove_id]
+
+                        # update the zmove power 
+                        if move.base_power == 1:
+                            move = move._replace(base_power = base_move.z_move.base_power)
+                            move = move._replace(category = base_move.category)
+
+                        z_move = move.z_move._replace(boosts=base_move.z_move.boosts)
+                        z_move = move.z_move._replace(effect=base_move.z_move.effect)
+                        move = move._replace(z_move=z_move)
+
+
+
+                    # actually add the moves to the queue
+                    if move.target_type == 'self':
+                        target = side
+                    elif move.target_type == 'normal':
+                        target = self.sides[0 if side.id else 1]
                     else:
-                        zmove_id = re.sub(r'\W+', '', item.zMove.lower())
-                    base_move = move
-                    move = dex.move_dex[zmove_id]
+                        target = self.sides[0 if side.id else 1]
+                    action = dex.Action(user, move, target)
+                    action_tuple = (self.resolve_priority(action), action)
 
-                    # update the zmove power 
-                    if move.base_power == 1:
-                        move = move._replace(base_power = base_move.z_move.base_power)
-                        move = move._replace(category = base_move.category)
+                    heapq.heappush(action_queue, action_tuple)
 
-                    z_move = move.z_move._replace(boosts=base_move.z_move.boosts)
-                    z_move = move.z_move._replace(effect=base_move.z_move.effect)
-                    move = move._replace(z_move=z_move)
-
-
-
-                # actually add the moves to the queue
-                if move.target_type == 'self':
-                    target = side
-                elif move.target_type == 'normal':
-                    target = self.sides[0 if side.id else 1]
                 else:
-                    target = self.sides[0 if side.id else 1]
-                action = dex.Action(user, move, target)
-                action_tuple = (self.resolve_priority(action), action)
+                    # dont add any action to the queue
+                    # this is here for the 'pass' decision
+                    pass
 
-                heapq.heappush(action_queue, action_tuple)
+    def start_of_turn(self):
+        if self.pseudo_turn:
+            return
 
-            else:
-                # dont add any action to the queue
-                # this is here for the 'pass' decision
-                pass
+        #----------------
+        # start of turn stuff
+        #-------------------
+
+        # remove volatile statuses that only last one turn
+        for pokemon in self.active_pokemon:
+
+            # one turn statuses
+            if 'protect' in pokemon.volatile_statuses:
+                pokemon.volatile_statuses.remove('protect')
+            if 'banefulbunker' in pokemon.volatile_statuses:
+                pokemon.volatile_statuses.remove('banefulbunker')
+            if 'spikyshield' in pokemon.volatile_statuses:
+                pokemon.volatile_statuses.remove('spikyshield')
+
+            if 'flinch' in pokemon.volatile_statuses:
+                pokemon.volatile_statuses.remove('flinch')
 
     def end_of_turn(self):
         if self.pseudo_turn:
@@ -166,8 +210,7 @@ class Battle(object):
             if self.weather_n == 0:
                 self.weather = 'clear'
 
-        for side in self.sides:
-            pokemon = side.active_pokemon
+        for pokemon in self.active_pokemon:
             if self.weather == 'sandstorm': 
                 if 'Steel' not in pokemon.types and 'Rock' not in pokemon.types and 'Ground' not in pokemon.types:
                     if pokemon.item != 'safetygoggles':
@@ -179,8 +222,7 @@ class Battle(object):
 
 
         # volatile statuses
-        for side in self.sides:
-            pokemon = side.active_pokemon
+        for pokemon in self.active_pokemon:
 
             # bound
             if 'partiallytrapped' in pokemon.volatile_statuses:
@@ -198,7 +240,7 @@ class Battle(object):
 
             # leech seed
             if 'leechseed' in pokemon.volatile_statuses:
-                foe = self.sides[0 if pokemon.side_id else 1].active_pokemon
+                foe = self.sides[0 if pokemon.side_id else 1].active_pokemon[0]
                 foe.damage(-(pokemon.damage(1/8, 'percentmaxhp')) * (1.3 if foe.item == 'bigroot' else 1))
 
             # nightmare
@@ -223,8 +265,7 @@ class Battle(object):
                     pokemon.damage(0.25, flag='percentmaxhp')
 
         # do major status checks
-        for side in self.sides:
-            pokemon = side.active_pokemon
+        for pokemon in self.active_pokemon:
             if pokemon.status == 'brn':
                 pokemon.damage(0.0625, flag='percentmax')
             elif pokemon.status == 'psn':
@@ -252,8 +293,11 @@ class Battle(object):
         updates the game state according to the decisions
         '''
 
+        if not self.setup_ran:
+            self.set_up()
+
         for side in self.sides:
-            side.active_pokemon.volatile_statuses = set()
+            #side.active_pokemon.volatile_statuses = set()
 
             if side.choice is None:
                 # error - one or more sides is missing a decsion
@@ -261,10 +305,14 @@ class Battle(object):
 
         self.turn += 1
 
-        for side in self.sides:
-            side.active_pokemon.active_turns += 1
+        for pokemon in self.active_pokemon:
+            pokemon.active_turns += 1
+
+        self.start_of_turn()
 
         # print the state of the battle
+        #print(str(self.sides[0].request))
+        #print(str(self.sides[1].request))
         self.log(self)
 
         # create priority queue and references to both sides
@@ -284,15 +332,21 @@ class Battle(object):
         self.pseudo_turn = False
         self.request = 'move'
         for i in range(2):
-            self.sides[i].request = 'move'
+            self.sides[i].request = ['move', 'move'] if self.doubles else ['move']
+
         #check if a pokemon fainted and insert a pseudo turn
-        for i in range(2):
-            if self.sides[i].active_pokemon.fainted:
-                # flag this side for a switch
-                self.sides[i].request = 'switch'
+        for pokemon in self.active_pokemon:
+            if pokemon.fainted:
                 self.pseudo_turn = True
-                if self.sides[0 if i else 1].active_pokemon.fainted == False:
-                    self.sides[0 if i else 1].request = 'pass'
+                
+        if self.pseudo_turn:
+            for side in self.sides:
+                n = 2 if self.doubles else 1
+                for i in range(n):
+                    if side.active_pokemon[i].fainted:
+                        side.request[i] = 'switch'
+                    else:
+                        side.request[i] = 'pass'
 
 #       check for a winner
 #       end the while true once the game ends
@@ -368,7 +422,7 @@ class Battle(object):
 
         # one way for switches
         if action.move == 'switch':
-            action.user.side.switch(action.target)
+            action.user.side.switch(action.user, action.target)
 
         # another for mega evolutions
         elif action.move == 'mega':
@@ -376,7 +430,10 @@ class Battle(object):
 
         # and lastly for moves
         else:
-            self.run_move(action.user, action.move, action.target.active_pokemon)
+            if self.doubles:
+                self.run_move(action.user, action.move, action.target.active_pokemon[0])
+            else:
+                self.run_move(action.user, action.move, action.target.active_pokemon[0])
 
 
     def run_move(self, user, move, target):
@@ -685,7 +742,10 @@ class Battle(object):
         return temp < check 
         
     def choose(self, side_id, choice):
-        self.sides[side_id].choice = choice 
+        if isinstance(choice, list):
+            self.sides[side_id].choice = choice
+        else:
+            self.sides[side_id].choice[0] = choice 
 
     def boosts_statuses(self, user, move, target):
         # stat changing moves 

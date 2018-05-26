@@ -15,7 +15,7 @@ class TestMega(unittest.TestCase):
         battle.choose(1, dex.Decision('move', 0, mega=True))
         battle.do_turn()
 
-        pidgeot = battle.sides[0].active_pokemon
+        pidgeot = battle.sides[0].pokemon[0]
         self.assertEqual(pidgeot.species, 'pidgeotmega')
         self.assertEqual(pidgeot.hp, pidgeot.maxhp-23)
 
@@ -34,8 +34,8 @@ class TestMega(unittest.TestCase):
         battle.choose(1, dex.Decision('move', 0, mega=False))
         battle.do_turn()
 
-        mewtwo = battle.sides[0].active_pokemon
-        charizard = battle.sides[1].active_pokemon
+        mewtwo = battle.sides[0].pokemon[0]
+        charizard = battle.sides[1].pokemon[0]
         self.assertEqual(mewtwo.species, 'mewtwomegax')
         self.assertEqual(mewtwo.hp, mewtwo.maxhp-17)
     

@@ -14,7 +14,7 @@ class TestProtect(unittest.TestCase):
         battle.choose(1, dex.Decision('move', 0))
         battle.do_turn()
 
-        pidgeot = battle.sides[0].active_pokemon
+        pidgeot = battle.sides[0].pokemon[0]
         self.assertEqual(pidgeot.hp, pidgeot.maxhp)
         self.assertTrue('protect' in pidgeot.volatile_statuses)
 
@@ -32,7 +32,7 @@ class TestProtect(unittest.TestCase):
         battle.choose(1, dex.Decision('move', 0))
         battle.do_turn()
 
-        pidgeot = battle.sides[0].active_pokemon
+        pidgeot = battle.sides[0].pokemon[0]
         self.assertEqual(pidgeot.hp, pidgeot.maxhp-24)
         self.assertFalse('protect' in pidgeot.volatile_statuses)
 
@@ -50,7 +50,7 @@ class TestProtect(unittest.TestCase):
         battle.choose(1, dex.Decision('move', 0))
         battle.do_turn()
 
-        pidgeot = battle.sides[0].active_pokemon
+        pidgeot = battle.sides[0].pokemon[0]
         self.assertEqual(pidgeot.hp, pidgeot.maxhp-24)
     def runTest(self):
         self.test_protect_invulnerable()

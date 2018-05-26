@@ -34,8 +34,8 @@ class TestDamageCalc(unittest.TestCase):
         battle.choose(1, dex.Decision('move', 0))
         battle.do_turn()
 
-        magnemite = battle.sides[1].active_pokemon
-        charmander = battle.sides[0].active_pokemon
+        magnemite = battle.sides[1].pokemon[0]
+        charmander = battle.sides[0].pokemon[0]
 
         #damage calcs were done by hand
         self.assertEqual(charmander.hp, charmander.maxhp-5)
