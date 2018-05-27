@@ -56,23 +56,24 @@ class Side(object):
             self.active_pokemon.is_switching = True
 
     def default_decide(self):
-        n = 2 if self.battle.doubles else 1
+        #n = 2 if self.battle.doubles else 1
+        n = len(self.active_pokemon)
         for i in range(n):
 
             if self.request[i] == 'switch':
                 for pokemon in self.pokemon:
                     if pokemon.fainted == False:
                         self.choice[i] = dex.Decision('switch', pokemon.position)
-                        return
+
             elif self.request[i] == 'pass':
                 self.choice[i] = dex.Decision('pass', 0)
-                return
 
-            if len(self.active_pokemon[i].moves) > 0:
-                rand_int = random.randint(0, len(self.active_pokemon[i].moves)-1)
-                self.choice[i] = dex.Decision('move', rand_int)
-            else:
-                self.choice[i] = dex.Decision('move', 'struggle')
+            elif self.request[i] == 'move':
+                if len(self.active_pokemon[i].moves) > 0:
+                    rand_int = random.randint(0, len(self.active_pokemon[i].moves)-1)
+                    self.choice[i] = dex.Decision('move', rand_int)
+                else:
+                    self.choice[i] = dex.Decision('move', 'struggle')
 
     def populate_team(self, team):
         if team == None:
@@ -111,8 +112,13 @@ class Side(object):
         if 'partiallytrapped' in user.volatile_statuses and 'Ghost' not in user.types:
             return False
 
-        # if the selected pokemon is fainted do a default switch
-        if self.pokemon[position].fainted:
+        if self.battle.doubles and self.pokemon_left == 1:
+            self.active_pokemon.remove(user)
+            self.battle.active_pokemon.remove(user)
+            return
+
+        # if the selected pokemon is fainted or is already on the field do a default switch
+        if self.pokemon[position].fainted or self.pokemon[position].active:
             return self.default_switch(user)
 
         pokemon_out = user
@@ -149,10 +155,11 @@ class Side(object):
 
     # switch to the first non-fainted pokemon on your team
     def default_switch(self, user):
-        if not pokemon_left:
+        if not self.pokemon_left:
             raise ValueError('There are no pokemon left but we are trying to switch!')
 
         for pokemon in self.bench:
-            if pokemon.fainted == False:
+            if not pokemon.fainted and not pokemon.active:
                 self.switch(user, pokemon.position)
-        return True
+                return True
+

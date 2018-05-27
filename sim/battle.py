@@ -84,11 +84,20 @@ class Battle(object):
 
     def __str__(self):
         out = ['\n']
-        out.append('Turn ' + str(self.turn))
-        #out.append(str(self.sides[0].pokemon_left)
-        #               + " : "
-        #               + str(self.sides[1].pokemon_left)
-        #               + '\n')
+        out.append('Turn ' + str(self.turn) + ' pseudo:' + str(self.pseudo_turn))
+        out.append('\n')
+        out.append(str(self.sides[0].pokemon_left)
+                       + " : "
+                       + str(self.sides[1].pokemon_left)
+                       + '\n')
+        for side in self.sides:
+            for pokemon in side.active_pokemon:
+                out.append(str(pokemon) + ' -- ')
+            out.append('\n')
+            for choice in side.choice:
+                out.append(str(choice) + ' -- ')
+            out.append('\n')
+
         #for i in range(2):
         #    out.append(self.sides[i].name
         #               + "|"
@@ -341,7 +350,8 @@ class Battle(object):
                 
         if self.pseudo_turn:
             for side in self.sides:
-                n = 2 if self.doubles else 1
+                #n = 2 if self.doubles else 1
+                n = len(side.active_pokemon)
                 for i in range(n):
                     if side.active_pokemon[i].fainted:
                         side.request[i] = 'switch'
