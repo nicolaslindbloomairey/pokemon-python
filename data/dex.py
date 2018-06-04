@@ -24,10 +24,10 @@ with open('data/typechart.json') as f:
 with open('data/natures.json') as f:
     natures_raw_data = json.load(f)
 
-
-class Decision(namedtuple('Decision', ['type', 'selection', 'mega', 'zmove'])):
-    def __new__(cls, type, selection, mega=False, zmove=False):
-        return super(Decision, cls).__new__(cls, type, selection, mega, zmove)
+# target can be : 'foe0', 'foe1', 'ally', 'self', 'foes', 'allies', 'adjacent', 'all'
+class Decision(namedtuple('Decision', ['type', 'selection', 'target', 'mega', 'zmove'])):
+    def __new__(cls, type, selection, target='foe0', mega=False, zmove=False):
+        return super(Decision, cls).__new__(cls, type, selection, target, mega, zmove)
         
 class Action(namedtuple('Action', ['user', 'move', 'target', 'zmove', 'base_move'])):
     def __new__(cls, user, move, target=None, zmove=False, base_move=None):

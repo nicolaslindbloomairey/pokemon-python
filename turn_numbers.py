@@ -11,7 +11,7 @@ num_battles = 200
 teams = [generate_team(), generate_team()]
 
 for i in range(num_battles):
-    battle = Battle(doubles=True, debug=False)
+    battle = Battle(doubles=False, debug=False)
     
     battle.join(team=teams[0])
     battle.join(team=teams[1])

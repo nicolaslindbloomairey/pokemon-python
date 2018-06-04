@@ -43,6 +43,8 @@ class Battle(object):
         self.players += 1
 
     def log(self, message):
+        if self.debug:
+            print(str(message))
         self.debug_log.append(str(message) + '\n')
 
     # run once both players are here
@@ -111,42 +113,53 @@ class Battle(object):
     def populate_action_queue(self, action_queue):
         for side in self.sides:
             n = 2 if self.doubles else 1
+            n = len(side.active_pokemon)
             for i in range(n):
-                # add the switches to the queue
-                if side.choice[i].type == 'switch':
-                    user = side.active_pokemon[i]
+                choice = side.choice[i]
+                user = side.active_pokemon[i]
+                #-------------------------
+                # generate SWITCH actions
+                #-------------------------
+                if choice.type == 'switch':
                     move = 'switch'
-                    target = side.choice[i].selection
+                    target = choice.selection
                     action = dex.Action(user, move, target) 
                     action_tuple = (self.resolve_priority(action), action)
 
                     heapq.heappush(action_queue, action_tuple)
 
-                # add the moves to the queue
-                elif side.choice[i].type == 'move':
+                #-------------------------
+                # move decision actions
+                #-------------------------
+                elif choice.type == 'move':
 
-                    # add the mega evolutions as a seperate action
-                    if side.choice[i].mega:
-                        user = side.active_pokemon[i]
+                    #-------------------------
+                    # generate MEGA EVOLUTION actions
+                    #-------------------------
+                    if choice.mega:
                         move = 'mega'
+
                         action = dex.Action(user, move)
                         action_tuple = (self.resolve_priority(action), action)
-
                         heapq.heappush(action_queue, action_tuple)
 
-                    user = side.active_pokemon[i]
 
-                    if side.choice[i].selection == 'struggle':
+                    #-------------------------
+                    # check if stuggle is move
+                    #-------------------------
+                    if choice.selection == 'struggle':
                         move = dex.move_dex['struggle']
                     else:
 
                         if 'encore' in user.volatile_statuses and user.last_used_move is not None:
                             move = dex.move_dex[user.last_used_move]
                         else:
-                            move = dex.move_dex[user.moves[side.choice[i].selection]]
+                            move = dex.move_dex[user.moves[choice.selection]]
 
-                    # if the move is Z
-                    if side.choice[i].zmove and user.can_z(move):
+                    #-------------------------
+                    # update z move power
+                    #-------------------------
+                    if choice.zmove and user.can_z(move):
                         item = dex.item_dex[user.item]
                         if item.zMove is True:
                             zmove_id = dex.zmove_chart[item.id]
@@ -164,24 +177,107 @@ class Battle(object):
                         z_move = move.z_move._replace(effect=base_move.z_move.effect)
                         move = move._replace(z_move=z_move)
 
+                    #-------------------------
+                    # targeting
+                    #-------------------------
+                    
+                    if self.doubles:
+                        target = self.resolve_target(move, choice)
+                    elif not self.doubles:
+                        if move.target_type == 'self':
+                            target = 'self'
+                        else:
+                            target = 'foe0'
 
 
                     # actually add the moves to the queue
-                    if move.target_type == 'self':
-                        target = side
-                    elif move.target_type == 'normal':
-                        target = self.sides[0 if side.id else 1]
-                    else:
-                        target = self.sides[0 if side.id else 1]
+                    #if move.target_type == 'self':
+                    #    target = side
+                    #elif move.target_type == 'normal':
+                    #    target = self.sides[0 if side.id else 1]
+                    #else:
+                    #    target = self.sides[0 if side.id else 1]
+
+                    #-------------------------
+                    # generate MOVE actions
+                    #-------------------------
                     action = dex.Action(user, move, target)
                     action_tuple = (self.resolve_priority(action), action)
-
                     heapq.heappush(action_queue, action_tuple)
 
                 else:
                     # dont add any action to the queue
                     # this is here for the 'pass' decision
                     pass
+
+    def resolve_target(self, move, choice):
+        '''
+        checks if the choice.target is a valid target for the move type
+        if not return a default target
+
+        target options are:
+        
+        targets 1 pokemon
+            -foe0
+            -foe1
+            -ally
+            -self
+            
+        targets 2 pokemon
+            -foes
+            -allies
+
+        targets 3 pokemon
+            -adjacent
+            
+        targets 4 pokemon
+            -all
+        '''
+        if move.target_type == 'adjacentFoe':
+            if choice.target in ['foe0', 'foe1']:
+                return choice.target
+            else:
+                return 'foe0'
+        elif move.target_type == 'allAdjacentFoes':
+            return 'foes'
+        elif move.target_type == 'any':
+            if choice.target in ['foe0', 'foe1', 'ally']:
+                return choice.target
+            else:
+                return 'foe0'
+        elif move.target_type == 'foeSide':
+            return 'foes'
+        elif move.target_type == 'adjacentAlly':
+            return 'ally'
+        elif move.target_type == 'allAdjacent':
+            return 'adjacent'
+        elif move.target_type == 'randomNormal':
+            if random.random() > 0.5:
+                return 'foe0'
+            else:
+                return 'foe1'
+        elif move.target_type == 'normal':
+            if choice.target in ['foe0', 'foe1']:
+                return choice.target
+            else:
+                return 'foe0'
+        elif move.target_type == 'adjacentAllyOrSelf':
+            if choice.target in ['self', 'ally']:
+                return choice.target
+            else:
+                return 'self'
+        elif move.target_type == 'self':
+            return 'self'
+        elif move.target_type == 'allySide':
+            return 'allies'
+        elif move.target_type == 'scripted':
+            # used by counter, mirrorcoat, and metalburst
+            # targets the last foe to damage the user this turn
+            return 'foe0'
+        elif move.target_type == 'all':
+            return 'all'
+        elif move.target_type == 'allyTeam':
+            return 'allies'
 
     def start_of_turn(self):
         if self.pseudo_turn:
@@ -193,6 +289,7 @@ class Battle(object):
 
         # remove volatile statuses that only last one turn
         for pokemon in self.active_pokemon:
+            pokemon.pokemon_hit_this_turn = 0
 
             # one turn statuses
             if 'protect' in pokemon.volatile_statuses:
@@ -428,28 +525,88 @@ class Battle(object):
         return priority + speed + tie_breaker
 
     def run_action(self, action):
+        user, move, target, zmove, base_move = action
         # action is set up three different ways
 
         # one way for switches
-        if action.move == 'switch':
-            action.user.side.switch(action.user, action.target)
+        if move == 'switch':
+            user.side.switch(user, target)
+            return
 
         # another for mega evolutions
-        elif action.move == 'mega':
-            action.user.mega_evolve()
+        if move == 'mega':
+            user.mega_evolve()
+            return
 
         # and lastly for moves
-        else:
-            if self.doubles:
-                self.run_move(action.user, action.move, action.target.active_pokemon[0])
-            else:
-                self.run_move(action.user, action.move, action.target.active_pokemon[0])
+        if target == 'foe0':
+            foe_side = self.sides[0 if user.side_id else 1]
+            try:
+                target_pokemon = foe_side.active_pokemon[0]
+                self.run_move(user, move, target_pokemon)
+            except IndexError:
+                self.log(move.name + ' failed because there is no target')
+            return
+        elif target == 'foe1':
+            foe_side = self.sides[0 if user.side_id else 1]
+            try:
+                target_pokemon = foe_side.active_pokemon[1]
+                self.run_move(user, move, target_pokemon)
+            except IndexError:
+                self.log(move.name + ' failed because there is no target')
+            return
+        elif target == 'ally':
+            ally_side = self.sides[user.side_id]
+            ally_index = 0 if ally_side.active_pokemon.index(user) else 1
+            target_pokemon = ally_side.active_pokemon[ally_index]
+            self.run_move(user, move, target_pokemon)
+            return
+        elif target == 'self':
+            self.run_move(user, move, user)
+            return
 
+        elif target == 'foes':
+            foe_side = self.sides[0 if user.side_id else 1]
+            for pokemon in foe_side.active_pokemon:
+                self.run_move(user, move, pokemon)
+            return
+        elif target == 'allies':
+            ally_side = self.sides[user.side_id]
+            for pokemon in ally_side.active_pokemon:
+                self.run_move(user, move, pokemon)
+            return
+
+        elif target == 'adjacent':
+            # foe side
+            foe_side = self.sides[0 if user.side_id else 1]
+            for pokemon in foe_side.active_pokemon:
+                self.run_move(user, move, pokemon)
+            # ally pokemon
+            ally_side = self.sides[user.side_id]
+            ally_index = 0 if ally_side.active_pokemon.index(user) else 1
+            try:
+                target_pokemon = ally_side.active_pokemon[ally_index]
+                self.run_move(user, move, target_pokemon)
+            except IndexError:
+                self.log(move.name + ' failed because there is no target')
+            return
+
+        elif target == 'all':
+            move = move._replace(base_power = move.base_power * 0.75)
+            for pokemon in self.active_pokemon:
+                self.run_move(user, move, pokemon)
+            return
 
     def run_move(self, user, move, target):
+        '''
+        user = Pokemon
+        move = Move
+        target = Pokemon
+        '''
         if user.fainted:
             self.log(user.name + " fainted before they could move")
             return
+
 
         # subtract pp
         # struggle and zmoves do not have pp
@@ -470,6 +627,7 @@ class Battle(object):
             # move missed! do nothing
             return
 
+        #user.pokemon_hit_this_turn += 1
 
         # zmove pp
         if move.z_move.crystal is not None:
@@ -537,7 +695,7 @@ class Battle(object):
             attack = user.get_attack(crit)
             defense = target.get_defense(crit)
 
-        damage = ((((((2 * user.level) / 5) + 2) * attack * power / defense) / 50) + 2) 
+        damage = (math.floor(math.floor(math.floor(((2 * user.level) / 5) + 2) * attack * power / defense) / 50) + 2) 
 
         #------------------------------------
         # multiply the damage by each modifier
@@ -545,6 +703,10 @@ class Battle(object):
         modifier = 1
 
         # 0.75 if move has multiple targets, 1 otherwise
+        #if user.pokemon_hit_this_turn > 1:
+        #    modifier *= 0.75
+        if self.doubles and move.target_type in ['foeSide', 'allyTeam', 'allAdjacent', 'allAdjacentFoes', 'allySide']:
+            modifier *= 0.75
 
         # weather
         if self.weather == 'rain' or self.weather == 'heavy_rain':
@@ -783,6 +945,8 @@ class Battle(object):
             if not target.fainted:
                 temp = random.randint(0, 99)
                 check = effect['chance']
+                if check != 100 and not self.rng:
+                    check = 0
                 if temp < check:
                     if 'boosts' in effect:
                         target.boost(effect['boosts'])

@@ -50,6 +50,8 @@ class Pokemon(object):
         self.substitute = False
         self.substitute_hp = 0
 
+        self.pokemon_hit_this_turn = 0
+
         self.last_damaging_move = None
         self.last_used_move = None
 
