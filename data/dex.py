@@ -23,6 +23,13 @@ with open('data/typechart.json') as f:
     typecharts_raw_data = json.load(f)
 with open('data/natures.json') as f:
     natures_raw_data = json.load(f)
+with open('data/simple_learnsets.json') as f:
+    simple_learnsets = json.load(f)
+with open('data/sample_teams.json') as f:
+    sample_teams = json.load(f)
+
+sample_teams = sample_teams
+simple_learnsets = simple_learnsets
 
 # target can be : 'foe0', 'foe1', 'ally', 'self', 'foes', 'allies', 'adjacent', 'all'
 class Decision(namedtuple('Decision', ['type', 'selection', 'target', 'mega', 'zmove'])):

@@ -1601,6 +1601,13 @@
         "rating": 1.5,
         "num": 105
     },
+    "suppressed": {
+        "shortDesc": "This Pokemon's ability is being suppressed by Gastro Acid",
+        "id": "suppressed",
+        "name": "Suppressed",
+        "rating": 0,
+        "num": -1
+    },
     "surgesurfer": {
         "shortDesc": "If Electric Terrain is active, this Pokemon's Speed is doubled.",
         "id": "surgesurfer",

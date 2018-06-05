@@ -107,9 +107,9 @@ class Side(object):
 
     # switch the active pokemon to the pokemon in index: position
     def switch(self, user, position):
-        if 'cantescape' in user.volatile_statuses:
+        if 'cantescape' in user.volatile_statuses and not user.fainted:
             return False
-        if 'partiallytrapped' in user.volatile_statuses and 'Ghost' not in user.types:
+        if 'partiallytrapped' in user.volatile_statuses and not user.fainted and 'Ghost' not in user.types:
             return False
 
         if self.battle.doubles and self.pokemon_left == 1:

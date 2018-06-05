@@ -37,6 +37,7 @@ class Pokemon(object):
         self.toxic_n = 1
         self.sleep_n = 0
         self.bound_n = 0
+        self.encore_n = 0
         self.perishsong_n = 0
         self.taunt_n = 0
 
@@ -77,6 +78,8 @@ class Pokemon(object):
         self.base_ability = pokemon_set.get('ability', self.template.abilities.normal0)
         self.base_ability = re.sub(r'\W+', '', self.base_ability.lower())
         self.ability = self.base_ability
+        if self.ability == '':
+            raise ValueError
         self.item = pokemon_set.get('item', '')
         self.lost_item = False
         self.last_used_item = None
@@ -85,15 +88,16 @@ class Pokemon(object):
 
         if 'evs' not in pokemon_set:
             self.pokemon_set['evs'] = dex.Stats(0, 0, 0, 0, 0, 0)
-        if 'ivs' not in pokemon_set:
-            self.pokemon_set['ivs'] = dex.Stats(31, 31, 31, 31, 31, 31)
+        else:
+            self.pokemon_set['evs'] = dex.Stats(pokemon_set['evs'][0], pokemon_set['evs'][1], pokemon_set['evs'][2], pokemon_set['evs'][3], pokemon_set['evs'][4], pokemon_set['evs'][5])
+        self.pokemon_set['ivs'] = dex.Stats(31, 31, 31, 31, 31, 31)
 
         self.calculate_stats()
         self.hp = self.stats.hp
         self.maxhp = self.hp
 
     def __str__(self):
-        info = [self.name, self.nature, self.ability, self.level, self.status, self.hp]
+        info = [self.name, self.hp, self.nature, self.ability, self.moves, self.status, ]
         info.append(self.volatile_statuses)
         out = ''
         for each in info:
@@ -156,6 +160,7 @@ class Pokemon(object):
             return False
         if status is None:
             return False
+        #print(self.name + self.ability)
 
         if status == 'brn' and ('Fire' in self.types or dex.ability_dex[self.ability].prevent_burn):
             return False
@@ -189,7 +194,7 @@ class Pokemon(object):
                 self.boosts[stat] = -6
 
 
-    def get_attack(self, crit):
+    def get_attack(self, crit=False):
         modifier = dex.boosts[self.boosts['atk']]
         if crit and modifier < 1:
             modifier = 1
@@ -347,6 +352,7 @@ class Pokemon(object):
         return diff_hp
 
     def faint(self):
+        self.volatile_statuses = set()
         self.battle.log(self.fullname + ' fainted')
         self.trapped = False
         self.hp = 0

@@ -12,9 +12,11 @@ abs_file_path = os.path.join(script_dir, rel_path)
 
 with open(abs_file_path) as f:
     vgc = json.load(f)
+with open('data/domains/all.json') as f:
+    domain_all = json.load(f)
 
 
-def generate_team():
+def generate_vgc_team():
 
     probs = numpy.array([p['usage'] for p in vgc])
     probs /= probs.sum()
@@ -52,6 +54,50 @@ def generate_team():
             pokemon['moves'][i] = move
 
     return team
+
+def generate_team(num_pokemon=6, domain='all'):
+    team = []
+    species = []
+    items = []
+    pokedex = list(domain_all)
+    items = list(dex.item_dex.keys())
+
+    while len(team) < 6:
+        pokemon = {}
+        r = random.randint(0,len(pokedex)-1)
+        pokemon['species'] = pokedex[r]
+        del pokedex[r]
+
+        pokemon['moves'] = []
+        moves = list(dex.simple_learnsets[pokemon['species']])
+        while len(pokemon['moves']) < 4 and len(moves) > 0:
+            r = random.randint(0,len(moves)-1)
+            pokemon['moves'].append(moves[r])
+            del moves[r]
+
+        
+        r = random.randint(0,len(items)-1)
+        pokemon['item'] = items[r]
+
+        abilities = [re.sub(r'\W+', '', ability.lower()) for ability in list(filter(None.__ne__, list(dex.pokedex[pokemon['species']].abilities)))]
+        #print(str(abilities))
+        r = random.randint(0,len(abilities)-1)
+        pokemon['ability'] = abilities[r]
+
+        divs = [random.randint(0,127) for i in range(5)]
+        divs.append(0)
+        divs.append(127)
+        divs.sort()
+        evs = [4*(divs[i+1]-divs[i]) if 4*(divs[i+1]-divs[i])< 252 else 252 for i in range(len(divs)-1)]
+        pokemon['evs'] = evs
+        pokemon['ivs'] = [31, 31, 31, 31, 31, 31]
+
+        team.append(pokemon)
+        
+    return team
+
+def choice(L, n, p):
+    pass
 
 #print(generateTeam())
 

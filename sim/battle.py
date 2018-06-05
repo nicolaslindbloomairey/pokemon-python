@@ -237,14 +237,14 @@ class Battle(object):
             if choice.target in ['foe0', 'foe1']:
                 return choice.target
             else:
-                return 'foe0'
+                return 'foe0' if random.random() > 0.5 else 'foe1'
         elif move.target_type == 'allAdjacentFoes':
             return 'foes'
         elif move.target_type == 'any':
             if choice.target in ['foe0', 'foe1', 'ally']:
                 return choice.target
             else:
-                return 'foe0'
+                return 'foe0' if random.random() > 0.5 else 'foe1'
         elif move.target_type == 'foeSide':
             return 'foes'
         elif move.target_type == 'adjacentAlly':
@@ -260,7 +260,7 @@ class Battle(object):
             if choice.target in ['foe0', 'foe1']:
                 return choice.target
             else:
-                return 'foe0'
+                return 'foe0' if random.random() > 0.5 else 'foe1'
         elif move.target_type == 'adjacentAllyOrSelf':
             if choice.target in ['self', 'ally']:
                 return choice.target
@@ -292,15 +292,9 @@ class Battle(object):
             pokemon.pokemon_hit_this_turn = 0
 
             # one turn statuses
-            if 'protect' in pokemon.volatile_statuses:
-                pokemon.volatile_statuses.remove('protect')
-            if 'banefulbunker' in pokemon.volatile_statuses:
-                pokemon.volatile_statuses.remove('banefulbunker')
-            if 'spikyshield' in pokemon.volatile_statuses:
-                pokemon.volatile_statuses.remove('spikyshield')
-
-            if 'flinch' in pokemon.volatile_statuses:
-                pokemon.volatile_statuses.remove('flinch')
+            one_turn_statuses = {None, 'flinch', 'endure', 'protect', 'banefulbunker',
+                                 'spikyshield'}
+            pokemon.volatile_statuses -= one_turn_statuses
 
     def end_of_turn(self):
         if self.pseudo_turn:
@@ -335,7 +329,7 @@ class Battle(object):
                 pokemon.damage(pokemon.bound_damage, flag='percentmaxhp')
                 pokemon.bound_n -= 1
                 if pokemon.bound_n == 0:
-                    pokemon.volatile_statues.remove('partiallytrapped')
+                    pokemon.volatile_statuses -= {'partiallytrapped'}
 
             # aqua ring
             if pokemon.aqua_ring:
@@ -359,6 +353,12 @@ class Battle(object):
                 pokemon.perishsong_n -= 1
                 if pokemon.perishsong_n == 0:
                     pokemon.faint()
+
+            # perish song
+            if 'encore' in pokemon.volatile_statuses:
+                pokemon.encore_n -= 1
+                if pokemon.encore_n == 0:
+                    pokemon.volatile_statuses -= {'encore'}
 
             if 'taunt' in pokemon.volatile_statuses:
                 pokemon.taunt_n -= 1
@@ -505,8 +505,8 @@ class Battle(object):
         elif action.move == 'mega':
             action_priority_tier = 2
 
-        elif action.move.id == 'pursuit' and action.target.active_pokemon.is_switching:
-            action_priority_tier = 0
+        #elif action.move.id == 'pursuit' and action.target.active_pokemon.is_switching:
+        #    action_priority_tier = 0
 
         else:
             action_priority_tier = 3 + (5 - action.move.priority)
@@ -611,12 +611,14 @@ class Battle(object):
         # subtract pp
         # struggle and zmoves do not have pp
         if move.id != 'struggle' and move.z_move.crystal is None:
-            user.pp[move.id] -= 1
-            #self.log(move.name + ' has ' + str(user.pp[move.id]) + ' pp left')
+            # moves ran by other stuff
+            #print(str(user.pp))
+            if move.id in user.pp:
+                user.pp[move.id] -= 1
 
-            # remove the move from the pokemons move list if it has no pp left
-            if user.pp[move.id] == 0:
-                user.moves.remove(move.id)
+                # remove the move from the pokemons move list if it has no pp left
+                if user.pp[move.id] == 0:
+                    user.moves.remove(move.id)
 
         user.last_used_move = move.id
 
@@ -681,7 +683,7 @@ class Battle(object):
 
         move_crit = move.crit_ratio if move.crit_ratio is not None else 0
         crit_chance = user.crit_chance + move_crit
-        random_crit = random.random() < dex.crit[crit_chance] and self.rng
+        random_crit = random.random() < (dex.crit[crit_chance] if crit_chance <= 3 else 1) and self.rng
 
         if crit_chance >= 3 or random_crit:
             crit = True
@@ -967,6 +969,9 @@ class Battle(object):
         if target_volatile_status == 'taunt':
             target.taunt_n = 3
 
+        if target_volatile_status == 'encore':
+            target.encore_n = 3
+
 
     def update_move_before_running(self, user, move, target):
         '''
@@ -1039,15 +1044,15 @@ class Battle(object):
             power = dex.fling.get(user.item, 30)
             move = move._replace(base_power = power)
             if user.item == 'kingsrock' or user.item == 'razorfang':
-                move = move._replace(primary, {'boosts': None, 'status': None, 'volatile_status': 'flinch', 'self': None})
+                move = move._replace(primary= {'boosts': None, 'status': None, 'volatile_status': 'flinch', 'self': None})
             elif user.item == 'flameorb':
-                move = move._replace(primary, {'boosts': None, 'status': 'brn', 'volatile_status': None, 'self': None})
+                move = move._replace(primary= {'boosts': None, 'status': 'brn', 'volatile_status': None, 'self': None})
             elif user.item == 'toxicorb':
-                move = move._replace(primary, {'boosts': None, 'status': 'tox', 'volatile_status': None, 'self': None})
+                move = move._replace(primary= {'boosts': None, 'status': 'tox', 'volatile_status': None, 'self': None})
             elif user.item == 'lightball':
-                move = move._replace(primary, {'boosts': None, 'status': 'par', 'volatile_status': None, 'self': None})
+                move = move._replace(primary= {'boosts': None, 'status': 'par', 'volatile_status': None, 'self': None})
             elif user.item == 'poisonbarb':
-                move = move._replace(primary, {'boosts': None, 'status': 'psn', 'volatile_status': None, 'self': None})
+                move = move._replace(primary= {'boosts': None, 'status': 'psn', 'volatile_status': None, 'self': None})
 
         # assume max base_power for return and frustration
         elif move.id == 'frustration' or move.id == 'return':
@@ -1128,18 +1133,19 @@ class Battle(object):
 
         # assist
         elif move.id == 'assist':
-            move = dex.move_dex[target.moves[random.randint(0, 3)]]
+            move = dex.move_dex[random.choice(target.moves)]
         
         # metronome
         elif move.id == 'metronome':
             while move.id in dex.no_metronome:
-                move = dex.move_dex[random.choice(dex.move_dex.keys())]
+                move = dex.move_dex[random.choice(list(dex.move_dex.keys()))]
 
         # mimic
         elif move.id == 'mimic':
             if target.last_used_move is not None:
-                user.moves.pop('mimic')
-                user.move.append(target.last_used_move)
+                if 'mimic' in user.moves:
+                    user.moves.remove('mimic')
+                user.moves.append(target.last_used_move)
                 move = dex.move_dex[target.last_used_move]
 
         # copycat
@@ -1267,15 +1273,17 @@ class Battle(object):
         # conversion
         move_types = []
         if move.id == 'conversion':
-            for move in user.moves:
-                if dex.move_dex[move].type not in user.types:
-                    move_types.append(dex.move_dex[move].type)
+            for user_move in user.moves:
+                if dex.move_dex[user_move].type not in user.types:
+                    move_types.append(dex.move_dex[user_move].type)
             if len(move_types) > 0:
                 user.types = [move_types[random.randint(0, len(move_types)-1)]]
 
         # this causes an attribute error and i dont know why
         # attrubiteError starts here
+        # I THINK I FIGURED IT OUT
         # conversion 2
+        #print(str(move))
         if move.id == 'conversion2':
             if user.last_damaging_move is not None:
                 for type in dex.typechart_dex[dex.move_dex[user.last_damaging_move].type].damage_taken:
@@ -1306,7 +1314,7 @@ class Battle(object):
 
         # focus energy
         if move.id == 'focusenergy':
-            user.crit_ratio += 2
+            user.crit_chance += 2
 
         # forests curse
         if move.id == 'forestscurse':
@@ -1314,7 +1322,8 @@ class Battle(object):
 
         # gastro acid
         if move.id == 'gastroacid':
-            target.ability = ''
+            if target.ability not in ['multitype', 'stancechance', 'schooling', 'comatose', 'shieldsdown', 'disguise', 'rkssystem', 'battlebond', 'powerconstruct']:
+                target.ability = 'suppressed'
 
         # guard split
         if move.id == 'guardsplit':
@@ -1438,7 +1447,8 @@ class Battle(object):
         # sketch
         if move.id == 'sketch':
             if target.last_used_move is not None:
-                user.moves.remove('sketch')
+                if 'sketch' in user.moves:
+                    user.moves.remove('sketch')
                 user.moves.append(target.last_used_move)
 
         # skill swap
@@ -1476,7 +1486,7 @@ class Battle(object):
 
         # strength sap
         if move.id == 'strengthsap':
-            if target.boost['atk'] != -6:
+            if target.boosts['atk'] != -6:
                 user.damage(-(target.get_attack()))
                 target.boost({'atk': -1})
 
@@ -1498,7 +1508,7 @@ class Battle(object):
         # topsy-turvy
         if move.id == 'topsyturvy':
             for stat in target.boosts:
-                target.boosts[stat] = -target.boost[stat]
+                target.boosts[stat] = -target.boosts[stat]
 
         # trick or treat
         if move.id == 'trickortreat':

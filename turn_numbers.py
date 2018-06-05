@@ -7,14 +7,14 @@ t0 = time.time()
 zero = 0
 one = 0
 turncount = 0
-num_battles = 200
+num_battles = 6000
 teams = [generate_team(), generate_team()]
 
 for i in range(num_battles):
     battle = Battle(doubles=False, debug=False)
     
-    battle.join(team=teams[0])
-    battle.join(team=teams[1])
+    battle.join(team=generate_team())
+    battle.join(team=generate_team())
 
     battle.run()
     turncount += battle.turn

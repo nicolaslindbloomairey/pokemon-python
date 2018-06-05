@@ -1,0 +1,25 @@
+{
+    "team0": [
+        {
+            "species": "bulbasaur",
+            "moves": ["tackle", "vinewhip", "sleeppowder", "ingrain"],
+            "ability": "overgrow",
+            "evs": [252, 0, 0, 4, 0, 252],
+            "ivs": [31, 31, 31, 31, 31, 31]
+        },
+        {
+            "species": "charmander",
+            "moves": ["scratch", "ember", "smokescreen", "firespin"],
+            "ability": "solarpower",
+            "evs": [252, 0, 0, 4, 0, 252],
+            "ivs": [31, 31, 31, 31, 31, 31]
+        },
+        {
+            "species": "squirtle",
+            "moves": ["skullbash", "confusion", "counter", "flail"],
+            "ability": "torrent",
+            "evs": [252, 0, 0, 4, 0, 252],
+            "ivs": [31, 31, 31, 31, 31, 31]
+        }
+    ]
+}
