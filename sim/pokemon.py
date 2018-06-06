@@ -358,3 +358,70 @@ class Pokemon(object):
         self.hp = 0
         self.fainted = True
         self.side.pokemon_left -= 1
+
+def json_to_genome(json):
+    '''
+    takes the dict/json format and returns the value encoded genome
+
+        species: string,
+        moves: [string, string, string, string],
+        item: string,
+        ability: string,
+        nature: string
+        evs: [int, int, int, int, int, int],
+        ivs: [int, int, int, int, int, int],
+        
+        use the index number of each
+        [species, moves, ability, nature, item, evs, ivs]
+    '''
+    genome = [0]*20
+    genome[0] = dex.pokedex[json['species']].num
+    for i in range(len(json['moves'])):
+        genome[i+1] = dex.move_dex[json['moves'][i]].num
+    genome[5] = dex.ability_dex[json['ability']].num
+    genome[6] = dex.nature_dex[json['nature']].num
+    genome[7] = dex.item_dex[json['item']].num
+    for i in range(len(json['evs'])):
+        genome[i+8] = json['evs'][i]
+    for i in range(len(json['ivs'])):
+        genome[i+14] = json['ivs'][i]
+
+    return genome
+
+def genome_to_json(genome):
+    pokemon = {}
+    pokemon['species'] = dex.index_to_id_pokemon[genome[0]]
+    pokemon['moves'] = []
+    for i in range(4):
+        if genome[i+1] != 0:
+            pokemon['moves'].append(dex.index_to_id_moves[genome[i+1]])
+    pokemon['ability'] = dex.index_to_id_abilities[genome[5]]
+    pokemon['nature'] = dex.index_to_id_natures[genome[6]]
+    try:
+        pokemon['item'] = dex.index_to_id_items[genome[7]]
+    except KeyError:
+        pokemon['item'] = '' 
+    pokemon['evs'] = []
+    pokemon['ivs'] = []
+    for i in range(6):
+        pokemon['evs'].append(genome[i+8])
+    for i in range(6):
+        pokemon['ivs'].append(genome[i+14])
+
+    return pokemon
+
+def encode_team(team):
+    '''
+    takes array of json-coded pokemon
+    '''
+    genome = []
+    for pokemon in team:
+        genome = genome + json_to_genome(pokemon)
+    return genome
+
+def decode_team(genome):
+    team = []
+    for i in range((len(genome)//20)):
+        team.append(genome_to_json(genome[i*20:(i+1)*20]))
+    return team
+

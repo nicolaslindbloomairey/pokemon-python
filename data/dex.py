@@ -27,6 +27,8 @@ with open('data/simple_learnsets.json') as f:
     simple_learnsets = json.load(f)
 with open('data/sample_teams.json') as f:
     sample_teams = json.load(f)
+with open('data/domains/all.json') as f:
+    pokemon_raw_base = json.load(f)
 
 sample_teams = sample_teams
 simple_learnsets = simple_learnsets
@@ -39,6 +41,28 @@ class Decision(namedtuple('Decision', ['type', 'selection', 'target', 'mega', 'z
 class Action(namedtuple('Action', ['user', 'move', 'target', 'zmove', 'base_move'])):
     def __new__(cls, user, move, target=None, zmove=False, base_move=None):
         return super(Action, cls).__new__(cls, user, move, target, zmove, base_move)
+
+index_to_id_pokemon = {}
+for poke in pokemon_raw_base:
+    index_to_id_pokemon[pokemon_raw_data[poke]['num']] = poke
+
+index_to_id_moves = {}
+for move in moves_raw_data:
+    index_to_id_moves[moves_raw_data[move]['num']] = move
+
+index_to_id_abilities = {}
+for ability in abilities_raw_data:
+    index_to_id_abilities[abilities_raw_data[ability]['num']] = ability
+
+index_to_id_natures = {}
+for nature in natures_raw_data:
+    index_to_id_natures[natures_raw_data[nature]['num']] = nature
+
+index_to_id_items = {}
+for item in items_raw_data:
+    #print(items_raw_data[item])
+    index_to_id_items[items_raw_data[item]['num']] = item
+
 
 #-------------
 #POKEDEX
@@ -210,10 +234,10 @@ for i in typecharts_raw_data:
 #--------
 #natures_raw_data
 #---------
-natureAttributes = ['id', 'name', 'plus', 'minus']
+natureAttributes = ['id', 'num', 'name', 'plus', 'minus']
 nature_dex = {}
 
-temp = ['id', 'name', 'plus', 'minus', 'values']
+temp = ['id', 'num', 'name', 'plus', 'minus', 'values']
 Nature = namedtuple('Nature', temp)
 
 for i in natures_raw_data:

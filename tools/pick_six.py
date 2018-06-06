@@ -61,6 +61,7 @@ def generate_team(num_pokemon=6, domain='all'):
     items = []
     pokedex = list(domain_all)
     items = list(dex.item_dex.keys())
+    natures = list(dex.nature_dex.keys())
 
     while len(team) < 6:
         pokemon = {}
@@ -78,6 +79,9 @@ def generate_team(num_pokemon=6, domain='all'):
         
         r = random.randint(0,len(items)-1)
         pokemon['item'] = items[r]
+
+        r = random.randint(0,len(natures)-1)
+        pokemon['nature'] = natures[r]
 
         abilities = [re.sub(r'\W+', '', ability.lower()) for ability in list(filter(None.__ne__, list(dex.pokedex[pokemon['species']].abilities)))]
         #print(str(abilities))

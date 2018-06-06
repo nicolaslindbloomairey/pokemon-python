@@ -79,7 +79,7 @@ class Battle(object):
 
             if self.turn > 500:
                 self.log('ERROR TURN COUNTER IS OVER 500')
-                self.error = True
+                #self.error = True
                 break
         if self.debug or self.error:
             print(''.join(self.debug_log))
@@ -460,7 +460,7 @@ class Battle(object):
         for side in self.sides:
             if not side.pokemon_left:
                 self.ended = True
-                self.winner = side.id
+                self.winner = 0 if side.id else 1
 
     def resolve_priority(self, action):
         '''
@@ -618,7 +618,8 @@ class Battle(object):
 
                 # remove the move from the pokemons move list if it has no pp left
                 if user.pp[move.id] == 0:
-                    user.moves.remove(move.id)
+                    if move.id in user.moves:
+                        user.moves.remove(move.id)
 
         user.last_used_move = move.id
 
@@ -1133,7 +1134,9 @@ class Battle(object):
 
         # assist
         elif move.id == 'assist':
-            move = dex.move_dex[random.choice(target.moves)]
+            # it hink this is broken
+            #move = dex.move_dex[random.choice(target.moves)]
+            pass
         
         # metronome
         elif move.id == 'metronome':

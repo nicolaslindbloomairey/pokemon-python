@@ -2,24 +2,592 @@
     "team0": [
         {
             "species": "bulbasaur",
-            "moves": ["tackle", "vinewhip", "sleeppowder", "ingrain"],
+            "moves": [
+                "tackle",
+                "vinewhip",
+                "sleeppowder",
+                "ingrain"
+            ],
             "ability": "overgrow",
-            "evs": [252, 0, 0, 4, 0, 252],
-            "ivs": [31, 31, 31, 31, 31, 31]
+            "evs": [
+                252,
+                0,
+                0,
+                4,
+                0,
+                252
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
         },
         {
             "species": "charmander",
-            "moves": ["scratch", "ember", "smokescreen", "firespin"],
+            "moves": [
+                "scratch",
+                "ember",
+                "smokescreen",
+                "firespin"
+            ],
             "ability": "solarpower",
-            "evs": [252, 0, 0, 4, 0, 252],
-            "ivs": [31, 31, 31, 31, 31, 31]
+            "evs": [
+                252,
+                0,
+                0,
+                4,
+                0,
+                252
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
         },
         {
             "species": "squirtle",
-            "moves": ["skullbash", "confusion", "counter", "flail"],
+            "moves": [
+                "skullbash",
+                "confusion",
+                "counter",
+                "flail"
+            ],
             "ability": "torrent",
-            "evs": [252, 0, 0, 4, 0, 252],
-            "ivs": [31, 31, 31, 31, 31, 31]
+            "evs": [
+                252,
+                0,
+                0,
+                4,
+                0,
+                252
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
         }
-    ]
+    ],
+    "firstgeneticsearch": [
+        {
+            "species": "gloom",
+            "moves": [
+                "naturalgift",
+                "round",
+                "grassyterrain",
+                "bide"
+            ],
+            "ability": "stench",
+            "nature": "lax",
+            "item": "aloraichiumz",
+            "evs": [
+                232,
+                32,
+                0,
+                88,
+                76,
+                80
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "gible",
+            "moves": [
+                "attract",
+                "roar",
+                "shadowclaw",
+                "bodyslam"
+            ],
+            "ability": "sandveil",
+            "nature": "relaxed",
+            "item": "swampertite",
+            "evs": [
+                172,
+                140,
+                8,
+                100,
+                84,
+                4
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "talonflame",
+            "moves": [
+                "swagger",
+                "flail",
+                "acrobatics",
+                "agility"
+            ],
+            "ability": "galewings",
+            "nature": "calm",
+            "item": "waveincense",
+            "evs": [
+                152,
+                76,
+                144,
+                20,
+                0,
+                116
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "drowzee",
+            "moves": [
+                "psychup",
+                "psywave",
+                "psychic",
+                "hypnosis"
+            ],
+            "ability": "innerfocus",
+            "nature": "brave",
+            "item": "lustrousorb",
+            "evs": [
+                40,
+                96,
+                172,
+                80,
+                116,
+                4
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "chikorita",
+            "moves": [
+                "toxic",
+                "refresh",
+                "doubleedge",
+                "magiccoat"
+            ],
+            "ability": "leafguard",
+            "nature": "timid",
+            "item": "rabutaberry",
+            "evs": [
+                28,
+                188,
+                24,
+                40,
+                120,
+                108
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "servine",
+            "moves": [
+                "workup",
+                "sleeptalk",
+                "megadrain",
+                "worryseed"
+            ],
+            "ability": "overgrow",
+            "nature": "jolly",
+            "item": "diancite",
+            "evs": [
+                24,
+                116,
+                76,
+                160,
+                60,
+                72
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        }
+    ],
+    "johtoxalola": [
+        {
+            "species": "zapdos",
+            "moves": [
+                "hiddenpower",
+                "thunderbolt",
+                "tailwind",
+                "protect"
+            ],
+            "ability": "pressure",
+            "nature": "bold",
+            "item": "psychicseed",
+            "evs": [
+                244,
+                0,
+                136,
+                0,
+                80,
+                48
+            ],
+            "ivs": [
+                31,
+                0,
+                30,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "garchomp",
+            "moves": [
+                "earthquake",
+                "dragonclaw",
+                "poisonjab",
+                "protect"
+            ],
+            "ability": "roughskin",
+            "nature": "jolly",
+            "item": "lifeorb",
+            "evs": [
+                0,
+                252,
+                0,
+                0,
+                4,
+                252
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "gyarados",
+            "moves": [
+                "dragondance",
+                "waterfall",
+                "crunch",
+                "protect"
+            ],
+            "ability": "intimidate",
+            "nature": "jolly",
+            "item": "gyaradosite",
+            "evs": [
+                0,
+                252,
+                0,
+                0,
+                4,
+                252
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "marowakalola",
+            "moves": [
+                "protect",
+                "shadowbone",
+                "flareblitz",
+                "bonemerang"
+            ],
+            "ability": "lightningrod",
+            "nature": "adamant",
+            "item": "thickclub",
+            "evs": [
+                252,
+                180,
+                4,
+                0,
+                68,
+                4
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "tapulele",
+            "moves": [
+                "protect",
+                "psychic",
+                "dazzlinggleam",
+                "taunt"
+            ],
+            "ability": "psychicsurge",
+            "nature": "timid",
+            "item": "psychiumz",
+            "evs": [
+                4,
+                0,
+                0,
+                252,
+                0,
+                252
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "tapubulu",
+            "moves": [
+                "woodhammer",
+                "hornleech",
+                "superpower",
+                "rockslide"
+            ],
+            "ability": "grassysurge",
+            "nature": "adamant",
+            "item": "choicescarf",
+            "evs": [
+                108,
+                252,
+                0,
+                0,
+                0,
+                148
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        }
+    ],
+    "secondgeneticsearch": [
+        {
+            "species": "slakoth",
+            "moves": [
+                "focuspunch",
+                "shadowclaw",
+                "toxic",
+                "nightslash"
+            ],
+            "ability": "truant",
+            "nature": "naughty",
+            "item": "safariball",
+            "evs": [
+                168,
+                32,
+                52,
+                72,
+                176,
+                8
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "nihilego",
+            "moves": [
+                "hiddenpowerwater",
+                "thunderbolt",
+                "protect",
+                "venoshock"
+            ],
+            "ability": "beastboost",
+            "nature": "bold",
+            "item": "smoothrock",
+            "evs": [
+                60,
+                140,
+                92,
+                156,
+                20,
+                40
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "gastrodon",
+            "moves": [
+                "earthquake",
+                "stoneedge",
+                "bodyslam",
+                "strength"
+            ],
+            "ability": "stickyhold",
+            "nature": "timid",
+            "item": "latiasite",
+            "evs": [
+                36,
+                68,
+                80,
+                252,
+                20,
+                28
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "empoleon",
+            "moves": [
+                "throatchop",
+                "icebeam",
+                "snore",
+                "swordsdance"
+            ],
+            "ability": "defiant",
+            "nature": "rash",
+            "item": "spelonberry",
+            "evs": [
+                4,
+                64,
+                128,
+                36,
+                8,
+                252
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "braviary",
+            "moves": [
+                "doubleteam",
+                "hyperbeam",
+                "pluck",
+                "skydrop"
+            ],
+            "ability": "defiant",
+            "nature": "hasty",
+            "item": "cornnberry",
+            "evs": [
+                180,
+                12,
+                100,
+                120,
+                20,
+                76
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        },
+        {
+            "species": "probopass",
+            "moves": [
+                "painsplit",
+                "torment",
+                "explosion",
+                "gravity"
+            ],
+            "ability": "sandforce",
+            "nature": "quirky",
+            "item": "twistedspoon",
+            "evs": [
+                72,
+                8,
+                36,
+                28,
+                248,
+                116
+            ],
+            "ivs": [
+                31,
+                31,
+                31,
+                31,
+                31,
+                31
+            ]
+        }
+    ],
+    "thirdgeneticsearch":[{"species": "geodude", "moves": ["snore", "ancientpower", "sleeptalk", "frustration"], "ability": "rockhead", "nature": "relaxed", "item": "fairymemory", "evs": [80, 56, 100, 20, 92, 160], "ivs": [31, 31, 31, 31, 31, 31]}, {"species": "swinub", "moves": ["strength", "bulldoze", "endeavor", "mudbomb"], "ability": "oblivious", "nature": "calm", "item": "greatball", "evs": [48, 0, 224, 16, 112, 108], "ivs": [31, 31, 31, 31, 31, 31]}, {"species": "milotic", "moves": ["raindance", "coil", "recover", "dive"], "ability": "cutecharm", "nature": "bashful", "item": "absolite", "evs": [44, 160, 28, 28, 128, 120], "ivs": [31, 31, 31, 31, 31, 31]}, {"species": "lugia", "moves": ["sleeptalk", "hyperbeam", "thunder", "fly"], "ability": "multiscale", "nature": "docile", "item": "parkball", "evs": [76, 28, 140, 88, 64, 112], "ivs": [31, 31, 31, 31, 31, 31]}, {"species": "ivysaur", "moves": ["sunnyday", "hiddenpowerwater", "protect", "confide"], "ability": "overgrow", "nature": "relaxed", "item": "plumefossil", "evs": [128, 40, 56, 60, 56, 168], "ivs": [31, 31, 31, 31, 31, 31]}, {"species": "sandile", "moves": ["embargo", "bite", "secretpower", "doubleteam"], "ability": "intimidate", "nature": "modest", "item": "electricseed", "evs": [8, 152, 168, 64, 36, 20], "ivs": [31, 31, 31, 31, 31, 31]}] 
 }

@@ -1,20 +1,25 @@
 from sim.battle import Battle
 from tools.pick_six import generate_team
 import time
+import json
+
+
+with open('data/sample_teams.json') as f:
+    sample_teams = json.load(f)
 
 t0 = time.time()
 
 zero = 0
 one = 0
 turncount = 0
-num_battles = 6000
+num_battles = 6000 
 teams = [generate_team(), generate_team()]
 
 for i in range(num_battles):
     battle = Battle(doubles=False, debug=False)
     
-    battle.join(team=generate_team())
-    battle.join(team=generate_team())
+    battle.join(0, team=sample_teams['secondgeneticsearch'])
+    battle.join(1, team=sample_teams['johtoxalola'])
 
     battle.run()
     turncount += battle.turn
