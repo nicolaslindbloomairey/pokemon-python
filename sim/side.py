@@ -137,6 +137,7 @@ class Side(object):
         pokemon_out.is_switching = False
         pokemon_out.aqua_ring = False
         pokemon_out.volatile_statuses = set()
+        pokemon_out.active = False
 
         self.boosts = {
             'atk': 0,

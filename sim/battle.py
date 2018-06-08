@@ -606,6 +606,8 @@ class Battle(object):
         if user.fainted:
             self.log(user.name + " fainted before they could move")
             return
+        if self.pseudo_turn:
+            return
 
 
         # subtract pp
