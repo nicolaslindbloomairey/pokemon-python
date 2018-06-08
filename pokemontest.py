@@ -32,16 +32,25 @@ while True:
         if event.type == pygame.QUIT:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONUP:
-            for i in range(11):
+
+            # do the button logic
+            for i in range(10):
                 if 400 < event.pos[0] < 400+150 and 20+(30*i) < event.pos[1] < 40+(30*i):
-                    # move i is selected
+
+                    # foe decides the default thing, here would be ai_decide if there was an ai
                     battle.sides[1].default_decide()
-                    if i == len(battle.sides[0].active_pokemon[0].moves):
-                        battle.choose(0, dex.Decision('pass', 0))
-                    elif i > len(battle.sides[0].active_pokemon[0].moves):
+                    
+                    # pass which does nothing
+                    #if i == len(battle.sides[0].active_pokemon[0].moves):
+                    #    battle.choose(0, dex.Decision('pass', 0))
+                    # switch to pokemon
+                    if i >= len(battle.sides[0].active_pokemon[0].moves):
                         battle.choose(0, dex.Decision('switch', i-(len(battle.sides[0].active_pokemon[0].moves)+1)))
+                    # move i is selected
                     else:
                         battle.choose(0, dex.Decision('move', i))
+
+                    # do the turns logic
                     battle.do_turn()
 
     screen.fill(white)
@@ -51,14 +60,17 @@ while True:
     user_num = dex.pokedex[battle.sides[0].active_pokemon[0].id].num
     user = pokemon_images[user_num]
 
+    # draw the buttons
     mouse = pygame.mouse.get_pos()
-    for i in range(len(battle.sides[0].active_pokemon[0].moves)+ 7):
+    for i in range(len(battle.sides[0].active_pokemon[0].moves)+ 6):
         if 400 < mouse[0] < 400+150 and 20+(30*i) < mouse[1] < 40+(30*i):
             pygame.draw.rect(screen, red, (400, 20+(30*i), 150, 20))
         pygame.draw.rect(screen, black, (400, 20+(30*i), 150, 20), 1)
-        if i == len(battle.sides[0].active_pokemon[0].moves):
-            screen.blit(font.render('pass', False, black), (410, 25+(30*i)))
-        elif i > len(battle.sides[0].active_pokemon[0].moves):
+
+        # button texts
+        #if i == len(battle.sides[0].active_pokemon[0].moves):
+        #    screen.blit(font.render('pass', False, black), (410, 25+(30*i)))
+        if i >= len(battle.sides[0].active_pokemon[0].moves):
             screen.blit(font.render('switch to ' + str(battle.sides[0].pokemon[i-(len(battle.sides[0].active_pokemon[0].moves)+1)].name) + (' (fnt)' if battle.sides[0].pokemon[i-(len(battle.sides[0].active_pokemon[0].moves)+1)].fainted else ''), False, black), (410, 25+(30*i)))
         else:
             screen.blit(font.render(battle.sides[0].active_pokemon[0].moves[i], False, black), (410, 25+(30*i)))
