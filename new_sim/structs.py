@@ -1,3 +1,26 @@
+'''
+Nicolas Lindbloom-Airey
+
+structs.py
+
+This file defines all the data containers for the simulator. It also contains
+a handful of functions at the bottom to help with initialization of these
+containers. I use pythons dataclass decorator which lets me write less
+source code when defining a data class. These data class have no methods.
+
+Data Classes:
+    PokemonSet
+    TeamSet => List[PokemonSet]
+    Decision
+    Stats
+    Action
+    Pokemon
+    Player
+
+Functions:
+    dict_to_team_set
+    calculate_stats 
+'''
 from typing import List
 from typing import Set
 from typing import Dict
@@ -85,6 +108,174 @@ class Action:
     def __repr__(self):
         return '(' + self.action_type + ' action)'
 
+# this class holds all data about a pokemon during battle
+@dataclass
+class Pokemon:
+    player_uid : int # one indexed
+    position : int
+    poke : InitVar[PokemonSet] = None 
+    packed : InitVar[str] = None
+
+    id : str = ''
+    name : str = ''
+    species : str = ''
+    nature : str = ''
+    moves : List[str] = field(init=False)
+    base_moves : List[str] = field(init=False)
+    ability : str = ''
+    base_ability : str = field(init=False)
+    item : str = ''
+
+    stats : Stats = field(init=False)
+    hp : int = field(init=False)
+    maxhp : int = field(init=False)
+
+    lost_item : bool = False
+    last_used_item : str = ''
+
+    pp : Dict[str, int] = field(default_factory=dict)
+
+    fainted : bool = False
+    status : str = ''
+    # counters for various status efects
+    protect_n : int = 0
+    toxic_n : int = 1
+    sleep_n : int = 0
+    bound_n : int = 0
+    encore_n : int = 0
+    perishsong_n : int = 0
+    taunt_n : int = 0
+
+    is_switching : bool = False
+    trapped : bool = False
+    aqua_ring : bool = False
+    substitute : bool = False
+    substitute_hp : int = 0
+    stockpile : int = 0
+
+    # move that most recently did damage to this pokemon
+    last_damaging_move : str = ''
+    last_used_move : str = None
+
+    consecutive_move_uses : int = 0
+    crit_chance : int = 0
+    boosts : Dict[str, int] = field(init=False)
+    volatile_statuses : Set[str] = field(default_factory=set)
+
+    active : bool = False
+    active_turns : int = 0
+
+    level : int = 50
+
+    types : List[str] = field(init=False)
+
+    def __post_init__(self, poke, packed):
+        if poke is None:
+            poke = packed_str_to_pokemon_set(packed)
+        self.boosts = {
+            'atk': 0,
+            'def': 0,
+            'spa': 0,
+            'spd': 0,
+            'spe': 0,
+            'accuracy': 0,
+            'evasion': 0
+        }
+        self.name = poke.name
+        self.species = poke.species
+        self.id = poke.species
+        self.item = poke.item
+        self.ability = poke.ability
+        self.base_ability = self.ability 
+        self.moves = poke.moves
+        self.base_moves = self.moves 
+        self.nature = poke.nature
+
+        self.stats = calculate_stats(self, poke.evs, poke.ivs)
+
+        self.hp = self.stats.hp
+        self.maxhp = self.stats.hp
+        self.types = dex.pokedex[self.species].types
+
+        for move in self.moves:
+            self.pp[move] = dex.move_dex[move].pp
+        return
+
+@dataclass
+class Player:
+    '''
+    Player specific info and their pokemon in this struct
+
+    FIELDS:
+    name : str - player name
+    uid : int - one indexed id value, 1 for player 1, 2 for player 2...
+    pokemon : List[Pokemon] - List of pokemon objects that belong to this
+        player.
+    bench : List[Pokemon] - List of pokemon pointers that are not active
+    active_pokemon : List[Pokemon] - List of pokemon pointers that are active
+    volatile_statuses : Set[str] - i forget what volatile statuses the player
+        can have.
+    side_conditions : Set[str] - i forget what side conditions the player
+        can have.
+    request : str - the type of decision this player needs to make next
+    choice : str - the type of decision this player has made for the current
+        turn.
+    used_zmove : bool - Has this player used their 1 zmove yet.
+
+    spikes : int - number of spike layers
+    toxic_spikes : int - number of toxic spike layers, independent of spikes
+    stealth_rock : bool - is stealth rock up
+    sticky_web : bool - is sticky web up
+    tailwind : bool - is tailwind active
+    tailwind_n : int - turns left for tailwind
+    '''
+
+    name : str
+    uid : int # one indexed
+    team : InitVar[List[PokemonSet]] = None
+
+    pokemon : List[Pokemon] = field(repr=False, default_factory=list)
+    bench : List[Pokemon] = field(repr=False, default_factory=list)
+    active_pokemon : List[Pokemon] = field(repr=False, default_factory=list)
+
+    #pokemon_left : int = 0
+    # old field conditions
+    volatile_statuses : Set[str] = field(default_factory=set)
+    side_conditions : Set[str] = field(default_factory=set)
+
+    # new field conditions
+    spikes : int = 0
+    toxic_spikes : int = 0
+    stealth_rock : bool = False
+    sticky_web : bool = False
+    tailwind : bool = False
+    tailwind_n : int = 0 
+
+    '''
+    request[0] is for one active pokemon
+    request[1] is for the next active pokemon
+    current request is one of
+    move - move request
+    switch - fainted pokemon or for u-turn and what not
+    teampreview - beginning of battle pick which pokemon
+    '' - no request
+    '''
+    request : str = 'move'
+    choice : Decision = None
+
+    used_zmove : bool = False
+
+    def __post_init__(self, team:List[PokemonSet]):
+        i = 0
+        for poke in team:
+            pokemon = Pokemon(self.uid, i, poke)
+            self.pokemon.append(pokemon) 
+            i += 1 
+        return
+
+'''
+HELPER FUNCTIONS FOR STRUCTS
+'''
 # dont think this works
 def packed_str_to_pokemon_set(packed : str) -> PokemonSet:
     a = packed.split('|')
@@ -94,6 +285,9 @@ def packed_str_to_pokemon_set(packed : str) -> PokemonSet:
     poke = PokemonSet(a[0], a[1], a[2], a[3], m, a[5], e, a[7], i, a[9], a[10], a[11])
 
 def dict_to_team_set(in_team : List) -> List[PokemonSet]:
+    '''
+    Takes dict format of pokemon sets and returns a list of PokemonSets
+    '''
     team = []
     for in_poke in in_team:
         name = in_poke['species']
@@ -107,3 +301,29 @@ def dict_to_team_set(in_team : List) -> List[PokemonSet]:
         poke = PokemonSet(name, species, item, ability, moves, nature, evs, gender='', ivs=ivs)
         team.append(poke)
     return team
+
+def calculate_stats(P:Pokemon, evs:List[int], ivs:List[int]) -> Stats:
+    '''
+    Called in init of a pokemon so it must be defined here.
+    Also called in mega_evolve()
+    '''
+    base_stats = dex.pokedex[P.species].baseStats
+    # hp
+    lvl = P.level
+    iv = ivs[0] #hp iv
+    ev = evs[0] #hp ev
+    hp = math.floor(((iv + (2 * base_stats.hp) + (ev/4)) * (lvl/100)) + 10 + lvl)
+
+    stats = ['attack', 'defense', 'specialattack', 'specialdefense', 'speed']
+    cal = []
+    i = 1
+    for stat in stats:
+        # other stat calculation
+        base = getattr(base_stats, stat)
+        iv = ivs[i]
+        ev = evs[i]
+        nature_mod = dex.nature_dex[P.nature].values[stat]
+        cal.append(math.floor(math.floor((((iv + (2 * base) + (ev/4)) * (lvl/100)) + 5)) * nature_mod))
+        i += 1
+
+    return Stats(hp, cal[0], cal[1], cal[2], cal[3], cal[4])
