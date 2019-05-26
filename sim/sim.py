@@ -14,12 +14,12 @@ Its methods should never be called. The caller has access so they can view
 the state of the battle. No info is hidden.
 '''
 import heapq
-from new_sim.player import *
+from sim.player import *
 
 
 def new_battle(format_str:str, name1:str, team1:List[PokemonSet],
-                name2:str, team2:List[PokemonSet]) -> Battle:
-    return Battle(format_str, name1, team1, name2, team2)
+                name2:str, team2:List[PokemonSet], debug:bool) -> Battle:
+    return Battle(format_str, name1, team1, name2, team2, debug)
 
 def choose(B:Battle, player_uid:int, choice:str) -> None:
     '''
@@ -71,7 +71,7 @@ def do_turn(B:Battle) -> None:
     if B.p1.choice is None or B.p2.choice is None:
         sys.exit('BATTLE ERROR: one or more sides has invalid decision')
 
-    from new_sim.turn import turn_start, turn_end, run_action, run_move,\
+    from sim.turn import turn_start, turn_end, run_action, run_move,\
                             calc_damage, accuracy_check, boosts_statuses,\
                             update_move_before_running,\
                             unique_moves_after_damage, create_move, \
@@ -79,9 +79,10 @@ def do_turn(B:Battle) -> None:
 
     turn_start(B)
 
-    print('---Turn ' + str(B.turn) + '---')
-    print(B.p1.choice)
-    print(B.p2.choice)
+    if B.debug:
+        print('---Turn ' + str(B.turn) + '---')
+        print(B.p1.choice)
+        print(B.p2.choice)
 
     # create and populate action queue
     # elements of queue are in form (priority : int, action : Action)
@@ -94,8 +95,9 @@ def do_turn(B:Battle) -> None:
             populate_action_queue(q, poke, choice, move, player, B)
 
     # run each each action in the queue
-    print(q)
-    print()
+    if B.debug:
+        print(q)
+        print()
     while q:
         priority, next_action = heapq.heappop(q) 
         run_action(B, next_action)
@@ -107,11 +109,13 @@ def do_turn(B:Battle) -> None:
     if not pokemon_left(B.p1):
         B.ended = True
         B.winner = 'p2'
-        print('p2 won')
+        if B.debug:
+            print('p2 won')
     if not pokemon_left(B.p2):
         B.ended = True
         B.winner = 'p1'
-        print('p1 won')
+        if B.debug:
+            print('p1 won')
 
     #request the next turns move
     B.pseudo_turn = False
@@ -140,5 +144,7 @@ def do_turn(B:Battle) -> None:
                 B.p2.request = 'switch'
             else:
                 B.p2.request = 'pass'
-    print('---End of Turn ' + str(B.turn) + '---')
+    
+    if B.debug:
+        print('---End of Turn ' + str(B.turn) + '---')
     return

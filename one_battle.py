@@ -1,8 +1,5 @@
-import new_sim.battle as sim
+import sim.sim as sim
 from tools.pick_six import generate_team
-import json
-import pprint
-
 
 teams = []
 for i in range(2):

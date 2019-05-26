@@ -12,7 +12,7 @@ FUNCTIONS:
     pokemon_left
 '''
 import sys
-from new_sim.pokemon import *
+from sim.pokemon import *
 
 def switch(T:Player, user:Pokemon, position:int) -> bool:
     '''
@@ -64,7 +64,9 @@ def switch(T:Player, user:Pokemon, position:int) -> bool:
         'accuracy': 0,
         'evasion': 0
     }
-    print(pokemon_out.name + ' switches out for ' + pokemon_in.name)
+    
+    if T.debug:
+        print(pokemon_out.name + ' switches out for ' + pokemon_in.name)
 
     #self.battle.log(pokemon_out.fullname
     #      + ' switches out for '

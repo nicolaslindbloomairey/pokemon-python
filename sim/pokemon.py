@@ -26,7 +26,7 @@ FUNCTIONS:
     mega_evolve
 '''
 import random
-from new_sim.structs import *
+from sim.structs import *
 
 
 def get_attack(P:Pokemon, weather:str, crit:bool=False) -> float:
@@ -233,7 +233,8 @@ def faint(P:Pokemon) -> None:
     P.fainted = True
     #self.side.pokemon_left -= 1
 
-    print(P.name + ' fainted')
+    if P.debug:
+        print(P.name + ' fainted')
     return
 
 def add_status(P:Pokemon, status:str, source:Pokemon=None):

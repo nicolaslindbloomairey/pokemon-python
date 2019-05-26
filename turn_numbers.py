@@ -1,4 +1,4 @@
-from sim.battle import Battle
+import sim.sim as sim
 from tools.pick_six import generate_team
 import time
 import json
@@ -11,25 +11,29 @@ t0 = time.time()
 
 zero = 0
 one = 0
+error = 0
 turncount = 0
-num_battles = 100 
-teams = [generate_team(), generate_team()]
+num_battles = 1000 
+teams = []
+for i in range(2):
+    teams.append(sim.dict_to_team_set(generate_team()))
+johtoxalola = sim.dict_to_team_set(sample_teams['johtoxalola'])
+genetic = sim.dict_to_team_set(sample_teams['secondgeneticsearch'])
+p1 = 'Nic'
+p2 = 'Sam'
 
 for i in range(num_battles):
-    battle = Battle(doubles=False, debug=False)
-    
-    battle.join(0, team=sample_teams['secondgeneticsearch'])
-    battle.join(1, team=sample_teams['johtoxalola'])
+    battle = sim.Battle('single', p1, johtoxalola, p2, teams[1], debug=False)
 
-    battle.run()
-    turncount += battle.turn
-    #print(str(battle.turn))
+    sim.run(battle)
 
-    #print(battle.sides[battle.winner].name)
-    if battle.winner == 0:
+    if battle.winner == 'p1':
         zero += 1
-    if battle.winner == 1:
+    elif battle.winner == 'p2':
         one += 1
+    else:
+        error += 1
+    turncount += battle.turn
 
 t1 = time.time()
 avg_turns = turncount/num_battles
@@ -42,3 +46,4 @@ print('total time: ' + str(round(total_time, 2)) + ' s')
 print('average time per battle: ' + str(avg_time) + ' ms')
 print('average time per turn: ' + str(avg_time_turn) + ' us')
 print( str(zero) + " | " + str(one) + " | " + str(num_battles-zero-one))
+print(str(error) + " battles ended reached max turn length")

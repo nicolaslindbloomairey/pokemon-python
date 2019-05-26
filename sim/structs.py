@@ -116,6 +116,7 @@ class Pokemon:
     position : int
     poke : InitVar[PokemonSet] = None 
     packed : InitVar[str] = None
+    debug : bool = False
 
     id : str = ''
     name : str = ''
@@ -234,6 +235,7 @@ class Player:
     name : str
     uid : int # one indexed
     team : InitVar[List[PokemonSet]] = None
+    debug : bool = False
 
     pokemon : List[Pokemon] = field(repr=False, default_factory=list)
     bench : List[Pokemon] = field(repr=False, default_factory=list)
@@ -269,7 +271,7 @@ class Player:
     def __post_init__(self, team:List[PokemonSet]):
         i = 0
         for poke in team:
-            pokemon = Pokemon(self.uid, i, poke)
+            pokemon = Pokemon(self.uid, i, poke, debug=self.debug)
             self.pokemon.append(pokemon) 
             i += 1 
         return
@@ -309,13 +311,13 @@ class Battle:
     name2 : InitVar[str] = 'Sam'
     team1 : InitVar[List[PokemonSet]] = None
     team2 : InitVar[List[PokemonSet]] = None
+    debug : bool = False
 
     #maintenance variables
     turn : int = 0
     pseudo_turn : bool = False
     doubles : bool = False
     rng : bool = True
-    debug : bool = False
     winner : str = None
     ended : bool = False
     started : bool = False
@@ -337,8 +339,8 @@ class Battle:
     def __post_init__(self, format_str, name1, team1, name2, team2,):
         if format_str == 'double':
             self.doubles = True
-        self.p1 = Player(name1, 1 , team1)
-        self.p2 = Player(name2, 2 , team2)
+        self.p1 = Player(name1, 1 , team1, debug=self.debug)
+        self.p2 = Player(name2, 2 , team2, debug=self.debug)
 
         self.set_up()
         return

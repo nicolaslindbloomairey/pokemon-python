@@ -30,7 +30,7 @@ ORDER OF FUNCTION CALL:
 '''
 
 import heapq
-from new_sim.player import *
+from sim.player import *
 
 def turn_start(B:Battle) -> None:
     '''
@@ -218,7 +218,8 @@ def run_move(B:Battle, user:Pokemon, move:dex.Move, target:Pokemon) -> None:
 
     # ACCURACY CHECK
     if not accuracy_check(B, user, move, target):
-        print(user.name + ' used ' + move.id + ' and missed')
+        if B.debug:
+            print(user.name + ' used ' + move.id + ' and missed')
         # move missed! do nothing
         return
 
@@ -261,7 +262,8 @@ def run_move(B:Battle, user:Pokemon, move:dex.Move, target:Pokemon) -> None:
     unique_moves_after_damage(B, user, move, target, dmg)
     # handle boosts and statuses
     boosts_statuses(B, user, move, target)
-    print(user.name + ' used ' + move.id + '')
+    if B.debug:
+        print(user.name + ' used ' + move.id + '')
     return
 
 def calc_damage(B:Battle, user:Pokemon, move:dex.Move, target:Pokemon) -> int:
@@ -973,7 +975,7 @@ def unique_moves_after_damage(B:Battle, user:Pokemon, move:dex.Move, target:Poke
     # psychoshift
     if move.id == 'psychoshift':
         if add_status(target, user.status):
-            user.cure_status()
+            cure_status(user)
 
     # psychup
     if move.id == 'psychup':
