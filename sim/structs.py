@@ -20,6 +20,7 @@ Data Classes:
 Functions:
     dict_to_team_set
     calculate_stats 
+    get_active_pokemon
 '''
 from typing import List
 from typing import Set
@@ -273,9 +274,102 @@ class Player:
             i += 1 
         return
 
+@dataclass
+class Battle:
+    '''
+    Contains all info related to this pokemon battle
+
+    FIELDS:
+    turn : int - The turn counter. Increments in turn_start()
+    pseudo_turn : bool - Pseudo turns are for when a pokemon faints and
+        new pokemon switch in, we still use the action queue because the 
+        order of the pokemon switching in matters.
+    doubles : bool - Not using this rn?
+    rng : bool - Some random numbers are rigged if rng is False.
+    debug : bool - Not using this either.
+    p1 : Player - pointer to player 1 object
+    p2 : Player - pointer to player 2 object
+    weather : str - what weather is currently on the field, options are as
+        follows, {clear, sunlight, heavy_sunlight, rain, heavy_rain,
+        sandstorm, hail, wind}
+    weather_n : int - how many turns are left for the weather
+    terrain : str - what terrain is currently on the field, options are,
+        {grassy, electric, psychic...
+    trickroom : bool - Is trickroom in effect? This flag lasts for 5 turns.
+    trickroom_n : int - how many turns are left for trickroom
+    started : bool - has the battle started
+    ended : bool - is the battle over
+    winner : str - who won
+    setup_ran : bool - has the set up method run yet
+
+    '''
+
+    format_str : InitVar[str] = 'single'
+    name1 : InitVar[str] = 'Nic'
+    name2 : InitVar[str] = 'Sam'
+    team1 : InitVar[List[PokemonSet]] = None
+    team2 : InitVar[List[PokemonSet]] = None
+
+    #maintenance variables
+    turn : int = 0
+    pseudo_turn : bool = False
+    doubles : bool = False
+    rng : bool = True
+    debug : bool = False
+    winner : str = None
+    ended : bool = False
+    started : bool = False
+    setup_ran : bool = False
+    log : List[str] = field(default_factory=list)
+
+    # players
+    p1 : Player = field(init=False)
+    p2 : Player = field(init=False)
+    # should i have a map of player ids to player objects?
+
+    # game field effects
+    weather : str = 'clear'
+    weather_n : int = 0
+    terrain : str = ''
+    trickroom : bool = False
+    trickroom_n : int = 0
+
+    def __post_init__(self, format_str, name1, team1, name2, team2,):
+        if format_str == 'double':
+            self.doubles = True
+        self.p1 = Player(name1, 1 , team1)
+        self.p2 = Player(name2, 2 , team2)
+
+        self.set_up()
+        return
+
+    def set_up(self):
+        self.p1.active_pokemon.append(self.p1.pokemon[0])
+        self.p2.active_pokemon.append(self.p2.pokemon[0])
+        for i in range(len(self.p1.pokemon)-1):
+            self.p1.bench.append(self.p1.pokemon[i+1])
+
+        for i in range(len(self.p2.pokemon)-1):
+            self.p2.bench.append(self.p2.pokemon[i+1])
+
+        self.setup_ran = True
+        return
+
 '''
 HELPER FUNCTIONS FOR STRUCTS
 '''
+
+def get_active_pokemon(B:Battle) -> List[Pokemon]:
+    '''
+    Returns a list of pointers to all the active pokemon in this battle
+    '''
+    active = []
+    for pokemon in B.p1.active_pokemon:
+        active.append(pokemon)
+    for pokemon in B.p2.active_pokemon:
+        active.append(pokemon)
+    return active
+
 # dont think this works
 def packed_str_to_pokemon_set(packed : str) -> PokemonSet:
     a = packed.split('|')

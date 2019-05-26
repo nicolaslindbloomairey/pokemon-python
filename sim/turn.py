@@ -1,203 +1,36 @@
+'''
+Nicolas Lindbloom-Airey
+
+turn.py
+
+This file is entirely devoted to the do_turn(Battle) method.
+One call of do_turn does all the logic for a single turn.
+Functions defined in this file are:
+    * functions are are only called in the do_turn method.
+
+Functions called by run_move are called only once per run_move call.
+turn_start and turn_end are called once per turn.
+create_move and populate_action_queue are called once per active pokemon
+    in the battle.
+run_action is called once on every action created.
+
+ORDER OF FUNCTION CALL:
+    turn_start
+    create_move
+    populate_action_queue
+    run_action 
+        run_move
+            update_move_before_running
+            accuracy_check
+            calc_damage
+                -> damage called in pokemon.py
+            unique_moves_after_damage
+            boosts_statuses
+    turn_end
+'''
+
 import heapq
 from new_sim.player import *
-
-MAX_TURNS = 500
-
-@dataclass
-class Battle:
-    '''
-    Contains all info related to this pokemon battle
-
-    FIELDS:
-    turn : int - The turn counter. Increments in turn_start()
-    pseudo_turn : bool - Pseudo turns are for when a pokemon faints and
-        new pokemon switch in, we still use the action queue because the 
-        order of the pokemon switching in matters.
-    doubles : bool - Not using this rn?
-    rng : bool - Some random numbers are rigged if rng is False.
-    debug : bool - Not using this either.
-    p1 : Player - pointer to player 1 object
-    p2 : Player - pointer to player 2 object
-    weather : str - what weather is currently on the field, options are as
-        follows, {clear, sunlight, heavy_sunlight, rain, heavy_rain,
-        sandstorm, hail, wind}
-    weather_n : int - how many turns are left for the weather
-    terrain : str - what terrain is currently on the field, options are,
-        {grassy, electric, psychic...
-    trickroom : bool - Is trickroom in effect? This flag lasts for 5 turns.
-    trickroom_n : int - how many turns are left for trickroom
-    started : bool - has the battle started
-    ended : bool - is the battle over
-    winner : str - who won
-    setup_ran : bool - has the set up method run yet
-
-    '''
-
-    format_str : InitVar[str] = 'single'
-    name1 : InitVar[str] = 'Nic'
-    name2 : InitVar[str] = 'Sam'
-    team1 : InitVar[List[PokemonSet]] = None
-    team2 : InitVar[List[PokemonSet]] = None
-
-    #maintenance variables
-    turn : int = 0
-    pseudo_turn : bool = False
-    doubles : bool = False
-    rng : bool = True
-    debug : bool = False
-    winner : str = None
-    ended : bool = False
-    started : bool = False
-    setup_ran : bool = False
-    log : List[str] = field(default_factory=list)
-
-    # players
-    p1 : Player = field(init=False)
-    p2 : Player = field(init=False)
-
-    # game field effects
-    weather : str = 'clear'
-    weather_n : int = 0
-    terrain : str = ''
-    trickroom : bool = False
-    trickroom_n : int = 0
-
-    def __post_init__(self, format_str, name1, team1, name2, team2,):
-        if format_str == 'double':
-            self.doubles = True
-        self.p1 = Player(name1, 1 , team1)
-        self.p2 = Player(name2, 2 , team2)
-
-        self.set_up()
-        return
-
-    def set_up(self):
-        self.p1.active_pokemon.append(self.p1.pokemon[0])
-        self.p2.active_pokemon.append(self.p2.pokemon[0])
-        for i in range(len(self.p1.pokemon)-1):
-            self.p1.bench.append(self.p1.pokemon[i+1])
-
-        for i in range(len(self.p2.pokemon)-1):
-            self.p2.bench.append(self.p2.pokemon[i+1])
-
-        self.setup_ran = True
-        return
-
-    def choose(self, player_uid:int, choice:str) -> None:
-        '''
-        Sets the player with given player_uid in given Battle choice
-        to the given choice.
-        '''
-        choice = choice.split(' ')
-        c = Decision(choice[0], int(choice[1]))
-        if player_uid == 1:
-                self.p1.choice = c
-        if player_uid == 2:
-                self.p2.choice = c
-        return
-
-    def run(self) -> None:
-        '''
-        Runs the Battle from start to finish as if each player ran out of time.
-        '''
-        while not self.ended:
-            default_decide(self.p1)
-            default_decide(self.p2)
-            self.do_turn()
-            if self.turn > MAX_TURNS:
-                sys.exit("Battle reached max number of allowed turns")
-                break
-        return
-
-    def do_turn(self) -> None:
-        '''
-        To be called once both sides have made their decisions.
-        Updates the game state according to the decisions. This method
-        is the meat of the simulator, some of the logic is separated
-        to other methods but the idea is as follows:
-
-            * update fields that need updating before any 'actions' happen
-            * build and then execute all 'actions' for the turn
-            * update fields that need updating after all 'actions'
-                eg. burn damage, weather...
-            * check if someone won the game on this turn
-            * update the request for new decisions from player/ai
-
-        Note: Pseudo turns exist for when either player needs to throw out
-        another pokemon due to fainting
-
-        PRE: self.p1.choice is valid
-        PRE: self.p2.choice is valid
-        '''
-        if self.p1.choice is None or self.p2.choice is None:
-            sys.exit('BATTLE ERROR: one or more sides has invalid decision')
-
-
-        turn_start(self)
-
-        print('---Turn ' + str(self.turn) + '---')
-        print(self.p1.choice)
-        print(self.p2.choice)
-
-        # create and populate action queue
-        # elements of queue are in form (priority : int, action : Action)
-        q : List[Tuple[float, Action]] = []
-        for player in [self.p1,self.p2]:
-            for i in range(len(player.active_pokemon)):
-                poke = player.active_pokemon[i]
-                choice = player.choice
-                move = create_move(self, poke, choice)
-                populate_action_queue(q, poke, choice, move, player, self)
-
-        # run each each action in the queue
-        print(q)
-        print()
-        while q:
-            priority, next_action = heapq.heappop(q) 
-            run_action(self, next_action)
-        
-        if not self.pseudo_turn:
-            turn_end(self)
-
-        #check for a winner
-        if not pokemon_left(self.p1):
-            self.ended = True
-            self.winner = 'p2'
-            print('p2 won')
-        if not pokemon_left(self.p2):
-            self.ended = True
-            self.winner = 'p1'
-            print('p1 won')
-
-        #request the next turns move
-        self.pseudo_turn = False
-        self.request = 'move'
-        self.p1.request = 'move'
-        self.p2.request = 'move'
-        #self.p1.request = ['move', 'move'] if self.doubles else ['move']
-        #self.p2.request = ['move', 'move'] if self.doubles else ['move']
-
-        #check if a pokemon fainted and insert a pseudo turn
-        for pokemon in get_active_pokemon(self):
-            if pokemon.fainted:
-                self.pseudo_turn = True
-                
-        if self.pseudo_turn:
-            # check player 1's pokemon
-            for i in range(len(self.p1.active_pokemon)):
-                if self.p1.active_pokemon[i].fainted:
-                    self.p1.request = 'switch'
-                else:
-                    self.p1.request = 'pass'
-
-            # check player 2's pokemon
-            for i in range(len(self.p2.active_pokemon)):
-                if self.p2.active_pokemon[i].fainted:
-                    self.p2.request = 'switch'
-                else:
-                    self.p2.request = 'pass'
-        print('---End of Turn ' + str(self.turn) + '---')
-        return
 
 def turn_start(B:Battle) -> None:
     '''
@@ -357,70 +190,8 @@ def run_action(B, a : Action) -> None:
             B.run_move(user, move, pokemon)
         return
 
-    # and lastly for moves
-    #
-    # Targeting needs to be fixed
-    '''
-    if target == 'foe0':
-        foe_side = B.sides[0 if user.side_id else 1]
-        try:
-            target_pokemon = foe_side.active_pokemon[0]
-            B.run_move(user, move, target_pokemon)
-        except IndexError:
-            B.log(move.name + ' failed because there is no target')
-        return
-    elif target == 'foe1':
-        foe_side = B.sides[0 if user.side_id else 1]
-        try:
-            target_pokemon = foe_side.active_pokemon[1]
-            B.run_move(user, move, target_pokemon)
-        except IndexError:
-            B.log(move.name + ' failed because there is no target')
-        return
-    elif target == 'ally':
-        ally_side = B.sides[user.side_id]
-        ally_index = 0 if ally_side.active_pokemon.index(user) else 1
-        target_pokemon = ally_side.active_pokemon[ally_index]
-        B.run_move(user, move, target_pokemon)
-        return
-    elif target == 'B':
-        B.run_move(user, move, user)
-        return
-
-    elif target == 'foes':
-        foe_side = B.sides[0 if user.side_id else 1]
-        for pokemon in foe_side.active_pokemon:
-            B.run_move(user, move, pokemon)
-        return
-    elif target == 'allies':
-        ally_side = B.sides[user.side_id]
-        for pokemon in ally_side.active_pokemon:
-            B.run_move(user, move, pokemon)
-        return
-
-    elif target == 'adjacent':
-        # foe side
-        foe_side = B.sides[0 if user.side_id else 1]
-        for pokemon in foe_side.active_pokemon:
-            B.run_move(user, move, pokemon)
-        # ally pokemon
-        ally_side = B.sides[user.side_id]
-        ally_index = 0 if ally_side.active_pokemon.index(user) else 1
-        try:
-            target_pokemon = ally_side.active_pokemon[ally_index]
-            B.run_move(user, move, target_pokemon)
-        except IndexError:
-            B.log(move.name + ' failed because there is no target')
-        return
-
-    elif target == 'all':
-        move = move._replace(base_power = move.base_power * 0.75)
-        for pokemon in B.active_pokemon:
-            B.run_move(user, move, pokemon)
-        return
-    '''
     return
-                
+
 def run_move(B:Battle, user:Pokemon, move:dex.Move, target:Pokemon) -> None:
     '''
     ONLY CALLED IN run_action()
@@ -1331,18 +1102,6 @@ def unique_moves_after_damage(B:Battle, user:Pokemon, move:dex.Move, target:Poke
     if move.id == 'growth':
         if B.weather == 'sunlight':
             boost(target, move.primary['B']['boosts'])
-
-def get_active_pokemon(B:Battle) -> List[Pokemon]:
-    '''
-    Returns a list of pointers to all the active pokemon in this battle
-    '''
-    active = []
-    for pokemon in B.p1.active_pokemon:
-        active.append(pokemon)
-    for pokemon in B.p2.active_pokemon:
-        active.append(pokemon)
-    return active
-
 
 def create_move(B:Battle, p:Pokemon, c:Decision) -> dex.Move:
     '''

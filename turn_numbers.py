@@ -12,7 +12,7 @@ t0 = time.time()
 zero = 0
 one = 0
 turncount = 0
-num_battles = 6000 
+num_battles = 100 
 teams = [generate_team(), generate_team()]
 
 for i in range(num_battles):
