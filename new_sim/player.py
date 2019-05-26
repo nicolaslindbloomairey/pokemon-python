@@ -17,7 +17,25 @@ from new_sim.pokemon import *
 
 @dataclass
 class Player:
-    '''Player specific info and their pokemon in this struct'''
+    '''
+    Player specific info and their pokemon in this struct
+
+    FIELDS:
+    name : str - player name
+    uid : int - one indexed id value, 1 for player 1, 2 for player 2...
+    pokemon : List[Pokemon] - List of pokemon objects that belong to this
+        player.
+    bench : List[Pokemon] - List of pokemon pointers that are not active
+    active_pokemon : List[Pokemon] - List of pokemon pointers that are active
+    volatile_statuses : Set[str] - i forget what volatile statuses the player
+        can have.
+    side_conditions : Set[str] - i forget what side conditions the player
+        can have.
+    request : str - the type of decision this player needs to make next
+    choice : str - the type of decision this player has made for the current
+        turn.
+    used_zmove : bool - Has this player used their 1 zmove yet.
+    '''
 
     name : str
     uid : int # one indexed

@@ -21,7 +21,33 @@ MAX_TURNS = 500
 
 @dataclass
 class Battle:
-    '''Contains all info related to this pokemon battle'''
+    '''
+    Contains all info related to this pokemon battle
+
+    FIELDS:
+    turn : int - The turn counter. Increments in turn_start()
+    pseudo_turn : bool - Pseudo turns are for when a pokemon faints and
+        new pokemon switch in, we still use the action queue because the 
+        order of the pokemon switching in matters.
+    doubles : bool - Not using this rn?
+    rng : bool - Some random numbers are rigged if rng is False.
+    debug : bool - Not using this either.
+    p1 : Player - pointer to player 1 object
+    p2 : Player - pointer to player 2 object
+    weather : str - what weather is currently on the field, options are as
+        follows, {clear, sunlight, heavy_sunlight, rain, heavy_rain,
+        sandstorm, hail, wind}
+    weather_n : int - how many turns are left for the weather
+    terrain : str - what terrain is currently on the field, options are,
+        {grassy, electric, psychic...
+    trickroom : bool - Is trickroom in effect? This flag lasts for 5 turns.
+    trickroom_n : int - how many turns are left for trickroom
+    started : bool - has the battle started
+    ended : bool - is the battle over
+    winner : str - who won
+    setup_ran : bool - has the set up method run yet
+
+    '''
 
     format_str : InitVar[str] = 'single'
     name1 : InitVar[str] = 'Nic'
@@ -39,9 +65,11 @@ class Battle:
     # weather options - clear, sunlight, heavy_sunlight, rain, heavy_rain
     #                   , sandstorm, hail, wind
     weather : str = 'clear'
+    weather_n : int = 0
     # terrain options - grassy, elect...
     terrain : str = ''
     trickroom : bool = False
+    trickroom_n : int = 0
     winner : str = None
     ended : bool = False
     started : bool = False
