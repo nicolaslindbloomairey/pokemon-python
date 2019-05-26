@@ -250,9 +250,9 @@ for i in natures_raw_data:
     values = {}
     stats = ['attack', 'defense', 'specialattack', 'specialdefense', 'speed']
     for stat in stats:
-        if args[2] == stat:
+        if args[3] == stat:
             values[stat] = 1.1
-        elif args[3] == stat:
+        elif args[4] == stat:
             values[stat] = 0.9
         else:
             values[stat] = 1

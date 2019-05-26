@@ -81,10 +81,9 @@ class Action:
     move : Any = field(repr=False, default=None) #move class from dex.py
     pos : int = None #pos for switch action
     target : str = 'foe0'
-    #zmove : bool = False
-    #base_move : str = field(init=False)
-
-
+    
+    def __repr__(self):
+        return '(' + self.action_type + ' action)'
 
 # dont think this works
 def packed_str_to_pokemon_set(packed : str) -> PokemonSet:

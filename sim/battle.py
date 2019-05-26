@@ -4,13 +4,16 @@ import random
 import math
 import heapq
 import re
+import sys
 
 class Battle(object):
     def __init__(self, doubles=False, debug=True, rng=True):
-        self.doubles = doubles
-        self.rng = rng
-        self.debug = debug
-        self.sides = []
+        self.turn = 0
+        self.pseudo_turn = False
+        self.doubles = doubles #bool - is this a doubles battle
+        self.rng = rng #bool - should we use rng
+        self.debug = debug # bool - print debug log at end of battle?
+        self.sides = [] 
         for i in range(2):
             self.sides.append(Side(self, i))
 
@@ -20,12 +23,10 @@ class Battle(object):
         # weather options - clear, sunlight, heavy_sunlight, rain, heavy_rain, sandstorm, hail, wind
         self.weather = 'clear'
         self.terrain = ''
-        self.turn = 0
         self.winner = None
         self.ended = False
         self.started = False
         #self.request = 'real'
-        self.pseudo_turn = False
         self.trickroom = False
 
         self.players = 0
@@ -33,18 +34,68 @@ class Battle(object):
         self.error = False
         self.debug_log = []
         self.setup_ran = False
+        self.pbi_log = []
+
+        self.pbi_log.append('format ' + ('double' if self.doubles else 'single') + '\n')
+        #self.pbi_log.append('RNG: ' + str(self.rng) + '\n')
 
     def join(self, side_id=None, team=None):
         if side_id is None:
             side_id = self.players
-        if side_id > 1:
+        
+        if side_id > 1: # side id greater than one would be more than two sides which is not possible
+            sys.exit("ERROR: more than two sides in pokemon battle?!?")
             return
         self.sides[side_id].populate_team(team)
         self.players += 1
+        #self.pbi_log.append('player p' + str(side_id + 1) + '\n')
+        #self.pbi_log.append(self.pack_team(team))
+
+    def pack_team(self, team):
+        out = ''
+        for pokemon in team:
+            #name
+            out += '|'
+            out += pokemon['species']
+            out += '|'
+            out += pokemon['item']
+            out += '|'
+            out += pokemon['ability']
+            out += '|'
+            out += pokemon['moves'][0] + ','
+            out += pokemon['moves'][1] + ','
+            out += pokemon['moves'][2] + ','
+            out += pokemon['moves'][3]
+            out += '|'
+            out += pokemon['nature']
+            out += '|'
+            out += str(pokemon['evs'].hp) + ','
+            out += str(pokemon['evs'].attack) + ','
+            out += str(pokemon['evs'].defense) + ','
+            out += str(pokemon['evs'].specialattack) + ','
+            out += str(pokemon['evs'].specialdefense) + ','
+            out += str(pokemon['evs'].speed)
+            out += '|'
+            #gender
+            out += '|'
+            out += str(pokemon['ivs'].hp) + ','
+            out += str(pokemon['ivs'].attack) + ','
+            out += str(pokemon['ivs'].defense) + ','
+            out += str(pokemon['ivs'].specialattack) + ','
+            out += str(pokemon['ivs'].specialdefense) + ','
+            out += str(pokemon['ivs'].speed)
+            out += '|'
+            #shiny
+            out += '|'
+            #level
+            out += '|'
+            #happiness
+            out += ']\n'
+        return out
 
     def log(self, message):
-        if self.debug:
-            print(str(message))
+        #if self.debug:
+        #    print(str(message))
         self.debug_log.append(str(message) + '\n')
 
     # run once both players are here
@@ -85,6 +136,32 @@ class Battle(object):
             print(''.join(self.debug_log))
 
     def __str__(self):
+        out = []
+        out.append('\n')
+        out.append('\n')
+        out.append('Turn ' + str(self.turn) + ' pseudo:' + str(self.pseudo_turn) + '\n')
+        out.append('Double Battle: ' + str(self.doubles) + '\n')
+        out.append('Use RNG: ' + str(self.rng) + '\n')
+        out.append('Debug Mode: ' + str(self.debug) + '\n')
+        out.append('Status: ' + str(self.status) + '\n')
+        out.append('Weather: ' + str(self.weather) + '\n')
+        out.append('Terrain: ' + str(self.terrain) + '\n')
+        out.append('Winner: ' + str(self.winner) + '\n')
+        out.append('Ended: ' + str(self.ended) + '\n')
+        out.append('Started: ' + str(self.started) + '\n')
+        out.append('Trickroom: ' + str(self.trickroom) + '\n')
+        out.append('Players: ' + str(self.players) + '\n')
+        out.append('Error: ' + str(self.error) + '\n')
+        out.append('Setup Ran: ' + str(self.setup_ran) + '\n')
+        out.append('\nSIDES\n')
+        for i in self.sides:
+            out.append(str(i)+ '\n')
+        out.append('\n')
+
+        return ''.join(out)
+
+    '''
+    def __str__(self):
         out = ['\n']
         out.append('Turn ' + str(self.turn) + ' pseudo:' + str(self.pseudo_turn))
         out.append('\n')
@@ -110,6 +187,7 @@ class Battle(object):
         #del out[-1]
         return ''.join(out)
 
+    '''
     def populate_action_queue(self, action_queue):
         for side in self.sides:
             n = 2 if self.doubles else 1
@@ -139,7 +217,7 @@ class Battle(object):
                     if choice.mega:
                         move = 'mega'
 
-                        action = dex.Action(user, move)
+                        action = dex.Action(user, 'mega')
                         action_tuple = (self.resolve_priority(action), action)
                         heapq.heappush(action_queue, action_tuple)
 
@@ -409,6 +487,19 @@ class Battle(object):
                 # error - one or more sides is missing a decsion
                 raise ValueError('one or more sides is missing a decision')
 
+        #for i in range(2):
+            #self.pbi_log.append('p' + str(i+1) + ' ')
+            #self.pbi_log.append(str(self.sides[i].choice[0].type) + ' ')
+            #s = str(self.sides[i].choice[0].selection + 1)
+            #print(s)
+            #self.pbi_log.append(s + ' ')
+            #if self.sides[i].choice[0].mega:
+            #    self.pbi_log.append('mega ')
+            #if self.sides[i].choice[0].zmove:
+            #    self.pbi_log.append('zmove')
+            #self.pbi_log.append('\n')
+
+            #self.pbi_log.append(str(side.choice) + '\n')
         self.turn += 1
 
         for pokemon in self.active_pokemon:

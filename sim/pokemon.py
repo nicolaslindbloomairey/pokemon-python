@@ -96,6 +96,7 @@ class Pokemon(object):
         self.hp = self.stats.hp
         self.maxhp = self.hp
 
+    '''
     def __str__(self):
         info = [self.name, self.hp, self.nature, self.ability, self.moves, self.status, ]
         info.append(self.volatile_statuses)
@@ -103,6 +104,58 @@ class Pokemon(object):
         for each in info:
             out += str(each)+ '|'
         return out
+    '''
+    def __str__(self):
+        out = []
+        out.append('Species: ' + str(self.species) + '\n')
+        #out.append('Pokemon Set: ' + str(self.pokemon_set) + '\n')
+        out.append('Side ID: ' + str(self.side_id) + '\n')
+        #out.append('Side: ' + str(self.side) + '\n')
+        #out.append('Battle: ' + str(self.side) + '\n')
+        out.append('id: ' + str(self.id) + '\n')
+        out.append('nature: ' + str(self.nature) + '\n')
+        #out.append('template: ' + str(self.template) + '\n')
+        out.append('name: ' + str(self.name) + '\n')
+        out.append('fullname: ' + str(self.fullname) + '\n')
+        out.append('moves: ' + str(self.moves) + '\n')
+        out.append('base_moves: ' + str(self.moves) + '\n')
+        out.append('pp: ' + str(self.pp) + '\n')
+        out.append('fainted: ' + str(self.fainted) + '\n')
+        out.append('status: ' + str(self.status) + '\n')
+        out.append('position: ' + str(self.position) + '\n')
+        out.append('burned: ' + str(self.burned) + '\n')
+        out.append('protect_n: ' + str(self.protect_n) + '\n')
+        out.append('toxic_n: ' + str(self.toxic_n) + '\n')
+        out.append('sleep_n: ' + str(self.sleep_n) + '\n')
+        out.append('bound_n: ' + str(self.bound_n) + '\n')
+        out.append('encore_n: ' + str(self.encore_n) + '\n')
+        out.append('perishsong_n: ' + str(self.perishsong_n) + '\n')
+        out.append('taunt_n: ' + str(self.taunt_n) + '\n')
+        out.append('is_switching: ' + str(self.is_switching) + '\n')
+        out.append('trapped: ' + str(self.trapped) + '\n')
+        out.append('aqua_ring: ' + str(self.aqua_ring) + '\n')
+        out.append('stockpile: ' + str(self.stockpile) + '\n')
+        out.append('substitute: ' + str(self.substitute) + '\n')
+        out.append('substitute_hp: ' + str(self.substitute_hp) + '\n')
+        out.append('pokemon_hit_this_turn: ' + str(self.pokemon_hit_this_turn) + '\n')
+        out.append('last damaging move: ' + str(self.last_damaging_move) + '\n')
+        out.append('last used move: ' + str(self.last_used_move) + '\n')
+        out.append('consecutive_move_uses: ' + str(self.consecutive_move_uses) + '\n')
+        out.append('Crit chance: ' + str(self.crit_chance) + '\n')
+        out.append('Boosts: ' + str(self.boosts) + '\n')
+        out.append('volatile_statuses: ' + str(self.volatile_statuses) + '\n')
+        out.append('active: ' + str(self.active) + '\n')
+        out.append('active_turns: ' + str(self.active_turns) + '\n')
+        out.append('level: ' + str(self.level) + '\n')
+        out.append('base_ability: ' + str(self.base_ability) + '\n')
+        out.append('ability: ' + str(self.ability) + '\n')
+        out.append('lost_item: ' + str(self.lost_item) + '\n')
+        out.append('last used item: ' + str(self.last_used_item) + '\n')
+        out.append('types: ' + str(self.types) + '\n')
+        out.append('hp: ' + str(self.hp) + '\n')
+        out.append('maxhp: ' + str(self.maxhp) + '\n')
+        out.append('stats: ' + str(self.stats) + '\n')
+        return ''.join(out)
 
     def form_change(self, species):
         self.species = species

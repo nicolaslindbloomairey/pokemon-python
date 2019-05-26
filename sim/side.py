@@ -44,6 +44,24 @@ class Side(object):
 
         self.used_zmove = False
 
+    def __str__(self):
+        out = []
+        out.append('id: ' + str(self.id) + '\n') 
+        out.append('name: ' + str(self.name) + '\n') 
+        out.append('bench: ' + str(self.bench) + '\n') 
+        #out.append('team: ' + str(self.team) + '\n') 
+        out.append('pokemon_left: ' + str(self.pokemon_left) + '\n') 
+        out.append('active pokemon: ' + str(self.active_pokemon) + '\n') 
+        out.append('volatile_statuses: ' + str(self.volatile_statuses) + '\n') 
+        out.append('side_conditions: ' + str(self.side_conditions) + '\n') 
+        out.append('request: ' + str(self.request) + '\n') 
+        out.append('choice: ' + str(self.choice) + '\n') 
+        out.append('used_zmove: ' + str(self.used_zmove) + '\n') 
+        out.append('\nPOKEMON \n') 
+        for i in self.pokemon:
+            out.append(str(i) + '\n') 
+        return ''.join(out)
+
     def ai_decide(self):
         self.choice = self.ai.decide(self.battle)
 
