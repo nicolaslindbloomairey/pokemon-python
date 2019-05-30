@@ -13,16 +13,19 @@ zero = 0
 one = 0
 error = 0
 turncount = 0
-num_battles = 1000 
+num_battles = 5000 
+johtoxalola = sim.dict_to_team_set(sample_teams['johtoxalola'])
+genetic = sim.dict_to_team_set(sample_teams['secondgeneticsearch'])
 teams = []
 for i in range(2):
     teams.append(sim.dict_to_team_set(generate_team()))
-johtoxalola = sim.dict_to_team_set(sample_teams['johtoxalola'])
-genetic = sim.dict_to_team_set(sample_teams['secondgeneticsearch'])
 p1 = 'Nic'
 p2 = 'Sam'
 
+most_turns = 0
+
 for i in range(num_battles):
+
     battle = sim.Battle('single', p1, johtoxalola, p2, teams[1], debug=False)
 
     sim.run(battle)
@@ -33,6 +36,9 @@ for i in range(num_battles):
         one += 1
     else:
         error += 1
+
+    if battle.turn > most_turns:
+        most_turns = battle.turn
     turncount += battle.turn
 
 t1 = time.time()
@@ -47,3 +53,4 @@ print('average time per battle: ' + str(avg_time) + ' ms')
 print('average time per turn: ' + str(avg_time_turn) + ' us')
 print( str(zero) + " | " + str(one) + " | " + str(num_battles-zero-one))
 print(str(error) + " battles ended reached max turn length")
+print(str(most_turns) + " was the max number of turns in a battle")

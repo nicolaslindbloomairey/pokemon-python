@@ -245,7 +245,7 @@ def run_move(B:Battle, user:Pokemon, move:dex.Move, target:Pokemon) -> None:
     for i in range(number_hits):
         # Triplekick checks accuracy for every hit
         if i != 1 and move.id == 'triplekick':
-            if not B.accuracy_check(user, move, target):
+            if not accuracy_check(B, user, move, target):
                 return
 
         # damage calculation
@@ -609,15 +609,15 @@ def update_move_before_running(B:Battle, user:Pokemon, move:dex.Move, target:Pok
         power = dex.fling.get(user.item, 30)
         move = move._replace(base_power = power)
         if user.item == 'kingsrock' or user.item == 'razorfang':
-            move = move._replace(primary= {'boosts': None, 'status': None, 'volatile_status': 'flinch', 'B': None})
+            move = move._replace(primary= {'boosts': None, 'status': None, 'volatile_status': 'flinch', 'self': None})
         elif user.item == 'flameorb':
-            move = move._replace(primary= {'boosts': None, 'status': 'brn', 'volatile_status': None, 'B': None})
+            move = move._replace(primary= {'boosts': None, 'status': 'brn', 'volatile_status': None, 'self': None})
         elif user.item == 'toxicorb':
-            move = move._replace(primary= {'boosts': None, 'status': 'tox', 'volatile_status': None, 'B': None})
+            move = move._replace(primary= {'boosts': None, 'status': 'tox', 'volatile_status': None, 'self': None})
         elif user.item == 'lightball':
-            move = move._replace(primary= {'boosts': None, 'status': 'par', 'volatile_status': None, 'B': None})
+            move = move._replace(primary= {'boosts': None, 'status': 'par', 'volatile_status': None, 'self': None})
         elif user.item == 'poisonbarb':
-            move = move._replace(primary= {'boosts': None, 'status': 'psn', 'volatile_status': None, 'B': None})
+            move = move._replace(primary= {'boosts': None, 'status': 'psn', 'volatile_status': None, 'self': None})
 
     # assume max base_power for return and frustration
     elif move.id == 'frustration' or move.id == 'return':
@@ -711,11 +711,12 @@ def update_move_before_running(B:Battle, user:Pokemon, move:dex.Move, target:Pok
 
     # mimic
     elif move.id == 'mimic':
-        if target.last_used_move is not None:
-            if 'mimic' in user.moves:
-                user.moves.remove('mimic')
-            user.moves.append(target.last_used_move)
-            move = dex.move_dex[target.last_used_move]
+        pass
+    #    if target.last_used_move is not None:
+    #        if 'mimic' in user.moves:
+    #            user.moves.remove('mimic')
+    #        user.moves.append(target.last_used_move)
+    #        move = dex.move_dex[target.last_used_move]
 
     # copycat
     elif move.id == 'copycat':
@@ -734,7 +735,7 @@ def update_move_before_running(B:Battle, user:Pokemon, move:dex.Move, target:Pok
     # baneful bunker
     if 'banefulbunker' in target.volatile_statuses:
         if move.flags.contact:
-            user.add_status('psn')
+            add_status(user, 'psn')
 
     # spiky shield
     if 'spikeyshield' in target.volatile_statuses:
@@ -931,7 +932,8 @@ def unique_moves_after_damage(B:Battle, user:Pokemon, move:dex.Move, target:Poke
 
     # kinggsheild
     if move.id == 'kingsshield' and user.id == 'aegislash':
-        user.form_change('aegislashshield')
+        pass
+        #user.form_change('aegislashshield')
 
     # pain split
     if move.id == 'painsplit':
@@ -1017,10 +1019,11 @@ def unique_moves_after_damage(B:Battle, user:Pokemon, move:dex.Move, target:Poke
 
     # sketch
     if move.id == 'sketch':
-        if target.last_used_move is not None:
-            if 'sketch' in user.moves:
-                user.moves.remove('sketch')
-            user.moves.append(target.last_used_move)
+        pass
+    #    if target.last_used_move is not None:
+    #        if 'sketch' in user.moves:
+    #            user.moves.remove('sketch')
+    #        user.moves.append(target.last_used_move)
 
     # skill swap
     if move.id == 'skillswap':
@@ -1103,7 +1106,7 @@ def unique_moves_after_damage(B:Battle, user:Pokemon, move:dex.Move, target:Poke
     # growth (the move) does another stat boost in the sun
     if move.id == 'growth':
         if B.weather == 'sunlight':
-            boost(target, move.primary['B']['boosts'])
+            boost(target, move.primary['self']['boosts'])
 
 def create_move(B:Battle, p:Pokemon, c:Decision) -> dex.Move:
     '''
@@ -1115,6 +1118,10 @@ def create_move(B:Battle, p:Pokemon, c:Decision) -> dex.Move:
     '''
     if c.type != 'move':
         return
+    
+    if p.pp[p.moves[c.selection]] <= 0:
+        move = dex.move_dex['struggle']
+        return move
 
     move = dex.move_dex[p.moves[c.selection]]
 

@@ -44,7 +44,7 @@ def run(B:Battle) -> None:
         default_decide(B.p2)
         do_turn(B)
         if B.turn > MAX_TURNS:
-            sys.exit("Battle reached max number of allowed turns")
+            #sys.exit("Battle reached max number of allowed turns")
             break
     return
 

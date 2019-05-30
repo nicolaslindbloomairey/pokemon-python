@@ -156,7 +156,7 @@ class Pokemon:
     stockpile : int = 0
 
     # move that most recently did damage to this pokemon
-    last_damaging_move : str = ''
+    last_damaging_move : str = None
     last_used_move : str = None
 
     consecutive_move_uses : int = 0
@@ -201,6 +201,8 @@ class Pokemon:
 
         for move in self.moves:
             self.pp[move] = dex.move_dex[move].pp
+        #print(self.moves)
+        #print(self.pp)
         return
 
 @dataclass
